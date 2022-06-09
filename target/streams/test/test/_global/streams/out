@@ -1,0 +1,23 @@
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(fsm_test.fsm_test, org.scalatest.tools.Framework$$anon$1@58eee4e0, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mfsm_test:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31mfsm_test.fsm_test *** ABORTED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  java.util.NoSuchElementException: None.get[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.None$.get(Option.scala:627)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.None$.get(Option.scala:626)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at chiseltest.ChiselScalatestTester$TestBuilder.getTestName(ChiselScalatestTester.scala:27)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at chiseltest.ChiselScalatestTester$TestBuilder.finalAnnos(ChiselScalatestTester.scala:35)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at chiseltest.ChiselScalatestTester$TestBuilder.apply(ChiselScalatestTester.scala:31)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at fsm_test.fsm_test.<init>(fsm_test.scala:10)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 364 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 0, aborted 1[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 0, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m*** 1 SUITE ABORTED ***[0m[0m
+[0m[[0m[31merror[0m] [0m[0mError during tests:[0m
+[0m[[0m[31merror[0m] [0m[0m	fsm_test.fsm_test[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mtest[0m) sbt.TestsFailedException: Tests unsuccessful[0m

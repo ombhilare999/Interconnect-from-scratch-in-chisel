@@ -1,0 +1,7 @@
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/fsm_test.scala:10:14: not found: type Transmitter[0m
+[0m[[0m[31merror[0m] [0m[0m    test(new Transmitter) { c =>[0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/fsm_test.scala:14:14: not found: type Receiver[0m
+[0m[[0m[31merror[0m] [0m[0m    test(new Receiver ) { d =>[0m
+[0m[[0m[31merror[0m] [0m[0m             ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
