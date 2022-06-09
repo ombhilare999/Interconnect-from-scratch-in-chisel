@@ -1,7 +1,15 @@
-[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/first_module.scala:5:8: not found: object chiseltest[0m
-[0m[[0m[31merror[0m] [0m[0mimport chiseltest._[0m
-[0m[[0m[31merror[0m] [0m[0m       ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/first_module.scala:6:22: object flatspec is not a member of package org.scalatest[0m
-[0m[[0m[31merror[0m] [0m[0mimport org.scalatest.flatspec.AnyFlatSpec[0m
-[0m[[0m[31merror[0m] [0m[0m                     ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/main/scala/fsm_comm.scala:6:16: object tester is not a member of package chisel3[0m
+[0m[[0m[31merror[0m] [0m[0mdid you mean testers?[0m
+[0m[[0m[31merror[0m] [0m[0mimport chisel3.tester._[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/main/scala/fsm_comm.scala:7:16: object tester is not a member of package chisel3[0m
+[0m[[0m[31merror[0m] [0m[0mdid you mean testers?[0m
+[0m[[0m[31merror[0m] [0m[0mimport chisel3.tester.RawTester.test[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/main/scala/fsm_comm.scala:121:5: not found: value test[0m
+[0m[[0m[31merror[0m] [0m[0m    test(new Top(start = 1.U)) { c =>[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/main/scala/fsm_comm.scala:122:9: not found: value step[0m
+[0m[[0m[31merror[0m] [0m[0m        step(3)[0m
+[0m[[0m[31merror[0m] [0m[0m        ^[0m
+[0m[[0m[31merror[0m] [0m[0mfour errors found[0m
