@@ -9,8 +9,6 @@ Transmitter  <------->   Receiver
     FSM                    FSM
  */
 
- //object Main extends App(){
-
     class Transmitter extends Module() {
         val io = IO(
             new Bundle {
@@ -45,16 +43,21 @@ Transmitter  <------->   Receiver
             is(State.sOne) {    // Write Operation First Cycle
                 r_wr := 1.U        // Sending Write as 1
                 r_rd := 0.U        // Keeping Read signal de-asserted
-                r_add := 10.U      // Lower Bit is 10
-                r_wdata := 20.U    // Data to be write at location 10 is 20
+                r_add := 30.U      // Lower bit is stored at 30 Address
+                r_wdata := 20.U    // Data stored at address is 20
                 state := State.sTwo
+            }
+            is(State.sTwo){
+                r_add := 31.U      // Lower bit is stored at 31 Address
+                r_wdata := 22.U    // Data stored at address is 22
+                state := State.sThree
             }
             is(State.sThree) {      // Deasserting Everything
                 r_wr := 0.U
                 r_rd := 0.U
                 r_add := 0.U
                 r_wdata := 0.U
-                state := State.sNone
+                //state := State.sNone
             }
         }
         
@@ -70,7 +73,7 @@ Transmitter  <------->   Receiver
         val io = IO(
             new Bundle {
             val WR = Input(UInt(1.W))
-            val RD = Input(UInt(1.W))
+            val RD = Input(UInt(1.W)) //object Main extends App(){
             val ADD = Input(UInt(32.W))
             val WDATA = Input(UInt(32.W))
             val RDATA = Output(UInt(32.W))
@@ -88,7 +91,7 @@ Transmitter  <------->   Receiver
 
 
         object State extends ChiselEnum {
-            val sNone, sOne, sTwo, sThree = Value
+            val sNone, sOne, sTwo = Value
         }
 
         val state = RegInit(State.sNone)
@@ -96,28 +99,23 @@ Transmitter  <------->   Receiver
         switch(state) {
             is(State.sNone) {
                 when(r_wr === 1.U) { // Right now Supporting Write Operation Only
+                    when(r_add === 30.U) {
+                        r_cdata := r_wdata // Storing the write data into current data
                     state := State.sOne
-                    r_rdata := 0.U
+                    }
                 }
             }
             is(State.sOne) { // Write Operation First Cycle
                 when(r_wr === 1.U) {
-                    when(r_add === 10.U) {
+                    when(r_add === 31.U) {
                     r_cdata := r_wdata // Storing the write data into current data
                     state := State.sTwo
                     }
                 }
             }
             is(State.sTwo) {
-                when(r_wr === 1.U) {
-                    when(r_add === 11.U) {
-                    r_cdata := r_wdata // Storing the write data into current data
-                    state := State.sThree
-                    }
-                }
-            }
-            is(State.sThree) { // Deasserting Everything
                 r_cdata := 0.U
+                //state := State.sNone
             }
         }
 
@@ -133,7 +131,7 @@ Transmitter  <------->   Receiver
 
         val io = IO(
             new Bundle {
-            val start = Input(UInt(0.W)) // Triggers the communication
+            val start = Input(UInt(1.W)) // Triggers the communication
             val cdata_check = Output(UInt(32.W))
             }
         )
@@ -157,5 +155,3 @@ Transmitter  <------->   Receiver
     object TopDriver extends App {
         (new chisel3.stage.ChiselStage).emitVerilog(new Top, args)
     }
-
-//}
