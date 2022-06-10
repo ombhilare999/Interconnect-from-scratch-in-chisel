@@ -11,4 +11,9 @@ gtkwave top_dump.vcd //Load the waveforms in gtkwave
 ## Output Waveform:
   <p align="center">
         <img width="1309" height="298" src="assets/output.png">
- </p>
+  </p>
+
+ # Circuit Level Representation of Top Module:
+  <p align="center">
+        <img width="1600" height="429" src="assets/circuit.png">
+  </p>
