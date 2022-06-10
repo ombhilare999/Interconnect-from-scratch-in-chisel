@@ -1,10 +1,20 @@
-[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/fsm_test.scala:9:23: type Top is not a member of package fsm_comm[0m
-[0m[[0m[31merror[0m] [0m[0m    test(new fsm_comm.Top(start = 1.U)) { c =>[0m
-[0m[[0m[31merror[0m] [0m[0m                      ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/fsm_test.scala:9:27: not found: value start[0m
-[0m[[0m[31merror[0m] [0m[0m    test(new fsm_comm.Top(start = 1.U)) { c =>[0m
-[0m[[0m[31merror[0m] [0m[0m                          ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/fsm_test.scala:10:9: not found: value step[0m
-[0m[[0m[31merror[0m] [0m[0m        step(3)[0m
-[0m[[0m[31merror[0m] [0m[0m        ^[0m
-[0m[[0m[31merror[0m] [0m[0mthree errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/examples/fsm_test.scala:3:16: object iotesters is not a member of package chisel3[0m
+[0m[[0m[31merror[0m] [0m[0mdid you mean testers?[0m
+[0m[[0m[31merror[0m] [0m[0mimport chisel3.iotesters.{PeekPokeTester, Driver, ChiselFlatSpec}[0m
+[0m[[0m[31merror[0m] [0m[0m               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/examples/fsm_test.scala:5:32: not found: type PeekPokeTester[0m
+[0m[[0m[31merror[0m] [0m[0mclass fsm_test(c: Top) extends PeekPokeTester(c) {[0m
+[0m[[0m[31merror[0m] [0m[0m                               ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/examples/fsm_test.scala:5:47: no arguments allowed for nullary constructor Object: (): Object[0m
+[0m[[0m[31merror[0m] [0m[0mclass fsm_test(c: Top) extends PeekPokeTester(c) {[0m
+[0m[[0m[31merror[0m] [0m[0m                                              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/examples/fsm_test.scala:6:5: not found: value poke[0m
+[0m[[0m[31merror[0m] [0m[0m    poke(c.io.start, 1)[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/examples/fsm_test.scala:7:5: not found: value step[0m
+[0m[[0m[31merror[0m] [0m[0m    step(3)[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/test/scala/examples/fsm_test.scala:8:5: not found: value expect[0m
+[0m[[0m[31merror[0m] [0m[0m    expect(c.cdata_check, 40)[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0m6 errors found[0m

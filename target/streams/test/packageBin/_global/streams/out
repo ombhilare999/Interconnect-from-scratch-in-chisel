@@ -1,0 +1,9 @@
+[0m[[0m[0mdebug[0m] [0m[0mPackaging /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/chisel-tutorial_2.12-3.3.0-tests.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/test-classes/examples[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/examples[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/test-classes/examples/examples[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/examples/fsm_test.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/test-classes/examples/examples/fsm_test.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m

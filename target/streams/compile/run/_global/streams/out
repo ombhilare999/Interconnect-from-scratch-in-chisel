@@ -1,0 +1,28 @@
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.PassExceptions: [0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Transmitter]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.RD <= mux(_T_2, VOID, mux(_T_6, UInt<1>("h0"), mux(_T_9, VOID, mux(_T_12, UInt<1>("h0"), VOID))))[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Transmitter]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.ADD <= mux(_T_2, VOID, mux(_T_6, UInt<32>("h10"), mux(_T_9, UInt<32>("h11"), mux(_T_12, UInt<32>("h0"), VOID))))[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Transmitter]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.WR <= mux(_T_2, VOID, mux(_T_6, UInt<1>("h0"), mux(_T_9, VOID, mux(_T_12, UInt<1>("h0"), VOID))))[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Transmitter]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.WDATA <= mux(_T_2, VOID, mux(_T_6, UInt<32>("h20"), mux(_T_9, UInt<32>("h40"), mux(_T_12, UInt<32>("h0"), VOID))))[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Receiver]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.RDATA <= mux(_T_2, mux(_T_3, UInt<1>("h0"), VOID), VOID)[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Receiver]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.CDATA <= mux(_T_2, VOID, mux(_T_6, mux(_T_7, io.WDATA, VOID), mux(_T_10, mux(_T_11, mux(_T_12, io.WDATA, VOID), VOID), mux(_T_15, UInt<1>("h0"), VOID))))[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.PassException: 6 errors detected![0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mrun[0m) firrtl.passes.PassExceptions: [0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Transmitter]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.RD <= mux(_T_2, VOID, mux(_T_6, UInt<1>("h0"), mux(_T_9, VOID, mux(_T_12, UInt<1>("h0"), VOID))))[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Transmitter]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.ADD <= mux(_T_2, VOID, mux(_T_6, UInt<32>("h10"), mux(_T_9, UInt<32>("h11"), mux(_T_12, UInt<32>("h0"), VOID))))[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Transmitter]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.WR <= mux(_T_2, VOID, mux(_T_6, UInt<1>("h0"), mux(_T_9, VOID, mux(_T_12, UInt<1>("h0"), VOID))))[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Transmitter]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.WDATA <= mux(_T_2, VOID, mux(_T_6, UInt<32>("h20"), mux(_T_9, UInt<32>("h40"), mux(_T_12, UInt<32>("h0"), VOID))))[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Receiver]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.RDATA <= mux(_T_2, mux(_T_3, UInt<1>("h0"), VOID), VOID)[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.CheckInitialization$RefNotInitializedException:  : [module Receiver]  Reference io is not fully initialized.[0m
+[0m[[0m[31merror[0m] [0m[0m   : io.CDATA <= mux(_T_2, VOID, mux(_T_6, mux(_T_7, io.WDATA, VOID), mux(_T_10, mux(_T_11, mux(_T_12, io.WDATA, VOID), VOID), mux(_T_15, UInt<1>("h0"), VOID))))[0m
+[0m[[0m[31merror[0m] [0m[0mfirrtl.passes.PassException: 6 errors detected![0m

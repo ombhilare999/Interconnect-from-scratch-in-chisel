@@ -1,4 +1,3 @@
-
 // See README.md for license details.
 
 ThisBuild / scalaVersion     := "2.13.8"
@@ -24,4 +23,3 @@ lazy val root = (project in file("."))
     addCompilerPlugin("edu.berkeley.cs" % "chisel3-plugin" % chiselVersion cross CrossVersion.full),
   )
 
-  
