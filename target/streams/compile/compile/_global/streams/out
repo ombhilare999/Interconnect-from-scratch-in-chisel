@@ -1,6 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/main/scala/examples/fsm_comm.scala:37:26: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Int(0)[0m
-[0m[[0m[31merror[0m] [0m[0m required: chisel3.Data[0m
-[0m[[0m[31merror[0m] [0m[0m                io.WR := 0[0m
-[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/main/scala/examples/fsm_comm.scala:51:13: Missing closing brace `}' assumed here[0m
+[0m[[0m[31merror[0m] [0m[0m            is(State.sThree) {      // Deasserting Everything[0m
+[0m[[0m[31merror[0m] [0m[0m            ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

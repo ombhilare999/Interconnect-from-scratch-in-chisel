@@ -4,10 +4,12 @@ import chisel3._
 import chisel3.util._
 import chisel3.experimental.ChiselEnum
 
-    /*
-    Transmitter  <------->   Receiver
-        FSM                    FSM
-    */
+/*
+Transmitter  <------->   Receiver
+    FSM                    FSM
+ */
+
+ //object Main extends App(){
 
     class Transmitter extends Module() {
         val io = IO(
@@ -21,6 +23,13 @@ import chisel3.experimental.ChiselEnum
             }
         )
 
+        val r_start = RegInit(0.U(1.W))  
+        val r_wr    = RegInit(0.U(1.W))
+        val r_rd    = RegInit(0.U(1.W))
+        val r_add   = RegInit(0.U(32.W))
+        val r_wdata = RegInit(0.U(32.W))
+        val r_rdata = RegInit(0.U(32.W))
+
         object State extends ChiselEnum {
             val sNone, sOne, sTwo, sThree = Value
         }
@@ -29,30 +38,32 @@ import chisel3.experimental.ChiselEnum
 
         switch(state) {
             is(State.sNone) {
-                when(io.START === 1.U) {
+                when(r_start === 1.U) {
                     state := State.sOne
                 }
             }
-            is(State.sOne) { // Write Operation First Cycle
-                io.WR := 0.U
-                io.RD := 0x0.U(1.W) // Keeping Read signal de-asserted
-                io.ADD := 0x10.U(32.W) // Lower Bit is 10
-                io.WDATA := 0x20.U(32.W) // Data to be write at location 10 is 20
+            is(State.sOne) {    // Write Operation First Cycle
+                r_wr := 1.U        // Sending Write as 1
+                r_rd := 0.U        // Keeping Read signal de-asserted
+                r_add := 10.U      // Lower Bit is 10
+                r_wdata := 20.U    // Data to be write at location 10 is 20
                 state := State.sTwo
             }
-            is(State.sTwo) {
-                io.ADD := 0x11.U(32.W)       // Address Changes to 11
-                io.WDATA := 0x40.U(32.W)     // Data changes to 40
-                state := State.sThree
-            }
-            is(State.sThree) { // Deasserting Everything
-                io.WR := 0x0.U(1.W)
-                io.RD := 0x0.U(1.W)
-                io.ADD := 0x0.U(32.W)
-                io.WDATA := 0x0.U(32.W)
+            is(State.sThree) {      // Deasserting Everything
+                r_wr := 0.U
+                r_rd := 0.U
+                r_add := 0.U
+                r_wdata := 0.U
                 state := State.sNone
             }
         }
+        
+        r_start := io.START 
+        io.WR := r_wr
+        io.RD := r_rd
+        io.ADD := r_add
+        io.WDATA := r_wdata
+        r_rdata := io.RDATA  
     }
 
     class Receiver extends Module() {
@@ -67,6 +78,15 @@ import chisel3.experimental.ChiselEnum
             }
         )
 
+        
+        val r_wr    = RegInit(0.U(1.W))
+        val r_rd    = RegInit(0.U(1.W))
+        val r_add   = RegInit(0.U(32.W))
+        val r_wdata = RegInit(0.U(32.W))
+        val r_rdata = RegInit(0.U(32.W))
+        val r_cdata = RegInit(0.U(32.W))  
+
+
         object State extends ChiselEnum {
             val sNone, sOne, sTwo, sThree = Value
         }
@@ -75,29 +95,38 @@ import chisel3.experimental.ChiselEnum
 
         switch(state) {
             is(State.sNone) {
-            when(io.WR === 1.U) { // Right now Supporting Write Operation Only
-                state := State.sOne
-                io.RDATA := 0.U
-            }
+                when(r_wr === 1.U) { // Right now Supporting Write Operation Only
+                    state := State.sOne
+                    r_rdata := 0.U
+                }
             }
             is(State.sOne) { // Write Operation First Cycle
-                when(io.ADD === 10.U) {
-                io.CDATA := io.WDATA // Storing the write data into current data
-                state := State.sTwo
+                when(r_wr === 1.U) {
+                    when(r_add === 10.U) {
+                    r_cdata := r_wdata // Storing the write data into current data
+                    state := State.sTwo
+                    }
                 }
             }
             is(State.sTwo) {
-            when(io.WR === 1.U) {
-                when(io.ADD === 11.U) {
-                io.CDATA := io.WDATA // Storing the write data into current data
-                state := State.sThree
+                when(r_wr === 1.U) {
+                    when(r_add === 11.U) {
+                    r_cdata := r_wdata // Storing the write data into current data
+                    state := State.sThree
+                    }
                 }
             }
-            }
             is(State.sThree) { // Deasserting Everything
-            io.CDATA := 0.U
+                r_cdata := 0.U
             }
         }
+
+        r_wr := io.WR
+        r_rd := io.RD
+        r_add := io.ADD
+        r_wdata := io.WDATA
+        io.RDATA := r_rdata
+        io.CDATA := r_cdata
     }
 
     class Top() extends Module {
@@ -129,3 +158,4 @@ import chisel3.experimental.ChiselEnum
         (new chisel3.stage.ChiselStage).emitVerilog(new Top, args)
     }
 
+//}

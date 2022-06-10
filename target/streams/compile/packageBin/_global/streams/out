@@ -1,1 +1,27 @@
-[0m[[0m[0mdebug[0m] [0m[0mJar uptodate: /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.13/-name-_2.13-0.1.0.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mPackaging /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/chisel-tutorial_2.12-3.3.0.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/Receiver.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/Receiver.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/Receiver$$anon$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/Receiver$$anon$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/Transmitter$$anon$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/Transmitter$$anon$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/Top.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/Top.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/TopDriver$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/TopDriver$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/TopDriver$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/TopDriver$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/Transmitter$State$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/Transmitter$State$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/TopDriver.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/TopDriver.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/Top$$anon$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/Top$$anon$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/Transmitter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/Transmitter.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	examples/Receiver$State$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/bhilare/omkar/experiments_chisel/example_2/target/scala-2.12/classes/examples/Receiver$State$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m
