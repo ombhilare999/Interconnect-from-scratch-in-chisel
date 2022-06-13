@@ -12,21 +12,48 @@ Transmitter  <------->   Receiver
 class Transmitter extends Module() {
   val io = IO(
     new Bundle {
-      val START = Input(UInt(1.W)) // Triggers the communication
-      val WR = Output(UInt(1.W))
-      val RD = Output(UInt(1.W))
-      val ADD = Output(UInt(32.W))
-      val WDATA = Output(UInt(32.W))
-      val RDATA = Input(UInt(32.W))
+      // Signals from Top:
+      val START       = Input(UInt(1.W))    // Triggers the communication
+      val TOP_WR      = Input(UInt(1.W))   // Write Enable Signal
+      val TOP_RD      = Input(UInt(1.W))   // Read Enable Signal
+      val TOP_ADDRESS = Input(UInt(32.W))  // Address Bus
+      val TOP_WDATA   = Input(UInt(32.W))  // Write Data Bus
+      val TOP_RDATA   = Output(UInt(32.W))  // Read Data Bus
+
+      //Receiver Side Signals:
+      val WR    = Output(UInt(1.W))   // Write Enable Signal for receiver
+      val RD    = Output(UInt(1.W))   // Read Enable Signal for receiver
+      val ADD   = Output(UInt(32.W))  // Address Bus for receiver
+      val WDATA = Output(UInt(32.W))  // Write data bus for receiver
+      val RDATA = Input(UInt(32.W))   // Read data bus for receiver
     }
   )
+  
+  //Initializing the signals:
+  
+  // Signals from Top:
+  val r_start       = RegInit(0.U(1.W))
+  val r_top_wr      = Input(UInt(1.W))   // Write Enable Signal
+  val r_top_rd      = Input(UInt(1.W))   // Read Enable Signal
+  val r_top_address = Input(UInt(32.W))  // Address Bus
+  val r_top_wdata   = Input(UInt(32.W))  // Write Data Bus
+  val r_top_rdata   = Output(UInt(32.W)) // Read Data Bus
 
-  val r_start = RegInit(0.U(1.W))
-  val r_wr = RegInit(0.U(1.W))
-  val r_rd = RegInit(0.U(1.W))
-  val r_add = RegInit(0.U(32.W))
+  //Receiver Side Signals:
+  val r_wr    = RegInit(0.U(1.W))
+  val r_rd    = RegInit(0.U(1.W))
+  val r_add   = RegInit(0.U(32.W))
   val r_wdata = RegInit(0.U(32.W))
   val r_rdata = RegInit(0.U(32.W))
+  
+
+  r_start := io.START
+  io.WR := r_wr
+  io.RD := r_rd
+  io.ADD := r_add
+  io.WDATA := r_wdata
+  r_rdata := io.RDATA
+
 
   object State extends ChiselEnum {
     val sNone, sOne, sTwo, sThree = Value
@@ -38,9 +65,18 @@ class Transmitter extends Module() {
     is(State.sNone) {
       when(r_start === 1.U) {
         state := State.sOne
+        r_wr := 0.U
+        r_rd := 0.U
+        r_add := 0.U
+        r_wdata := 0.U
       }
     }
     is(State.sOne) { // Write Operation First Cycle
+      if(n == 0){
+        1
+      }else{
+        n*factorial(n-1)
+      }
       r_wr := 1.U // Sending Write as 1
       r_rd := 0.U // Keeping Read signal de-asserted
       r_add := 30.U // Lower bit is stored at 30 Address
@@ -52,19 +88,7 @@ class Transmitter extends Module() {
       r_wdata := 22.U // Data stored at address is 22
       state := State.sThree
     }
-    is(State.sThree) { // Deasserting Everything
-      r_wr := 0.U
-      r_rd := 0.U
-      r_add := 0.U
-      r_wdata := 0.U
-      // state := State.sNone
-    }
   }
 
-  r_start := io.START
-  io.WR := r_wr
-  io.RD := r_rd
-  io.ADD := r_add
-  io.WDATA := r_wdata
-  r_rdata := io.RDATA
+
 }
