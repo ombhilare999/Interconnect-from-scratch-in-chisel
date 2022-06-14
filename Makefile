@@ -10,8 +10,7 @@ testbench:
 	iverilog $(TESTBENCH).v && ./a.out
 
 waveform:
-	gtkwave $(WAVEFORM).vcd
+	gtkwave $(WAVEFORM).vcd sample.sav 
 
-.phony : clean
-
-clean: rm *.vcd 
+clean: 
+	rm $(WAVEFORM).vcd a.out Top.v	

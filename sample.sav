@@ -1,0 +1,32 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Tue Jun 14 17:29:49 2022
+[*]
+[dumpfile] "/home/bhilare/omkar/tx_rx_fsms/top_dump.vcd"
+[dumpfile_mtime] "Tue Jun 14 17:29:29 2022"
+[dumpfile_size] 4256
+[savefile] "/home/bhilare/omkar/tx_rx_fsms/sample.sav"
+[timestart] 0
+[size] 1920 1163
+[pos] 3789 -27
+*-14.539259 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top_tb.
+[sst_width] 233
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 368
+@28
+top_tb.clock
+top_tb.reset
+top_tb.start
+top_tb.wr
+@23
+top_tb.address[3:0]
+@22
+top_tb.wdata[31:0]
+@28
+top_tb.rd
+@22
+top_tb.rdata[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
