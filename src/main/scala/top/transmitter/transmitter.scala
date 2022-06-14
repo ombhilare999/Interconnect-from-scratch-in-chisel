@@ -39,8 +39,10 @@ class Transmitter extends Module() {
 
   // Connecting the IO signals from the TOP to reg buffers
   r_start       := io.START
+  r_top_wr      := io.TOP_WR
+  r_top_rd      := io.TOP_RD
   io.TOP_RDATA  := 0.U
-  
+
   // Object for state 
   object State extends ChiselEnum {
     val sIdle, sOne, sTwo = Value
