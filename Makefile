@@ -10,7 +10,7 @@ testbench:
 	iverilog $(TESTBENCH).v && ./a.out
 
 waveform:
-	gtkwave $(WAVEFORM).vcd sample.sav 
+	gtkwave -A --rcvar 'fontname_signals Monospace 12' --rcvar 'fontname_waves Monospace 12' $(WAVEFORM).vcd sample.sav
 
 clean: 
 	rm $(WAVEFORM).vcd a.out Top.v	
