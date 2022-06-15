@@ -14,7 +14,7 @@ class Top() extends Module {
       val start       = Input(UInt(1.W))    // Triggers the communication from transmitter side.
       val top_wr      = Input(UInt(1.W))    // Write Enable Signal
       val top_rd      = Input(UInt(1.W))    // Read Enable Signal
-      val top_address = Input(UInt(4.W))   // Address Bus
+      val top_address = Input(UInt(4.W))    // Address Bus
       val top_wdata   = Input(UInt(32.W))   // Write Data Bus
       val top_rdata   = Output(UInt(32.W))  // Read Data Bus
     }
@@ -39,8 +39,6 @@ class Top() extends Module {
   Tx.io.RDATA := Rx.io.RDATA
   Tx.io.START := io.start
 
-  // To check the modules
-  //io.cdata_check := Rx.io.CDATA
 }
 
 object TopDriver extends App {
