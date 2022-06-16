@@ -17,6 +17,7 @@ class Top() extends Module {
       val top_address = Input(UInt(4.W))    // Address Bus
       val top_wdata   = Input(UInt(32.W))   // Write Data Bus
       val top_rdata   = Output(UInt(32.W))  // Read Data Bus
+      val top_length  = Input(UInt(4.W))    // Length Input
     }
   )
 
@@ -30,6 +31,7 @@ class Top() extends Module {
   Tx.io.TOP_ADDRESS := io.top_address
   Tx.io.TOP_WDATA   := io.top_wdata
   io.top_rdata      := Tx.io.TOP_RDATA
+  Tx.io.TOP_LENGTH  := io.top_length
 
   // Connecting both the modules
   Rx.io.WR := Tx.io.WR
@@ -38,7 +40,7 @@ class Top() extends Module {
   Rx.io.WDATA := Tx.io.WDATA
   Tx.io.RDATA := Rx.io.RDATA
   Tx.io.START := io.start
-
+  Rx.io.LENGTH := Tx.io.LENGTH
 }
 
 object TopDriver extends App {

@@ -1,31 +1,179 @@
 module Transmitter(
+  input         clock,
+  input         reset,
   input         io_START,
   input         io_TOP_WR,
   input         io_TOP_RD,
   input  [3:0]  io_TOP_ADDRESS,
   input  [31:0] io_TOP_WDATA,
   output [31:0] io_TOP_RDATA,
+  input  [3:0]  io_TOP_LENGTH,
   output        io_WR,
   output        io_RD,
   output [3:0]  io_ADDRESS,
   output [31:0] io_WDATA,
   input  [31:0] io_RDATA
 );
-  wire  _GEN_0 = io_TOP_RD & io_TOP_WR; // @[transmitter.scala 70:40]
-  wire [3:0] _GEN_2 = io_TOP_RD ? io_TOP_ADDRESS : 4'h0; // @[transmitter.scala 70:40]
-  wire [31:0] _GEN_3 = io_TOP_RD ? io_RDATA : 32'h0; // @[transmitter.scala 70:40]
-  wire  _GEN_5 = io_TOP_WR ? io_TOP_WR : _GEN_0; // @[transmitter.scala 64:33]
-  wire [3:0] _GEN_7 = io_TOP_WR ? io_TOP_ADDRESS : _GEN_2; // @[transmitter.scala 64:33]
-  wire [31:0] _GEN_8 = io_TOP_WR ? io_TOP_WDATA : 32'h0; // @[transmitter.scala 64:33]
-  wire [31:0] _GEN_9 = io_TOP_WR ? 32'h0 : _GEN_3; // @[transmitter.scala 64:33]
-  assign io_TOP_RDATA = io_START ? _GEN_9 : 32'h0; // @[transmitter.scala 47:16 transmitter.scala 75:24]
-  assign io_WR = io_START & _GEN_5; // @[transmitter.scala 48:16 transmitter.scala 66:22 transmitter.scala 72:24]
-  assign io_RD = io_START & io_TOP_RD; // @[transmitter.scala 49:16 transmitter.scala 67:22 transmitter.scala 73:24]
-  assign io_ADDRESS = io_START ? _GEN_7 : 4'h0; // @[transmitter.scala 50:16 transmitter.scala 68:22 transmitter.scala 74:24]
-  assign io_WDATA = io_START ? _GEN_8 : 32'h0; // @[transmitter.scala 51:16 transmitter.scala 69:22]
+`ifdef RANDOMIZE_REG_INIT
+  reg [31:0] _RAND_0;
+  reg [31:0] _RAND_1;
+  reg [31:0] _RAND_2;
+  reg [31:0] _RAND_3;
+  reg [31:0] _RAND_4;
+  reg [31:0] _RAND_5;
+`endif // RANDOMIZE_REG_INIT
+  reg [3:0] r_len; // @[transmitter.scala 35:26]
+  reg [3:0] r_address; // @[transmitter.scala 36:26]
+  reg [31:0] r_wdata; // @[transmitter.scala 37:26]
+  reg  r_wr; // @[transmitter.scala 38:26]
+  reg  r_rd; // @[transmitter.scala 39:26]
+  reg [1:0] state; // @[transmitter.scala 54:22]
+  wire  _T_2 = 2'h0 == state; // @[Conditional.scala 37:30]
+  wire  _T_4 = io_TOP_LENGTH > 4'h1; // @[transmitter.scala 66:31]
+  wire [31:0] _GEN_3 = io_START ? io_RDATA : 32'h0; // @[transmitter.scala 59:30]
+  wire  _T_7 = 2'h1 == state; // @[Conditional.scala 37:30]
+  wire  _T_8 = r_len > 4'h1; // @[transmitter.scala 76:21]
+  wire [3:0] _T_10 = r_address + 4'h1; // @[transmitter.scala 77:37]
+  wire [3:0] _T_12 = r_len - 4'h1; // @[transmitter.scala 80:33]
+  wire [31:0] _GEN_12 = _T_8 ? io_RDATA : 32'h0; // @[transmitter.scala 76:27]
+  wire  _GEN_15 = _T_8 & r_wr; // @[transmitter.scala 76:27]
+  wire  _GEN_16 = _T_8 & r_rd; // @[transmitter.scala 76:27]
+  wire [31:0] _GEN_19 = _T_7 ? _GEN_12 : 32'h0; // @[Conditional.scala 39:67]
+  assign io_TOP_RDATA = _T_2 ? _GEN_3 : _GEN_19; // @[transmitter.scala 42:16 transmitter.scala 60:24 transmitter.scala 79:24]
+  assign io_WR = r_wr; // @[transmitter.scala 43:16 transmitter.scala 93:14]
+  assign io_RD = r_rd; // @[transmitter.scala 44:16 transmitter.scala 94:14]
+  assign io_ADDRESS = r_address; // @[transmitter.scala 45:16 transmitter.scala 95:14]
+  assign io_WDATA = r_wdata; // @[transmitter.scala 46:16 transmitter.scala 97:14]
+`ifdef RANDOMIZE_GARBAGE_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_INVALID_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_REG_INIT
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+`define RANDOMIZE
+`endif
+`ifndef RANDOM
+`define RANDOM $random
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+  integer initvar;
+`endif
+`ifndef SYNTHESIS
+`ifdef FIRRTL_BEFORE_INITIAL
+`FIRRTL_BEFORE_INITIAL
+`endif
+initial begin
+  `ifdef RANDOMIZE
+    `ifdef INIT_RANDOM
+      `INIT_RANDOM
+    `endif
+    `ifndef VERILATOR
+      `ifdef RANDOMIZE_DELAY
+        #`RANDOMIZE_DELAY begin end
+      `else
+        #0.002 begin end
+      `endif
+    `endif
+`ifdef RANDOMIZE_REG_INIT
+  _RAND_0 = {1{`RANDOM}};
+  r_len = _RAND_0[3:0];
+  _RAND_1 = {1{`RANDOM}};
+  r_address = _RAND_1[3:0];
+  _RAND_2 = {1{`RANDOM}};
+  r_wdata = _RAND_2[31:0];
+  _RAND_3 = {1{`RANDOM}};
+  r_wr = _RAND_3[0:0];
+  _RAND_4 = {1{`RANDOM}};
+  r_rd = _RAND_4[0:0];
+  _RAND_5 = {1{`RANDOM}};
+  state = _RAND_5[1:0];
+`endif // RANDOMIZE_REG_INIT
+  `endif // RANDOMIZE
+end // initial
+`ifdef FIRRTL_AFTER_INITIAL
+`FIRRTL_AFTER_INITIAL
+`endif
+`endif // SYNTHESIS
+  always @(posedge clock) begin
+    if (reset) begin
+      r_len <= 4'h0;
+    end else if (_T_2) begin
+      if (io_START) begin
+        r_len <= io_TOP_LENGTH;
+      end
+    end else if (_T_7) begin
+      if (_T_8) begin
+        r_len <= _T_12;
+      end else begin
+        r_len <= 4'h0;
+      end
+    end
+    if (reset) begin
+      r_address <= 4'h0;
+    end else if (_T_2) begin
+      if (io_START) begin
+        r_address <= io_TOP_ADDRESS;
+      end
+    end else if (_T_7) begin
+      if (_T_8) begin
+        r_address <= _T_10;
+      end else begin
+        r_address <= 4'h0;
+      end
+    end
+    if (reset) begin
+      r_wdata <= 32'h0;
+    end else if (_T_2) begin
+      if (io_START) begin
+        r_wdata <= io_TOP_WDATA;
+      end
+    end else if (_T_7) begin
+      if (_T_8) begin
+        r_wdata <= io_TOP_WDATA;
+      end else begin
+        r_wdata <= 32'h0;
+      end
+    end
+    if (reset) begin
+      r_wr <= 1'h0;
+    end else if (_T_2) begin
+      if (io_START) begin
+        r_wr <= io_TOP_WR;
+      end
+    end else if (_T_7) begin
+      r_wr <= _GEN_15;
+    end
+    if (reset) begin
+      r_rd <= 1'h0;
+    end else if (_T_2) begin
+      if (io_START) begin
+        r_rd <= io_TOP_RD;
+      end
+    end else if (_T_7) begin
+      r_rd <= _GEN_16;
+    end
+    if (reset) begin
+      state <= 2'h0;
+    end else if (_T_2) begin
+      if (io_START) begin
+        if (_T_4) begin
+          state <= 2'h1;
+        end
+      end else begin
+        state <= 2'h0;
+      end
+    end else if (_T_7) begin
+      state <= {{1'd0}, _T_8};
+    end
+  end
 endmodule
 module Receiver(
   input         clock,
+  input         reset,
   input         io_WR,
   input         io_RD,
   input  [3:0]  io_ADD,
@@ -41,28 +189,29 @@ module Receiver(
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_2;
   reg [31:0] _RAND_3;
+  reg [31:0] _RAND_4;
 `endif // RANDOMIZE_REG_INIT
-  reg [31:0] mem [0:9]; // @[receiver.scala 39:24]
-  wire [31:0] mem__T_9_data; // @[receiver.scala 39:24]
-  wire [3:0] mem__T_9_addr; // @[receiver.scala 39:24]
-  wire [31:0] mem__T_4_data; // @[receiver.scala 39:24]
-  wire [3:0] mem__T_4_addr; // @[receiver.scala 39:24]
-  wire  mem__T_4_mask; // @[receiver.scala 39:24]
-  wire  mem__T_4_en; // @[receiver.scala 39:24]
+  reg [31:0] mem [0:9]; // @[receiver.scala 24:24]
+  wire [31:0] mem__T_9_data; // @[receiver.scala 24:24]
+  wire [3:0] mem__T_9_addr; // @[receiver.scala 24:24]
+  wire [31:0] mem__T_4_data; // @[receiver.scala 24:24]
+  wire [3:0] mem__T_4_addr; // @[receiver.scala 24:24]
+  wire  mem__T_4_mask; // @[receiver.scala 24:24]
+  wire  mem__T_4_en; // @[receiver.scala 24:24]
   reg  mem__T_9_en_pipe_0;
   reg [3:0] mem__T_9_addr_pipe_0;
-  wire [31:0] _GEN_7 = io_RD ? mem__T_9_data : 32'h0; // @[receiver.scala 54:36]
+  reg [31:0] r_rdata; // @[receiver.scala 21:26]
   assign mem__T_9_addr = mem__T_9_addr_pipe_0;
   `ifndef RANDOMIZE_GARBAGE_ASSIGN
-  assign mem__T_9_data = mem[mem__T_9_addr]; // @[receiver.scala 39:24]
+  assign mem__T_9_data = mem[mem__T_9_addr]; // @[receiver.scala 24:24]
   `else
-  assign mem__T_9_data = mem__T_9_addr >= 4'ha ? _RAND_1[31:0] : mem[mem__T_9_addr]; // @[receiver.scala 39:24]
+  assign mem__T_9_data = mem__T_9_addr >= 4'ha ? _RAND_1[31:0] : mem[mem__T_9_addr]; // @[receiver.scala 24:24]
   `endif // RANDOMIZE_GARBAGE_ASSIGN
   assign mem__T_4_data = io_WDATA;
   assign mem__T_4_addr = io_ADD;
   assign mem__T_4_mask = 1'h1;
   assign mem__T_4_en = io_WR;
-  assign io_RDATA = io_WR ? 32'h0 : _GEN_7; // @[receiver.scala 36:16 receiver.scala 56:20]
+  assign io_RDATA = r_rdata; // @[receiver.scala 47:12]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -110,6 +259,8 @@ initial begin
   mem__T_9_en_pipe_0 = _RAND_2[0:0];
   _RAND_3 = {1{`RANDOM}};
   mem__T_9_addr_pipe_0 = _RAND_3[3:0];
+  _RAND_4 = {1{`RANDOM}};
+  r_rdata = _RAND_4[31:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -119,7 +270,7 @@ end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
     if(mem__T_4_en & mem__T_4_mask) begin
-      mem[mem__T_4_addr] <= mem__T_4_data; // @[receiver.scala 39:24]
+      mem[mem__T_4_addr] <= mem__T_4_data; // @[receiver.scala 24:24]
     end
     if (io_WR) begin
       mem__T_9_en_pipe_0 <= 1'h0;
@@ -128,6 +279,13 @@ end // initial
     end
     if (io_WR ? 1'h0 : io_RD) begin
       mem__T_9_addr_pipe_0 <= io_ADD;
+    end
+    if (reset) begin
+      r_rdata <= 32'h0;
+    end else if (!(io_WR)) begin
+      if (io_RD) begin
+        r_rdata <= mem__T_9_data;
+      end
     end
   end
 endmodule
@@ -139,56 +297,69 @@ module Top(
   input         io_top_rd,
   input  [3:0]  io_top_address,
   input  [31:0] io_top_wdata,
-  output [31:0] io_top_rdata
+  output [31:0] io_top_rdata,
+  input  [3:0]  io_top_length
 );
-  wire  Tx_io_START; // @[Main.scala 23:18]
-  wire  Tx_io_TOP_WR; // @[Main.scala 23:18]
-  wire  Tx_io_TOP_RD; // @[Main.scala 23:18]
-  wire [3:0] Tx_io_TOP_ADDRESS; // @[Main.scala 23:18]
-  wire [31:0] Tx_io_TOP_WDATA; // @[Main.scala 23:18]
-  wire [31:0] Tx_io_TOP_RDATA; // @[Main.scala 23:18]
-  wire  Tx_io_WR; // @[Main.scala 23:18]
-  wire  Tx_io_RD; // @[Main.scala 23:18]
-  wire [3:0] Tx_io_ADDRESS; // @[Main.scala 23:18]
-  wire [31:0] Tx_io_WDATA; // @[Main.scala 23:18]
-  wire [31:0] Tx_io_RDATA; // @[Main.scala 23:18]
-  wire  Rx_clock; // @[Main.scala 24:18]
-  wire  Rx_io_WR; // @[Main.scala 24:18]
-  wire  Rx_io_RD; // @[Main.scala 24:18]
-  wire [3:0] Rx_io_ADD; // @[Main.scala 24:18]
-  wire [31:0] Rx_io_WDATA; // @[Main.scala 24:18]
-  wire [31:0] Rx_io_RDATA; // @[Main.scala 24:18]
-  Transmitter Tx ( // @[Main.scala 23:18]
+  wire  Tx_clock; // @[Main.scala 24:18]
+  wire  Tx_reset; // @[Main.scala 24:18]
+  wire  Tx_io_START; // @[Main.scala 24:18]
+  wire  Tx_io_TOP_WR; // @[Main.scala 24:18]
+  wire  Tx_io_TOP_RD; // @[Main.scala 24:18]
+  wire [3:0] Tx_io_TOP_ADDRESS; // @[Main.scala 24:18]
+  wire [31:0] Tx_io_TOP_WDATA; // @[Main.scala 24:18]
+  wire [31:0] Tx_io_TOP_RDATA; // @[Main.scala 24:18]
+  wire [3:0] Tx_io_TOP_LENGTH; // @[Main.scala 24:18]
+  wire  Tx_io_WR; // @[Main.scala 24:18]
+  wire  Tx_io_RD; // @[Main.scala 24:18]
+  wire [3:0] Tx_io_ADDRESS; // @[Main.scala 24:18]
+  wire [31:0] Tx_io_WDATA; // @[Main.scala 24:18]
+  wire [31:0] Tx_io_RDATA; // @[Main.scala 24:18]
+  wire  Rx_clock; // @[Main.scala 25:18]
+  wire  Rx_reset; // @[Main.scala 25:18]
+  wire  Rx_io_WR; // @[Main.scala 25:18]
+  wire  Rx_io_RD; // @[Main.scala 25:18]
+  wire [3:0] Rx_io_ADD; // @[Main.scala 25:18]
+  wire [31:0] Rx_io_WDATA; // @[Main.scala 25:18]
+  wire [31:0] Rx_io_RDATA; // @[Main.scala 25:18]
+  Transmitter Tx ( // @[Main.scala 24:18]
+    .clock(Tx_clock),
+    .reset(Tx_reset),
     .io_START(Tx_io_START),
     .io_TOP_WR(Tx_io_TOP_WR),
     .io_TOP_RD(Tx_io_TOP_RD),
     .io_TOP_ADDRESS(Tx_io_TOP_ADDRESS),
     .io_TOP_WDATA(Tx_io_TOP_WDATA),
     .io_TOP_RDATA(Tx_io_TOP_RDATA),
+    .io_TOP_LENGTH(Tx_io_TOP_LENGTH),
     .io_WR(Tx_io_WR),
     .io_RD(Tx_io_RD),
     .io_ADDRESS(Tx_io_ADDRESS),
     .io_WDATA(Tx_io_WDATA),
     .io_RDATA(Tx_io_RDATA)
   );
-  Receiver Rx ( // @[Main.scala 24:18]
+  Receiver Rx ( // @[Main.scala 25:18]
     .clock(Rx_clock),
+    .reset(Rx_reset),
     .io_WR(Rx_io_WR),
     .io_RD(Rx_io_RD),
     .io_ADD(Rx_io_ADD),
     .io_WDATA(Rx_io_WDATA),
     .io_RDATA(Rx_io_RDATA)
   );
-  assign io_top_rdata = Tx_io_TOP_RDATA; // @[Main.scala 32:21]
-  assign Tx_io_START = io_start; // @[Main.scala 40:15]
-  assign Tx_io_TOP_WR = io_top_wr; // @[Main.scala 28:21]
-  assign Tx_io_TOP_RD = io_top_rd; // @[Main.scala 29:21]
-  assign Tx_io_TOP_ADDRESS = io_top_address; // @[Main.scala 30:21]
-  assign Tx_io_TOP_WDATA = io_top_wdata; // @[Main.scala 31:21]
-  assign Tx_io_RDATA = Rx_io_RDATA; // @[Main.scala 39:15]
+  assign io_top_rdata = Tx_io_TOP_RDATA; // @[Main.scala 33:21]
+  assign Tx_clock = clock;
+  assign Tx_reset = reset;
+  assign Tx_io_START = io_start; // @[Main.scala 42:15]
+  assign Tx_io_TOP_WR = io_top_wr; // @[Main.scala 29:21]
+  assign Tx_io_TOP_RD = io_top_rd; // @[Main.scala 30:21]
+  assign Tx_io_TOP_ADDRESS = io_top_address; // @[Main.scala 31:21]
+  assign Tx_io_TOP_WDATA = io_top_wdata; // @[Main.scala 32:21]
+  assign Tx_io_TOP_LENGTH = io_top_length; // @[Main.scala 34:21]
+  assign Tx_io_RDATA = Rx_io_RDATA; // @[Main.scala 41:15]
   assign Rx_clock = clock;
-  assign Rx_io_WR = Tx_io_WR; // @[Main.scala 35:12]
-  assign Rx_io_RD = Tx_io_RD; // @[Main.scala 36:12]
-  assign Rx_io_ADD = Tx_io_ADDRESS; // @[Main.scala 37:13]
-  assign Rx_io_WDATA = Tx_io_WDATA; // @[Main.scala 38:15]
+  assign Rx_reset = reset;
+  assign Rx_io_WR = Tx_io_WR; // @[Main.scala 37:12]
+  assign Rx_io_RD = Tx_io_RD; // @[Main.scala 38:12]
+  assign Rx_io_ADD = Tx_io_ADDRESS; // @[Main.scala 39:13]
+  assign Rx_io_WDATA = Tx_io_WDATA; // @[Main.scala 40:15]
 endmodule

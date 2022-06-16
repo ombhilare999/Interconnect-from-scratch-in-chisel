@@ -15,6 +15,7 @@ reg reset;
 reg start;
 reg wr;
 reg rd;
+reg [3:0] length;
 reg [3:0] address;
 reg [31:0] wdata;
 wire [31:0] rdata;
@@ -24,19 +25,24 @@ always begin
     forever  #5 clock = ~clock;
 end 
 
+/*
 initial begin
     //Toggling Reset Once
-    #5 reset = 1'b1;
+    #10
+    reset = 1'b1;
+    start = 1'b0;
     #10 reset = 1'b0;
-    @(posedge clock) start = 1'b1;
+    start = 1'b1;
+    #10
+    @(posedge clock) 
     address = 4'h7;
     wdata = 32'hA;
     wr = 1'b1;
     rd = 1'b0;
-    @(posedge clock) start = 1'b1;
+    @(posedge clock) 
     address = 4'h8;
     wdata = 32'hB;
-    wr = 1'b1;
+    wr = 1'b1;`include "Top.v"
     rd = 1'b0;   
     #10
     address = 4'h0;
@@ -62,6 +68,73 @@ initial begin
     rd = 1'b0;
     #100 $finish;
 end
+*/
+
+initial begin
+    #5
+    //Toggling Reset Once
+    #10 reset = 1'b1;
+    start = 1'b0;
+    #10 reset = 1'b0;
+    start = 1'b1;
+    @(posedge clock) 
+    address = 4'h7;
+    length = 4'h4;
+    wdata = 4'hA;
+    wr = 1'b1;
+    rd = 1'b0;
+    @(posedge clock)
+    address = 4'h0;
+    length = 4'h0;
+    wdata = 4'hB;
+    wr = 1'b0;
+    rd = 1'b0;
+    @(posedge clock) 
+    address = 4'h0;
+    length = 4'h0;
+    wdata = 4'hC;
+    wr = 1'b0;
+    rd = 1'b0;
+    @(posedge clock) 
+    wdata = 4'hD;
+    @(posedge clock) 
+    wdata = 4'h0;
+    @(posedge clock) 
+    address = 4'h7;
+    length = 4'h4;
+    wr = 1'b0;
+    rd = 1'b1;
+    @(posedge clock) 
+    wr = 1'b0;
+    rd = 1'b0;
+    /*
+    @(posedge clock)  
+    address = 4'hA;
+    wdata = 32'h0;
+    wr = 1'b0;
+    rd = 1'b1;
+    #10
+    @(posedge clock)  
+    address = 4'h9;
+    wdata = 32'h0;
+    wr = 1'b0;
+    rd = 1'b1;
+    #10
+    @(posedge clock)  
+    address = 4'h8;
+    wdata = 32'h0;
+    wr = 1'b0;
+    rd = 1'b1;
+    #10
+    @(posedge clock)  
+    address = 4'h7;
+    wdata = 32'h0;
+    wr = 1'b0;
+    rd = 1'b1;    
+    /*/
+    #100 $finish;
+end
+
 
 initial
 begin
@@ -78,7 +151,8 @@ Top uut
   .io_top_rd(rd),
   .io_top_address(address),
   .io_top_wdata(wdata),
-  .io_top_rdata(rdata)
+  .io_top_rdata(rdata),
+  .io_top_length(length)
 );
 
 endmodule
