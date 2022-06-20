@@ -105,6 +105,8 @@ initial begin
     wr = 1'b0;
     rd = 1'b1;
     @(posedge clock) 
+    address = 4'h0;
+    length = 4'h0;
     wr = 1'b0;
     rd = 1'b0;
     /*

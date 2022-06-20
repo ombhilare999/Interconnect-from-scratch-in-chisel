@@ -18,11 +18,15 @@ class Receiver extends Module() {
   )
   
   //Initializing the Output Variables
-  val r_rdata   = RegInit(0.U(32.W))
+  //val r_rdata   = RegInit(0.U(32.W))
+  val r_rd  = RegNext(io.RD)
+  val w_mem_rdy = Wire(UInt(1.W))
+  w_mem_rdy := io.RD | r_rd
 
   //Memory Related Signals:
-  val mem = SyncReadMem(10, UInt(32.W))
-  //val rf = Mem(10, UInt(32.W))
+  //val mem = SyncReadMem(10, UInt(32.W))
+  val rf = Mem(10, UInt(32.W))
+  io.RDATA := 0.U
 
   object State extends ChiselEnum {
     val sIdle, sOne, sTwo = Value
@@ -33,16 +37,19 @@ class Receiver extends Module() {
   switch(state) {
     is(State.sIdle) {
         when (io.WR === 1.U){        
-          mem.write(io.ADD, io.WDATA)
-          //rf(io.ADD) := io.WDATA
-        } .elsewhen(io.RD === 1.U) { 
-          r_rdata := mem.read(io.ADD, true.B) 
-          //io.RDATA := rf(io.ADD)
+          //mem.write(io.ADD, io.WDATA)
+          rf(io.ADD) := io.WDATA
+          state := State.sIdle  
+        } .elsewhen(w_mem_rdy === 1.U) { 
+          //r_rdata := mem.read(io.ADD, io.RD.asBool())
+          io.RDATA := rf(io.ADD)    
         } .otherwise {
+          //r_rdata := 0.U
+          io.RDATA := 0.U
           state := State.sIdle          //Otherwise stay in IDLE state
         }
     }
   }
 
-  io.RDATA := r_rdata
+  //io.RDATA := r_rdata
 }

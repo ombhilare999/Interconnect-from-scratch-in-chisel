@@ -173,7 +173,6 @@ end // initial
 endmodule
 module Receiver(
   input         clock,
-  input         reset,
   input         io_WR,
   input         io_RD,
   input  [3:0]  io_ADD,
@@ -188,30 +187,28 @@ module Receiver(
 `endif // RANDOMIZE_MEM_INIT
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_2;
-  reg [31:0] _RAND_3;
-  reg [31:0] _RAND_4;
 `endif // RANDOMIZE_REG_INIT
-  reg [31:0] mem [0:9]; // @[receiver.scala 24:24]
-  wire [31:0] mem__T_9_data; // @[receiver.scala 24:24]
-  wire [3:0] mem__T_9_addr; // @[receiver.scala 24:24]
-  wire [31:0] mem__T_4_data; // @[receiver.scala 24:24]
-  wire [3:0] mem__T_4_addr; // @[receiver.scala 24:24]
-  wire  mem__T_4_mask; // @[receiver.scala 24:24]
-  wire  mem__T_4_en; // @[receiver.scala 24:24]
-  reg  mem__T_9_en_pipe_0;
-  reg [3:0] mem__T_9_addr_pipe_0;
-  reg [31:0] r_rdata; // @[receiver.scala 21:26]
-  assign mem__T_9_addr = mem__T_9_addr_pipe_0;
+  reg [31:0] rf [0:9]; // @[receiver.scala 28:15]
+  wire [31:0] rf__T_7_data; // @[receiver.scala 28:15]
+  wire [3:0] rf__T_7_addr; // @[receiver.scala 28:15]
+  wire [31:0] rf__T_5_data; // @[receiver.scala 28:15]
+  wire [3:0] rf__T_5_addr; // @[receiver.scala 28:15]
+  wire  rf__T_5_mask; // @[receiver.scala 28:15]
+  wire  rf__T_5_en; // @[receiver.scala 28:15]
+  reg  r_rd; // @[receiver.scala 22:22]
+  wire  w_mem_rdy = io_RD | r_rd; // @[receiver.scala 24:22]
+  wire [31:0] _GEN_3 = w_mem_rdy ? rf__T_7_data : 32'h0; // @[receiver.scala 43:40]
+  assign rf__T_7_addr = io_ADD;
   `ifndef RANDOMIZE_GARBAGE_ASSIGN
-  assign mem__T_9_data = mem[mem__T_9_addr]; // @[receiver.scala 24:24]
+  assign rf__T_7_data = rf[rf__T_7_addr]; // @[receiver.scala 28:15]
   `else
-  assign mem__T_9_data = mem__T_9_addr >= 4'ha ? _RAND_1[31:0] : mem[mem__T_9_addr]; // @[receiver.scala 24:24]
+  assign rf__T_7_data = rf__T_7_addr >= 4'ha ? _RAND_1[31:0] : rf[rf__T_7_addr]; // @[receiver.scala 28:15]
   `endif // RANDOMIZE_GARBAGE_ASSIGN
-  assign mem__T_4_data = io_WDATA;
-  assign mem__T_4_addr = io_ADD;
-  assign mem__T_4_mask = 1'h1;
-  assign mem__T_4_en = io_WR;
-  assign io_RDATA = r_rdata; // @[receiver.scala 47:12]
+  assign rf__T_5_data = io_WDATA;
+  assign rf__T_5_addr = io_ADD;
+  assign rf__T_5_mask = 1'h1;
+  assign rf__T_5_en = io_WR;
+  assign io_RDATA = io_WR ? 32'h0 : _GEN_3; // @[receiver.scala 29:12 receiver.scala 45:20 receiver.scala 48:20]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -252,15 +249,11 @@ initial begin
 `ifdef RANDOMIZE_MEM_INIT
   _RAND_0 = {1{`RANDOM}};
   for (initvar = 0; initvar < 10; initvar = initvar+1)
-    mem[initvar] = _RAND_0[31:0];
+    rf[initvar] = _RAND_0[31:0];
 `endif // RANDOMIZE_MEM_INIT
 `ifdef RANDOMIZE_REG_INIT
   _RAND_2 = {1{`RANDOM}};
-  mem__T_9_en_pipe_0 = _RAND_2[0:0];
-  _RAND_3 = {1{`RANDOM}};
-  mem__T_9_addr_pipe_0 = _RAND_3[3:0];
-  _RAND_4 = {1{`RANDOM}};
-  r_rdata = _RAND_4[31:0];
+  r_rd = _RAND_2[0:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -269,24 +262,10 @@ end // initial
 `endif
 `endif // SYNTHESIS
   always @(posedge clock) begin
-    if(mem__T_4_en & mem__T_4_mask) begin
-      mem[mem__T_4_addr] <= mem__T_4_data; // @[receiver.scala 24:24]
+    if(rf__T_5_en & rf__T_5_mask) begin
+      rf[rf__T_5_addr] <= rf__T_5_data; // @[receiver.scala 28:15]
     end
-    if (io_WR) begin
-      mem__T_9_en_pipe_0 <= 1'h0;
-    end else begin
-      mem__T_9_en_pipe_0 <= io_RD;
-    end
-    if (io_WR ? 1'h0 : io_RD) begin
-      mem__T_9_addr_pipe_0 <= io_ADD;
-    end
-    if (reset) begin
-      r_rdata <= 32'h0;
-    end else if (!(io_WR)) begin
-      if (io_RD) begin
-        r_rdata <= mem__T_9_data;
-      end
-    end
+    r_rd <= io_RD;
   end
 endmodule
 module Top(
@@ -315,7 +294,6 @@ module Top(
   wire [31:0] Tx_io_WDATA; // @[Main.scala 24:18]
   wire [31:0] Tx_io_RDATA; // @[Main.scala 24:18]
   wire  Rx_clock; // @[Main.scala 25:18]
-  wire  Rx_reset; // @[Main.scala 25:18]
   wire  Rx_io_WR; // @[Main.scala 25:18]
   wire  Rx_io_RD; // @[Main.scala 25:18]
   wire [3:0] Rx_io_ADD; // @[Main.scala 25:18]
@@ -339,7 +317,6 @@ module Top(
   );
   Receiver Rx ( // @[Main.scala 25:18]
     .clock(Rx_clock),
-    .reset(Rx_reset),
     .io_WR(Rx_io_WR),
     .io_RD(Rx_io_RD),
     .io_ADD(Rx_io_ADD),
@@ -357,7 +334,6 @@ module Top(
   assign Tx_io_TOP_LENGTH = io_top_length; // @[Main.scala 34:21]
   assign Tx_io_RDATA = Rx_io_RDATA; // @[Main.scala 41:15]
   assign Rx_clock = clock;
-  assign Rx_reset = reset;
   assign Rx_io_WR = Tx_io_WR; // @[Main.scala 37:12]
   assign Rx_io_RD = Tx_io_RD; // @[Main.scala 38:12]
   assign Rx_io_ADD = Tx_io_ADDRESS; // @[Main.scala 39:13]
