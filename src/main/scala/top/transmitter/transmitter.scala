@@ -20,6 +20,7 @@ class Transmitter extends Module() {
       val TOP_WDATA   = Input(UInt(32.W))   // Write Data Bus
       val TOP_RDATA   = Output(UInt(32.W))  // Read Data Bus
       val TOP_LENGTH  = Input(UInt(4.W))    // Length Input
+      val IN_READY    = Output(UInt(1.W))
 
       //Receiver Side Signals:
       val WR        = Output(UInt(1.W))     // Write Enable Signal for receiver
@@ -27,7 +28,7 @@ class Transmitter extends Module() {
       val ADDRESS   = Output(UInt(4.W))     // Address Bus for receiver
       val WDATA     = Output(UInt(32.W))    // Write data bus for receiver
       val RDATA     = Input(UInt(32.W))     // Read data bus for receiver
-      val LENGTH    = Output(UInt(4.W))
+      val READY     = Input(UInt(1.W))
     }
   )
   
@@ -37,6 +38,9 @@ class Transmitter extends Module() {
   val r_wdata   = RegInit(0.U(32.W))
   val r_wr      = RegInit(0.U(1.W))
   val r_rd      = RegInit(0.U(1.W))
+  val r_transaction_cnt = RegInit(0.U(3.W))
+  val r_ready   = RegInit(0.U(1.W))
+  
 
   //Initializing the Output Variables
   io.TOP_RDATA := 0.U
@@ -44,7 +48,8 @@ class Transmitter extends Module() {
   io.RD        := 0.U 
   io.ADDRESS   := 0.U
   io.WDATA     := 0.U
-
+  io.IN_READY  := 0.U
+  
 
   // Object for state 
   object State extends ChiselEnum {
@@ -56,12 +61,40 @@ class Transmitter extends Module() {
   //Transmitter FSM 
   switch(state) {
     is(State.sIdle) {
-      when(io.START === 1.U) {      
+      r_ready     := io.READY
+      io.IN_READY := r_ready
+      
+      when(io.TOP_WR === 1.U) {            
+            when (r_transaction_cnt < 1.U){   //Means the first step of transaction
+              r_wdata      := io.TOP_WDATA    // Sending the data received from Top
+              r_address    := io.TOP_ADDRESS  // Sending the address received from Top  
+              r_wr         := io.TOP_WR       // Asserting write enable
+              r_rd         := io.TOP_RD       // De-Asserting Read Enable        
+              r_len        := io.TOP_LENGTH 
+            } .otherwise{
+              when (r_ready === 1.U){
+                r_transaction_cnt := 0.U
+              } .otherwise {
+                r_wdata      := r_wdata
+                r_address    := r_address
+                r_wr         := r_wr
+                r_rd         := r_rd
+                r_len        := r_len
+              }
+            }
+
+            r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
+
+            when (io.TOP_LENGTH > 1.U) {
+                state := State.sOne
+                r_wr        := io.TOP_WR       // Asserting write enable
+                r_rd        := io.TOP_RD       // De-Asserting Read Enable 
+            } 
+      } .elsewhen(io.TOP_RD === 1.U) {      
             io.TOP_RDATA := io.RDATA  
-            r_wdata      := io.TOP_WDATA    // Sending the data received from Top
             r_address    := io.TOP_ADDRESS  // Sending the address received from Top  
-            r_wr        := io.TOP_WR       // Asserting write enable
-            r_rd        := io.TOP_RD       // De-Asserting Read Enable        
+            r_wr         := io.TOP_WR       // Asserting write enable
+            r_rd         := io.TOP_RD       // De-Asserting Read Enable        
             r_len        := io.TOP_LENGTH 
             when (io.TOP_LENGTH > 1.U) {
                 state := State.sOne
@@ -94,7 +127,6 @@ class Transmitter extends Module() {
   io.WR      := r_wr
   io.RD      := r_rd
   io.ADDRESS := r_address
-  io.LENGTH  := r_len
   io.WDATA   := r_wdata
   
 }

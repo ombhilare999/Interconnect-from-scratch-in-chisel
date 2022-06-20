@@ -12,12 +12,13 @@ class Top() extends Module {
   val io = IO(
     new Bundle {
       val start       = Input(UInt(1.W))    // Triggers the communication from transmitter side.
-      val top_wr      = Input(UInt(1.W))    // Write Enable Signal
-      val top_rd      = Input(UInt(1.W))    // Read Enable Signal
+      val top_wr      = Input(UInt(1.W))    //Input(UInt(1.W))    // Write Enable Signal
+      val top_rd      = Input(UInt(1.W))    //Input(UInt(1.W))    // Read Enable Signal
       val top_address = Input(UInt(4.W))    // Address Bus
       val top_wdata   = Input(UInt(32.W))   // Write Data Bus
       val top_rdata   = Output(UInt(32.W))  // Read Data Bus
       val top_length  = Input(UInt(4.W))    // Length Input
+      val top_ready   = Input(UInt(1.W))
     }
   )
 
@@ -33,14 +34,17 @@ class Top() extends Module {
   io.top_rdata      := Tx.io.TOP_RDATA
   Tx.io.TOP_LENGTH  := io.top_length
 
+  //Connecting Singal from Top to Receiver
+  Rx.io.TOP_READY   := io.top_ready
+
   // Connecting both the modules
-  Rx.io.WR := Tx.io.WR
-  Rx.io.RD := Tx.io.RD
-  Rx.io.ADD := Tx.io.ADDRESS
+  Rx.io.WR    := Tx.io.WR
+  Rx.io.RD    := Tx.io.RD
+  Rx.io.ADD   := Tx.io.ADDRESS
   Rx.io.WDATA := Tx.io.WDATA
+  Tx.io.READY := Rx.io.READY
   Tx.io.RDATA := Rx.io.RDATA
   Tx.io.START := io.start
-  Rx.io.LENGTH := Tx.io.LENGTH
 }
 
 object TopDriver extends App {

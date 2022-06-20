@@ -15,7 +15,6 @@ reg reset;
 reg start;
 reg wr;
 reg rd;
-reg ready;
 reg [3:0] length;
 reg [3:0] address;
 reg [31:0] wdata;
@@ -26,8 +25,7 @@ always begin
     forever  #5 clock = ~clock;
 end 
 
-
-// Ready_from Receiver
+// Burst_Read_Write
 initial begin
     #5
     //Toggling Reset Once
@@ -40,15 +38,37 @@ initial begin
     reset = 1'b0;
     start = 1'b1;
     address = 4'h6;
-    length = 4'h1;
+    length = 4'h4;
     wdata = 4'hA;
     wr = 1'b1;
     rd = 1'b0;
-    ready = 1'b0;
-    @(posedge clock) 
-    @(posedge clock) 
     @(posedge clock)
-    ready = 1'b1; 
+    address = 4'h0;
+    length = 4'h0;
+    wdata = 4'hB;
+    wr = 1'b0;
+    rd = 1'b0;
+    @(posedge clock) 
+    address = 4'h0;
+    length = 4'h0;
+    wdata = 4'hC;
+    wr = 1'b0;
+    rd = 1'b0;
+    @(posedge clock) 
+    wdata = 4'hD;
+    @(posedge clock) 
+    wdata = 4'h0;
+    
+    @(posedge clock) 
+    address = 4'h6;
+    length = 4'h4;
+    wr = 1'b0;
+    rd = 1'b1;
+    @(posedge clock) 
+    address = 4'h0;
+    length = 4'h0;
+    wr = 1'b0;
+    rd = 1'b0;
     #100 $finish;
 end
 
@@ -69,7 +89,6 @@ Top uut
   .io_top_address(address),
   .io_top_wdata(wdata),
   .io_top_rdata(rdata),
-  .io_top_ready(ready),
   .io_top_length(length)
 );
 
