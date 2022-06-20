@@ -26,6 +26,7 @@ always begin
 end 
 
 /*
+// Normal_Write_Read_Back
 initial begin
     //Toggling Reset Once
     #10
@@ -70,6 +71,7 @@ initial begin
 end
 */
 
+// Burst_Read_Write
 initial begin
     #5
     //Toggling Reset Once
@@ -111,31 +113,6 @@ initial begin
     length = 4'h0;
     wr = 1'b0;
     rd = 1'b0;
-    /*
-    @(posedge clock)  
-    address = 4'hA;
-    wdata = 32'h0;
-    wr = 1'b0;
-    rd = 1'b1;
-    #10
-    @(posedge clock)  
-    address = 4'h9;
-    wdata = 32'h0;
-    wr = 1'b0;
-    rd = 1'b1;
-    #10
-    @(posedge clock)  
-    address = 4'h8;
-    wdata = 32'h0;
-    wr = 1'b0;
-    rd = 1'b1;
-    #10
-    @(posedge clock)  
-    address = 4'h7;
-    wdata = 32'h0;
-    wr = 1'b0;
-    rd = 1'b1;    
-    /*/
     #100 $finish;
 end
 

@@ -57,17 +57,17 @@ class Transmitter extends Module() {
   switch(state) {
     is(State.sIdle) {
       when(io.START === 1.U) {      
-          io.TOP_RDATA := io.RDATA  
-          r_wdata      := io.TOP_WDATA    // Sending the data received from Top
-          r_address    := io.TOP_ADDRESS  // Sending the address received from Top  
-          r_wr        := io.TOP_WR       // Asserting write enable
-          r_rd        := io.TOP_RD       // De-Asserting Read Enable        
-          r_len        := io.TOP_LENGTH 
-          when (io.TOP_LENGTH > 1.U) {
-              state := State.sOne
-              r_wr        := io.TOP_WR       // Asserting write enable
-              r_rd        := io.TOP_RD       // De-Asserting Read Enable 
-          } 
+            io.TOP_RDATA := io.RDATA  
+            r_wdata      := io.TOP_WDATA    // Sending the data received from Top
+            r_address    := io.TOP_ADDRESS  // Sending the address received from Top  
+            r_wr        := io.TOP_WR       // Asserting write enable
+            r_rd        := io.TOP_RD       // De-Asserting Read Enable        
+            r_len        := io.TOP_LENGTH 
+            when (io.TOP_LENGTH > 1.U) {
+                state := State.sOne
+                r_wr        := io.TOP_WR       // Asserting write enable
+                r_rd        := io.TOP_RD       // De-Asserting Read Enable 
+            } 
       } .otherwise {
           state := State.sIdle            //Otherwise go to IDLE state
       }
