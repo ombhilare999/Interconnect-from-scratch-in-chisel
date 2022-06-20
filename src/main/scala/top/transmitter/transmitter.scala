@@ -81,6 +81,7 @@ class Transmitter extends Module() {
           state        := State.sOne          //Remain in state two
         } .otherwise {
           state := State.sIdle            //Otherwise go to IDLE state
+          io.TOP_RDATA := io.RDATA
           r_len        := 0.U
           r_wr         := 0.U       
           r_rd         := 0.U

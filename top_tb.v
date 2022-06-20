@@ -77,8 +77,9 @@ initial begin
     start = 1'b0;
     #10 reset = 1'b0;
     start = 1'b1;
+    
     @(posedge clock) 
-    address = 4'h7;
+    address = 4'h6;
     length = 4'h4;
     wdata = 4'hA;
     wr = 1'b1;
@@ -99,8 +100,9 @@ initial begin
     wdata = 4'hD;
     @(posedge clock) 
     wdata = 4'h0;
+    
     @(posedge clock) 
-    address = 4'h7;
+    address = 4'h6;
     length = 4'h4;
     wr = 1'b0;
     rd = 1'b1;
