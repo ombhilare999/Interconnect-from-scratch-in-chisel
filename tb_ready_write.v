@@ -15,7 +15,6 @@ reg reset;
 reg wr;
 reg rd;
 reg ready;
-reg rddatavalid;
 reg [3:0] length;
 reg [3:0] address;
 reg [31:0] wdata;
@@ -32,31 +31,40 @@ initial begin
     #5
     //Toggling Reset Once
     #10 reset = 1'b1;
+    //start = 1'b0;
     wr = 1'b0;
     rd = 1'b0;
-    rddatavalid = 1'h0;
     #10 
     @(posedge clock) 
     reset = 1'b0;
-    address = 4'h1;
+    //start = 1'b1;
+    address = 4'h6;
     length = 4'h1;
     wdata = 4'hA;
-    wr = 1'b0;
-    rd = 1'b1;
-    ready = 1'b0;   
-    @(posedge clock) 
-    @(posedge clock) 
-    ready = 1'b1;  
-    @(posedge clock) 
-    address = 4'h0;
-    length = 4'h0;
-    wdata = 4'h0;
-    wr = 1'b0;
+    wr = 1'b1;
     rd = 1'b0;
     ready = 1'b0;
-    rddatavalid = 1'h1;
     @(posedge clock) 
-    rddatavalid = 1'h0;
+    @(posedge clock) 
+    @(posedge clock)
+    ready = 1'b1; 
+    @(posedge clock)
+    address = 4'h7;
+    length = 4'h3;
+    wdata = 4'hB;
+    wr = 1'b1;
+    rd = 1'b0;
+    @(posedge clock)
+    address = 4'h0;
+    length = 4'h0;
+    ready = 1'b0;
+    wdata = 4'hC;
+    wr = 1'b0;
+    rd = 1'b0;
+    @(posedge clock)
+    ready = 1'b1; 
+    @(posedge clock)
+    wdata = 4'hD;
     #100 $finish;
 end
 
@@ -77,7 +85,6 @@ Top uut
   .io_top_wdata(wdata),
   .io_top_rdata(rdata),
   .io_top_ready(ready),
-  .io_top_rddatavalid(rddatavalid),
   .io_top_length(length)
 );
 

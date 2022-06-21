@@ -1,5 +1,5 @@
 $date
-	Tue Jun 21 15:16:43 2022
+	Tue Jun 21 16:45:22 2022
 $end
 $version
 	Icarus Verilog
@@ -13,169 +13,196 @@ $var reg 4 " address [3:0] $end
 $var reg 1 # clock $end
 $var reg 4 $ length [3:0] $end
 $var reg 1 % rd $end
-$var reg 1 & ready $end
-$var reg 1 ' reset $end
-$var reg 1 ( start $end
+$var reg 1 & rddatavalid $end
+$var reg 1 ' ready $end
+$var reg 1 ( reset $end
 $var reg 32 ) wdata [31:0] $end
 $var reg 1 * wr $end
 $scope module uut $end
 $var wire 1 + Rx_clock $end
 $var wire 4 , Rx_io_ADD [3:0] $end
 $var wire 1 - Rx_io_RD $end
-$var wire 1 . Rx_io_TOP_READY $end
-$var wire 32 / Rx_io_WDATA [31:0] $end
-$var wire 1 0 Rx_io_WR $end
-$var wire 1 1 Tx_clock $end
-$var wire 32 2 Tx_io_RDATA [31:0] $end
-$var wire 1 3 Tx_io_RX_READY $end
-$var wire 4 4 Tx_io_TOP_ADDRESS [3:0] $end
-$var wire 4 5 Tx_io_TOP_LENGTH [3:0] $end
-$var wire 1 6 Tx_io_TOP_RD $end
-$var wire 32 7 Tx_io_TOP_WDATA [31:0] $end
-$var wire 1 8 Tx_io_TOP_WR $end
-$var wire 1 9 Tx_reset $end
+$var wire 1 . Rx_io_TOP_RDDATAVALID $end
+$var wire 1 / Rx_io_TOP_READY $end
+$var wire 32 0 Rx_io_WDATA [31:0] $end
+$var wire 1 1 Rx_io_WR $end
+$var wire 1 2 Tx_clock $end
+$var wire 32 3 Tx_io_RDATA [31:0] $end
+$var wire 1 4 Tx_io_RX_RDDATAVALID $end
+$var wire 1 5 Tx_io_RX_READY $end
+$var wire 4 6 Tx_io_TOP_ADDRESS [3:0] $end
+$var wire 4 7 Tx_io_TOP_LENGTH [3:0] $end
+$var wire 1 8 Tx_io_TOP_RD $end
+$var wire 32 9 Tx_io_TOP_WDATA [31:0] $end
+$var wire 1 : Tx_io_TOP_WR $end
+$var wire 1 ; Tx_reset $end
 $var wire 1 # clock $end
-$var wire 1 ( io_start $end
-$var wire 4 : io_top_address [3:0] $end
-$var wire 4 ; io_top_length [3:0] $end
+$var wire 4 < io_top_address [3:0] $end
+$var wire 4 = io_top_length [3:0] $end
 $var wire 1 % io_top_rd $end
-$var wire 32 < io_top_rdata [31:0] $end
-$var wire 1 & io_top_ready $end
-$var wire 32 = io_top_wdata [31:0] $end
+$var wire 32 > io_top_rdata [31:0] $end
+$var wire 1 & io_top_rddatavalid $end
+$var wire 1 ' io_top_ready $end
+$var wire 32 ? io_top_wdata [31:0] $end
 $var wire 1 * io_top_wr $end
-$var wire 1 ' reset $end
-$var wire 1 > Tx_io_WR $end
-$var wire 32 ? Tx_io_WDATA [31:0] $end
-$var wire 32 @ Tx_io_TOP_RDATA [31:0] $end
-$var wire 1 A Tx_io_RD $end
-$var wire 4 B Tx_io_ADDRESS [3:0] $end
-$var wire 1 C Rx_io_READY $end
-$var wire 32 D Rx_io_RDATA [31:0] $end
+$var wire 1 ( reset $end
+$var wire 1 @ Tx_io_WR $end
+$var wire 32 A Tx_io_WDATA [31:0] $end
+$var wire 32 B Tx_io_TOP_RDATA [31:0] $end
+$var wire 1 C Tx_io_RD $end
+$var wire 4 D Tx_io_ADDRESS [3:0] $end
+$var wire 1 E Rx_io_READY $end
+$var wire 1 F Rx_io_RDDATAVALID $end
+$var wire 32 G Rx_io_RDATA [31:0] $end
 $scope module Rx $end
 $var wire 1 + clock $end
-$var wire 4 E io_ADD [3:0] $end
+$var wire 4 H io_ADD [3:0] $end
 $var wire 1 - io_RD $end
-$var wire 1 C io_READY $end
-$var wire 1 . io_TOP_READY $end
-$var wire 32 F io_WDATA [31:0] $end
-$var wire 1 0 io_WR $end
-$var wire 1 G r_wr $end
-$var wire 1 H rf__T_5_en $end
-$var wire 1 I rf__T_5_mask $end
-$var wire 32 J rf__T_7_data [31:0] $end
-$var wire 4 K rf__T_7_addr [3:0] $end
-$var wire 32 L rf__T_5_data [31:0] $end
-$var wire 4 M rf__T_5_addr [3:0] $end
-$var wire 32 N io_RDATA [31:0] $end
-$var wire 32 O _GEN_3 [31:0] $end
-$var wire 32 P _GEN_13 [31:0] $end
-$var wire 1 Q _GEN_12 $end
+$var wire 1 F io_RDDATAVALID $end
+$var wire 1 E io_READY $end
+$var wire 1 . io_TOP_RDDATAVALID $end
+$var wire 1 / io_TOP_READY $end
+$var wire 32 I io_WDATA [31:0] $end
+$var wire 1 1 io_WR $end
+$var wire 1 J r_wr $end
+$var wire 1 K rf__T_6_en $end
+$var wire 1 L rf__T_6_mask $end
+$var wire 32 M rf__T_8_data [31:0] $end
+$var wire 4 N rf__T_addr [3:0] $end
+$var wire 32 O rf__T_data [31:0] $end
+$var wire 1 P rf__T_en $end
+$var wire 1 Q rf__T_mask $end
+$var wire 4 R rf__T_8_addr [3:0] $end
+$var wire 32 S rf__T_6_data [31:0] $end
+$var wire 4 T rf__T_6_addr [3:0] $end
+$var wire 32 U io_RDATA [31:0] $end
+$var wire 32 V _GEN_3 [31:0] $end
+$var wire 32 W _GEN_13 [31:0] $end
+$var wire 1 X _GEN_12 $end
 $upscope $end
 $scope module Tx $end
-$var wire 1 R _GEN_37 $end
-$var wire 1 S _GEN_38 $end
-$var wire 1 1 clock $end
-$var wire 4 T io_ADDRESS [3:0] $end
-$var wire 1 A io_RD $end
-$var wire 32 U io_RDATA [31:0] $end
-$var wire 1 3 io_RX_READY $end
-$var wire 4 V io_TOP_ADDRESS [3:0] $end
-$var wire 4 W io_TOP_LENGTH [3:0] $end
-$var wire 1 6 io_TOP_RD $end
-$var wire 32 X io_TOP_WDATA [31:0] $end
-$var wire 1 8 io_TOP_WR $end
-$var wire 1 > io_WR $end
-$var wire 1 9 reset $end
-$var wire 32 Y io_WDATA [31:0] $end
-$var wire 32 Z io_TOP_RDATA [31:0] $end
-$var wire 3 [ _T_6 [2:0] $end
-$var wire 1 \ _T_4 $end
-$var wire 4 ] _T_21 [3:0] $end
-$var wire 1 ^ _T_2 $end
-$var wire 4 _ _T_19 [3:0] $end
-$var wire 1 ` _T_17 $end
-$var wire 1 a _T_15 $end
-$var wire 1 b _T_10 $end
-$var wire 32 c _GEN_50 [31:0] $end
-$var wire 32 d _GEN_42 [31:0] $end
-$var wire 32 e _GEN_31 [31:0] $end
-$var wire 32 f _GEN_18 [31:0] $end
-$var reg 4 g r_address [3:0] $end
-$var reg 4 h r_len [3:0] $end
-$var reg 1 i r_rd $end
-$var reg 3 j r_transaction_cnt [2:0] $end
-$var reg 32 k r_wdata [31:0] $end
-$var reg 1 l r_wr $end
-$var reg 2 m state [1:0] $end
+$var wire 1 Y _GEN_15 $end
+$var wire 1 Z _GEN_54 $end
+$var wire 1 [ _GEN_55 $end
+$var wire 1 \ _T_13 $end
+$var wire 1 ] _T_22 $end
+$var wire 1 2 clock $end
+$var wire 4 ^ io_ADDRESS [3:0] $end
+$var wire 1 C io_RD $end
+$var wire 32 _ io_RDATA [31:0] $end
+$var wire 1 4 io_RX_RDDATAVALID $end
+$var wire 1 5 io_RX_READY $end
+$var wire 4 ` io_TOP_ADDRESS [3:0] $end
+$var wire 4 a io_TOP_LENGTH [3:0] $end
+$var wire 1 8 io_TOP_RD $end
+$var wire 32 b io_TOP_WDATA [31:0] $end
+$var wire 1 : io_TOP_WR $end
+$var wire 1 @ io_WR $end
+$var wire 1 ; reset $end
+$var wire 32 c io_WDATA [31:0] $end
+$var wire 32 d io_TOP_RDATA [31:0] $end
+$var wire 3 e _T_6 [2:0] $end
+$var wire 1 f _T_4 $end
+$var wire 4 g _T_32 [3:0] $end
+$var wire 4 h _T_30 [3:0] $end
+$var wire 1 i _T_28 $end
+$var wire 1 j _T_26 $end
+$var wire 1 k _T_2 $end
+$var wire 1 l _T_10 $end
+$var wire 32 m _GEN_67 [31:0] $end
+$var wire 32 n _GEN_59 [31:0] $end
+$var wire 32 o _GEN_48 [31:0] $end
+$var wire 32 p _GEN_38 [31:0] $end
+$var wire 32 q _GEN_27 [31:0] $end
+$var reg 4 r r_address [3:0] $end
+$var reg 4 s r_len [3:0] $end
+$var reg 1 t r_rd $end
+$var reg 1 u r_rd_done $end
+$var reg 3 v r_transaction_cnt [2:0] $end
+$var reg 32 w r_wdata [31:0] $end
+$var reg 1 x r_wr $end
+$var reg 2 y state [1:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
+bx y
+xx
+bx w
+bx v
+xu
+xt
+bx s
+bx r
+bx q
+bx p
+bx o
+bx n
 bx m
 xl
-bx k
-bx j
+xk
+xj
 xi
 bx h
 bx g
-bx f
+xf
 bx e
 bx d
 bx c
-xb
-xa
-x`
+bx b
+bx a
+bx `
 bx _
-x^
-bx ]
+bx ^
+x]
 x\
-bx [
-bx Z
-bx Y
-bx X
+x[
+xZ
+xY
+xX
 bx W
 bx V
 bx U
 bx T
-xS
-xR
-xQ
-bx P
-bx O
-bx N
+bx S
+bx R
+1Q
+1P
+b10 O
+b1 N
 bx M
-bx L
-bx K
-bx J
-1I
-xH
-xG
-bx F
-bx E
+1L
+xK
+xJ
+bx I
+bx H
+bx G
+xF
+xE
 bx D
 xC
 bx B
-xA
-bx @
+bx A
+x@
 bx ?
-x>
+bx >
 bx =
 bx <
-bx ;
-bx :
-x9
+x;
+x:
+bx 9
 x8
 bx 7
-x6
-bx 5
-bx 4
-x3
-bx 2
-01
-x0
-bx /
+bx 6
+x5
+x4
+bx 3
+02
+x1
+bx 0
+x/
 x.
 x-
 bx ,
@@ -192,408 +219,307 @@ bx "
 bx !
 $end
 #5000
-11
+12
 1+
 1#
 #10000
-01
+02
 0+
 0#
 #15000
-b0 d
-b0 2
+b0 n
+b0 3
+b0 _
+b0 G
 b0 U
-b0 D
-b0 N
-0H
-b0 P
+0K
+b0 W
 b0 !
-b0 <
-b0 @
-b0 Z
-b0 c
-b0 O
-0Q
-0G
-b0 L
-b0 K
-b0 M
-0S
-0R
-1^
-0a
-b0 m
-1\
-b1 [
-b0 j
-0-
-0A
-0i
-00
-0>
-0l
-b0 /
-b0 F
-b0 ?
-b0 Y
-b0 k
-b1 _
-b0 ,
-b0 E
+b0 >
 b0 B
+b0 d
+b0 m
+0\
+b0 V
+0X
+0J
+b0 S
+b0 R
 b0 T
-b0 g
-0`
-b1111 ]
-b0 h
-b0 e
-b0 f
-11
+0[
+0Z
+1k
+0j
+b0 y
+1f
+b1 e
+b0 v
+0u
+0-
+0C
+0t
+01
+0@
+0x
+b0 0
+b0 I
+b0 A
+b0 c
+b0 w
+b1 h
+b0 ,
+b0 H
+b0 D
+b0 ^
+b0 r
+0i
+b1111 g
+b0 s
+b0 o
+b0 p
+b0 q
+0]
+12
 1+
 1#
-06
-0%
+04
+0F
+0.
+0&
 08
+0%
+0:
 0*
-0(
-19
-1'
+1;
+1(
 #20000
-01
+02
 0+
 0#
 #25000
-0\
-b10 [
-b1 j
-10
-1>
-1l
-b1010 /
-b1010 F
-b1010 ?
-b1010 Y
-b1010 k
-b111 _
-b110 ,
-b110 E
-b110 B
-b110 T
-b110 g
-b0 ]
-b1 h
-03
-0C
-0.
-0&
-18
-1*
-b1010 7
-b1010 X
-b1010 )
-b1010 =
-0b
-b1 5
-b1 W
-b1 $
-b1 ;
-b110 4
-b110 V
-b110 "
-b110 :
-1(
-09
+0Y
+1\
+05
+0E
+0/
 0'
-11
+18
+1%
+b1010 9
+b1010 b
+b1010 )
+b1010 ?
+0l
+b1 7
+b1 a
+b1 $
+b1 =
+b1 6
+b1 `
+b1 "
+b1 <
+0;
+0(
+12
 1+
 1#
 #30000
-01
+02
 0+
 0#
 #35000
-b11 [
-b10 j
-11
+bx W
+bx V
+1X
+0f
+b10 e
+b1 v
+1-
+1C
+1t
+b10 h
+b1 ,
+b1 H
+b1 D
+b1 ^
+b1 r
+b0 g
+b1 s
+12
 1+
 1#
 #40000
-01
+02
 0+
 0#
 #45000
-b100 [
-b11 j
-11
+1f
+b1 e
+b0 v
+b10 W
+b10 V
+b10 n
+b10 M
+b1 R
+b1 T
+b10 3
+b10 _
+b10 G
+b10 U
+1Y
+15
+1E
+1/
+1'
+12
 1+
 1#
 #50000
-01
+02
 0+
 0#
 #55000
-1\
-b1 [
-b0 j
-b110 K
-b1010 L
-b110 M
-1H
-1G
-13
-1C
+0X
+0f
+b10 e
+b1 v
+0-
+0C
+0t
+b1 h
+b0 ,
+b0 H
+b0 D
+b0 ^
+b0 r
+b1111 g
+b0 s
+b0 W
+b0 V
+bx M
+b0 R
+b0 T
+b0 3
+b0 _
+b0 G
+b0 U
+0Y
+b0 n
+0\
+14
+1F
 1.
 1&
-11
+05
+0E
+0/
+0'
+08
+0%
+b0 9
+b0 b
+b0 )
+b0 ?
+b0 7
+b0 a
+b0 $
+b0 =
+b0 6
+b0 `
+b0 "
+b0 <
+12
 1+
 1#
 #60000
-01
+02
 0+
 0#
 #65000
-b1011 L
-b111 K
-b111 M
-1R
-0^
-1a
-b1 m
-0\
-b10 [
-b1 j
-b1011 /
-b1011 F
-b1011 ?
-b1011 Y
-b1011 k
-b1000 _
-b111 ,
-b111 E
-b111 B
-b111 T
-b111 g
-1`
-b10 ]
-b11 h
-bx J
-b1011 7
-b1011 X
-b1011 )
-b1011 =
-1b
-b11 5
-b11 W
-b11 $
-b11 ;
-b111 4
-b111 V
-b111 "
-b111 :
-11
+04
+0F
+0.
+0&
+12
 1+
 1#
 #70000
-01
+02
 0+
 0#
 #75000
-b11 [
-b10 j
-b0 K
-b0 L
-b0 M
-0H
-0G
-08
-0*
-b1100 7
-b1100 X
-b1100 )
-b1100 =
-03
-0C
-0.
-0&
-0b
-b0 5
-b0 W
-b0 $
-b0 ;
-b0 4
-b0 V
-b0 "
-b0 :
-11
+12
 1+
 1#
 #80000
-01
+02
 0+
 0#
 #85000
-1\
-b1 [
-b0 j
-b1100 /
-b1100 F
-b1100 ?
-b1100 Y
-b1100 k
-b1001 _
-b1000 ,
-b1000 E
-b1000 B
-b1000 T
-b1000 g
-b1 ]
-b10 h
-bx J
-b1000 K
-b1100 L
-b1000 M
-1H
-1G
-13
-1C
-1.
-1&
-11
+12
 1+
 1#
 #90000
-01
+02
 0+
 0#
 #95000
-b1101 L
-b1001 K
-b1001 M
-0R
-b1101 /
-b1101 F
-b1101 ?
-b1101 Y
-b1101 k
-b1010 _
-b1001 ,
-b1001 E
-b1001 B
-b1001 T
-b1001 g
-0`
-b0 ]
-b1 h
-bx J
-b1101 7
-b1101 X
-b1101 )
-b1101 =
-11
+12
 1+
 1#
 #100000
-01
+02
 0+
 0#
 #105000
-0H
-0G
-b0 L
-b0 K
-b0 M
-1^
-0a
-b0 m
-00
-0>
-0l
-b0 /
-b0 F
-b0 ?
-b0 Y
-b0 k
-b1 _
-b0 ,
-b0 E
-b0 B
-b0 T
-b0 g
-b1111 ]
-b0 h
-bx J
-11
+12
 1+
 1#
 #110000
-01
+02
 0+
 0#
 #115000
-11
+12
 1+
 1#
 #120000
-01
+02
 0+
 0#
 #125000
-11
+12
 1+
 1#
 #130000
-01
+02
 0+
 0#
 #135000
-11
+12
 1+
 1#
 #140000
-01
+02
 0+
 0#
 #145000
-11
+12
 1+
 1#
 #150000
-01
+02
 0+
 0#
 #155000
-11
+12
 1+
 1#
 #160000
-01
+02
 0+
 0#
 #165000
-11
-1+
-1#
-#170000
-01
-0+
-0#
-#175000
-11
-1+
-1#
-#180000
-01
-0+
-0#
-#185000
-11
-1+
-1#
-#190000
-01
-0+
-0#
-#195000
-11
+12
 1+
 1#
