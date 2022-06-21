@@ -49,6 +49,23 @@ initial begin
     @(posedge clock) 
     @(posedge clock)
     ready = 1'b1; 
+    @(posedge clock)
+    address = 4'h7;
+    length = 4'h3;
+    wdata = 4'hB;
+    wr = 1'b1;
+    rd = 1'b0;
+    @(posedge clock)
+    address = 4'h0;
+    length = 4'h0;
+    ready = 1'b0;
+    wdata = 4'hC;
+    wr = 1'b0;
+    rd = 1'b0;
+    @(posedge clock)
+    ready = 1'b1; 
+    @(posedge clock)
+    wdata = 4'hD;
     #100 $finish;
 end
 

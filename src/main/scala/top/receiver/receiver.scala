@@ -19,12 +19,15 @@ class Receiver extends Module() {
   )
   
   //Registered Input:
-  val r_address = RegInit(0.U(4.W))
-  val r_wdata   = RegInit(0.U(32.W))
-  val r_wr      = RegInit(0.U(1.W))
-  val r_rd      = RegInit(0.U(1.W))
+  val r_address = Wire(UInt(4.W)) //RegInit(0.U(4.W))
+  val r_wdata   = Wire(UInt(32.W)) //RegInit(0.U(32.W))
+  val r_wr      = Wire(UInt(1.W)) //RegInit(0.U(1.W))
+  val r_rd      = Wire(UInt(1.W)) //RegInit(0.U(1.W))
 
-  
+  r_wr       :=  0.U
+  r_rd       :=  0.U
+  r_address  :=  0.U
+  r_wdata    :=  0.U
 
   //Updating Ready from Top
   io.READY := io.TOP_READY
@@ -40,8 +43,6 @@ class Receiver extends Module() {
   }
 
   val state = RegInit(State.sIdle)
-  
-
 
   switch(state) {
     is(State.sIdle) {
@@ -67,11 +68,6 @@ class Receiver extends Module() {
             r_address  :=  0.U
             r_wdata    :=  0.U
         }
-
     }
   }
-
-
-
-
 }

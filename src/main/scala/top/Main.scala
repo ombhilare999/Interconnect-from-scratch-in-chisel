@@ -36,13 +36,13 @@ class Top() extends Module {
 
   //Connecting Singal from Top to Receiver
   Rx.io.TOP_READY   := io.top_ready
+  Tx.io.RX_READY       := Rx.io.READY
 
   // Connecting both the modules
   Rx.io.WR    := Tx.io.WR
   Rx.io.RD    := Tx.io.RD
   Rx.io.ADD   := Tx.io.ADDRESS
   Rx.io.WDATA := Tx.io.WDATA
-  Tx.io.READY := Rx.io.READY
   Tx.io.RDATA := Rx.io.RDATA
   Tx.io.START := io.start
 }
