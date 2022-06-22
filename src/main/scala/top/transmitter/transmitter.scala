@@ -13,7 +13,6 @@ class Transmitter extends Module() {
   val io = IO(
     new Bundle {
       // Signals from Top:
-      val START       = Input(UInt(1.W))    // Triggers the communication
       val TOP_WR      = Input(UInt(1.W))    // Write Enable Signal
       val TOP_RD      = Input(UInt(1.W))    // Read Enable Signal
       val TOP_ADDRESS = Input(UInt(4.W))    // Address Bus
@@ -27,7 +26,8 @@ class Transmitter extends Module() {
       val ADDRESS   = Output(UInt(4.W))     // Address Bus for receiver
       val WDATA     = Output(UInt(32.W))    // Write data bus for receiver
       val RDATA     = Input(UInt(32.W))     // Read data bus for receiver
-      val RX_READY     = Input(UInt(1.W))
+      val RX_READY       = Input(UInt(1.W))
+      val RX_RDDATAVALID = Input(UInt(1.W))
     }
   )
   
@@ -37,6 +37,7 @@ class Transmitter extends Module() {
   val r_wdata   = RegInit(0.U(32.W))
   val r_wr      = RegInit(0.U(1.W))
   val r_rd      = RegInit(0.U(1.W))
+  val r_rd_done = RegInit(0.U(1.W))
   val r_transaction_cnt = RegInit(0.U(3.W))
   
   //Initializing the Output Variables
@@ -81,12 +82,33 @@ class Transmitter extends Module() {
                 r_wr        := io.TOP_WR       // Asserting write enable
                 r_rd        := io.TOP_RD       // De-Asserting Read Enable 
             } 
-      } .elsewhen(io.TOP_RD === 1.U) {      
-            io.TOP_RDATA := io.RDATA  
-            r_address    := io.TOP_ADDRESS  // Sending the address received from Top  
-            r_wr         := io.TOP_WR       // Asserting write enable
-            r_rd         := io.TOP_RD       // De-Asserting Read Enable        
-            r_len        := io.TOP_LENGTH 
+      } .elsewhen((io.TOP_RD === 1.U) | (r_rd_done === 1.U)) {      
+            when (r_transaction_cnt === 0.U){   //Means the first step of transaction
+              r_address    := io.TOP_ADDRESS  // Sending the address received from Top  
+              r_wr         := io.TOP_WR       // Asserting write enable
+              r_rd         := io.TOP_RD       // De-Asserting Read Enable        
+              r_len        := io.TOP_LENGTH 
+              r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
+            } .otherwise {
+                when (io.RX_READY === 1.U){
+                    r_rd_done    := 1.U 
+                    r_transaction_cnt := 0.U
+                } .otherwise {
+                    r_address    := r_address
+                    r_wr         := r_wr
+                    r_rd         := r_rd
+                    r_len        := r_len
+                    r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
+                }
+            }
+
+            when((r_rd_done === 1.U) & (io.RX_RDDATAVALID === 1.U)) {
+              io.TOP_RDATA := io.RDATA 
+              r_rd_done    := 0.U  
+            } .otherwise {
+              io.TOP_RDATA := 0.U
+            }
+
             when (io.TOP_LENGTH > 1.U) {
                 state := State.sOne
                 r_wr        := io.TOP_WR       // Asserting write enable

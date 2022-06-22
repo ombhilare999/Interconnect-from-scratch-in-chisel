@@ -1,4 +1,0 @@
-[0m[[0m[31merror[0m] [0m[0m/home/bhilare/omkar/experiments_chisel/example_2/src/main/scala/examples/fsm_comm.scala:53:9: Missing closing brace `}' assumed here[0m
-[0m[[0m[31merror[0m] [0m[0m        r_start := io.START [0m
-[0m[[0m[31merror[0m] [0m[0m        ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m

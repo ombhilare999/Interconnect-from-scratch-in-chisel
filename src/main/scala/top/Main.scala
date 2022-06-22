@@ -11,14 +11,14 @@ class Top() extends Module {
 
   val io = IO(
     new Bundle {
-      val start       = Input(UInt(1.W))    // Triggers the communication from transmitter side.
       val top_wr      = Input(UInt(1.W))    //Input(UInt(1.W))    // Write Enable Signal
       val top_rd      = Input(UInt(1.W))    //Input(UInt(1.W))    // Read Enable Signal
       val top_address = Input(UInt(4.W))    // Address Bus
       val top_wdata   = Input(UInt(32.W))   // Write Data Bus
       val top_rdata   = Output(UInt(32.W))  // Read Data Bus
       val top_length  = Input(UInt(4.W))    // Length Input
-      val top_ready   = Input(UInt(1.W))
+      val top_ready   = Input(UInt(1.W))     // Receiver Ready Input
+      val top_rddatavalid = Input(UInt(1.W)) // Receiver Data Valid Input
     }
   )
 
@@ -35,8 +35,8 @@ class Top() extends Module {
   Tx.io.TOP_LENGTH  := io.top_length
 
   //Connecting Singal from Top to Receiver
-  Rx.io.TOP_READY   := io.top_ready
-  Tx.io.RX_READY       := Rx.io.READY
+  Rx.io.TOP_READY       := io.top_ready
+  Rx.io.TOP_RDDATAVALID := io.top_rddatavalid
 
   // Connecting both the modules
   Rx.io.WR    := Tx.io.WR
@@ -44,8 +44,10 @@ class Top() extends Module {
   Rx.io.ADD   := Tx.io.ADDRESS
   Rx.io.WDATA := Tx.io.WDATA
   Tx.io.RDATA := Rx.io.RDATA
-  Tx.io.START := io.start
+  Tx.io.RX_READY  := Rx.io.READY
+  Tx.io.RX_RDDATAVALID := Rx.io.RDDATAVALID
 }
+
 
 object TopDriver extends App {
   (new chisel3.stage.ChiselStage).emitVerilog(new Top, args)

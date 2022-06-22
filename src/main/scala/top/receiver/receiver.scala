@@ -8,13 +8,15 @@ import chisel3.experimental.ChiselEnum
 class Receiver extends Module() {
   val io = IO(
     new Bundle {
-      val WR        = Input(UInt(1.W))
-      val RD        = Input(UInt(1.W))
-      val ADD       = Input(UInt(4.W))
-      val WDATA     = Input(UInt(32.W))
-      val RDATA     = Output(UInt(32.W))
-      val TOP_READY = Input(UInt(1.W)) 
-      val READY     = Output(UInt(1.W))
+      val WR              = Input(UInt(1.W))
+      val RD              = Input(UInt(1.W))
+      val ADD             = Input(UInt(4.W))
+      val WDATA           = Input(UInt(32.W))
+      val RDATA           = Output(UInt(32.W))
+      val TOP_READY       = Input(UInt(1.W)) 
+      val TOP_RDDATAVALID = Input(UInt(1.W))
+      val READY           = Output(UInt(1.W))
+      val RDDATAVALID     = Output(UInt(1.W))
     }
   )
   
@@ -29,11 +31,13 @@ class Receiver extends Module() {
   r_address  :=  0.U
   r_wdata    :=  0.U
 
-  //Updating Ready from Top
-  io.READY := io.TOP_READY
+  //Updating Ready, RDDATAVALID from Top
+  io.READY       := io.TOP_READY
+  io.RDDATAVALID := io.TOP_RDDATAVALID
   
   //Memory Related Signals
   val rf = Mem(10, UInt(32.W))
+  rf(0x1.U) := 0x2.U
 
   //Initializing the output signals
   io.RDATA := 0.U
