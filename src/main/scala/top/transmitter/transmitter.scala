@@ -38,6 +38,8 @@ class Transmitter extends Module() {
   val r_wr      = RegInit(0.U(1.W))
   val r_rd      = RegInit(0.U(1.W))
   val r_rd_done = RegInit(0.U(1.W))
+  val w_rd      = Wire(UInt(1.W)) 
+  val read_status = Wire(UInt(1.W)) 
   val r_transaction_cnt = RegInit(0.U(3.W))
   
   //Initializing the Output Variables
@@ -46,7 +48,12 @@ class Transmitter extends Module() {
   io.RD        := 0.U 
   io.ADDRESS   := 0.U
   io.WDATA     := 0.U
-
+  w_rd         := 0.U
+  read_status  := 0.U
+  r_rd_done    := 0.U
+  
+ 
+  
   // Object for state 
   object State extends ChiselEnum {
     val sIdle, sOne, sTwo = Value
@@ -57,6 +64,11 @@ class Transmitter extends Module() {
   //Transmitter FSM 
   switch(state) {
     is(State.sIdle) {    
+
+      w_rd         := io.TOP_RD
+      read_status  := w_rd | r_rd_done
+
+
       when(io.TOP_WR === 1.U) {                 
             when (r_transaction_cnt === 0.U){   //Means the first step of transaction
               r_wdata      := io.TOP_WDATA    // Sending the data received from Top
@@ -82,7 +94,7 @@ class Transmitter extends Module() {
                 r_wr        := io.TOP_WR       // Asserting write enable
                 r_rd        := io.TOP_RD       // De-Asserting Read Enable 
             } 
-      } .elsewhen((io.TOP_RD === 1.U) | (r_rd_done === 1.U)) {      
+      } .elsewhen((read_status === 1.U)) {      
             when (r_transaction_cnt === 0.U){   //Means the first step of transaction
               r_address    := io.TOP_ADDRESS  // Sending the address received from Top  
               r_wr         := io.TOP_WR       // Asserting write enable

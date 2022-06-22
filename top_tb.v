@@ -45,7 +45,6 @@ initial begin
     rd = 1'b1;
     ready = 1'b0;   
     @(posedge clock) 
-    @(posedge clock) 
     ready = 1'b1;  
     @(posedge clock) 
     address = 4'h0;
@@ -54,6 +53,7 @@ initial begin
     wr = 1'b0;
     rd = 1'b0;
     ready = 1'b0;
+    @(posedge clock) 
     rddatavalid = 1'h1;
     @(posedge clock) 
     rddatavalid = 1'h0;

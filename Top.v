@@ -31,31 +31,37 @@ module Transmitter(
   reg  r_wr; // @[transmitter.scala 38:26]
   reg  r_rd; // @[transmitter.scala 39:26]
   reg  r_rd_done; // @[transmitter.scala 40:26]
-  reg [2:0] r_transaction_cnt; // @[transmitter.scala 41:34]
-  reg [1:0] state; // @[transmitter.scala 55:22]
+  reg [2:0] r_transaction_cnt; // @[transmitter.scala 43:34]
+  reg [1:0] state; // @[transmitter.scala 62:22]
   wire  _T_2 = 2'h0 == state; // @[Conditional.scala 37:30]
-  wire  _T_4 = r_transaction_cnt == 3'h0; // @[transmitter.scala 61:37]
-  wire [2:0] _T_6 = r_transaction_cnt + 3'h1; // @[transmitter.scala 67:54]
-  wire  _T_10 = io_TOP_LENGTH > 4'h1; // @[transmitter.scala 80:33]
-  wire  _T_13 = io_TOP_RD | r_rd_done; // @[transmitter.scala 85:39]
-  wire  _GEN_15 = io_RX_READY | r_rd_done; // @[transmitter.scala 93:43]
-  wire  _T_22 = r_rd_done & io_RX_RDDATAVALID; // @[transmitter.scala 105:38]
-  wire [31:0] _GEN_27 = _T_22 ? io_RDATA : 32'h0; // @[transmitter.scala 105:69]
-  wire [31:0] _GEN_38 = _T_13 ? _GEN_27 : 32'h0; // @[transmitter.scala 85:62]
-  wire [31:0] _GEN_48 = io_TOP_WR ? 32'h0 : _GEN_38; // @[transmitter.scala 60:31]
-  wire  _T_26 = 2'h1 == state; // @[Conditional.scala 37:30]
-  wire  _T_28 = r_len > 4'h1; // @[transmitter.scala 124:23]
-  wire [3:0] _T_30 = r_address + 4'h1; // @[transmitter.scala 125:39]
-  wire [3:0] _T_32 = r_len - 4'h1; // @[transmitter.scala 128:35]
-  wire  _GEN_54 = _T_28 & r_wr; // @[transmitter.scala 124:29]
-  wire  _GEN_55 = _T_28 & r_rd; // @[transmitter.scala 124:29]
-  wire [31:0] _GEN_59 = io_RX_READY ? io_RDATA : 32'h0; // @[transmitter.scala 122:35]
-  wire [31:0] _GEN_67 = _T_26 ? _GEN_59 : 32'h0; // @[Conditional.scala 39:67]
-  assign io_TOP_RDATA = _T_2 ? _GEN_48 : _GEN_67; // @[transmitter.scala 44:16 transmitter.scala 106:28 transmitter.scala 109:28 transmitter.scala 127:26 transmitter.scala 132:26]
-  assign io_WR = r_wr; // @[transmitter.scala 45:16 transmitter.scala 150:14]
-  assign io_RD = r_rd; // @[transmitter.scala 46:16 transmitter.scala 151:14]
-  assign io_ADDRESS = r_address; // @[transmitter.scala 47:16 transmitter.scala 152:14]
-  assign io_WDATA = r_wdata; // @[transmitter.scala 48:16 transmitter.scala 153:14]
+  wire  w_rd = _T_2 & io_TOP_RD; // @[Conditional.scala 40:58]
+  wire  _T_3 = w_rd | r_rd_done; // @[transmitter.scala 69:28]
+  wire  _T_5 = r_transaction_cnt == 3'h0; // @[transmitter.scala 73:37]
+  wire [2:0] _T_7 = r_transaction_cnt + 3'h1; // @[transmitter.scala 79:54]
+  wire  _T_11 = io_TOP_LENGTH > 4'h1; // @[transmitter.scala 92:33]
+  wire  read_status = _T_2 & _T_3; // @[Conditional.scala 40:58]
+  wire  _GEN_26 = _T_5 ? 1'h0 : io_RX_READY; // @[transmitter.scala 98:45]
+  wire  _T_21 = r_rd_done & io_RX_RDDATAVALID; // @[transmitter.scala 117:38]
+  wire [31:0] _GEN_27 = _T_21 ? io_RDATA : 32'h0; // @[transmitter.scala 117:69]
+  wire  _GEN_28 = _T_21 ? 1'h0 : _GEN_26; // @[transmitter.scala 117:69]
+  wire  _GEN_37 = read_status & _GEN_28; // @[transmitter.scala 97:42]
+  wire [31:0] _GEN_38 = read_status ? _GEN_27 : 32'h0; // @[transmitter.scala 97:42]
+  wire  _GEN_47 = io_TOP_WR ? 1'h0 : _GEN_37; // @[transmitter.scala 72:31]
+  wire [31:0] _GEN_48 = io_TOP_WR ? 32'h0 : _GEN_38; // @[transmitter.scala 72:31]
+  wire  _T_25 = 2'h1 == state; // @[Conditional.scala 37:30]
+  wire  _T_27 = r_len > 4'h1; // @[transmitter.scala 136:23]
+  wire [3:0] _T_29 = r_address + 4'h1; // @[transmitter.scala 137:39]
+  wire [3:0] _T_31 = r_len - 4'h1; // @[transmitter.scala 140:35]
+  wire  _GEN_54 = _T_27 & r_wr; // @[transmitter.scala 136:29]
+  wire  _GEN_55 = _T_27 & r_rd; // @[transmitter.scala 136:29]
+  wire [31:0] _GEN_59 = io_RX_READY ? io_RDATA : 32'h0; // @[transmitter.scala 134:35]
+  wire [31:0] _GEN_67 = _T_25 ? _GEN_59 : 32'h0; // @[Conditional.scala 39:67]
+  wire  _GEN_81 = _T_2 & _GEN_47; // @[Conditional.scala 40:58]
+  assign io_TOP_RDATA = _T_2 ? _GEN_48 : _GEN_67; // @[transmitter.scala 46:16 transmitter.scala 118:28 transmitter.scala 121:28 transmitter.scala 139:26 transmitter.scala 144:26]
+  assign io_WR = r_wr; // @[transmitter.scala 47:16 transmitter.scala 162:14]
+  assign io_RD = r_rd; // @[transmitter.scala 48:16 transmitter.scala 163:14]
+  assign io_ADDRESS = r_address; // @[transmitter.scala 49:16 transmitter.scala 164:14]
+  assign io_WDATA = r_wdata; // @[transmitter.scala 50:16 transmitter.scala 165:14]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -119,18 +125,18 @@ end // initial
       r_len <= 4'h0;
     end else if (_T_2) begin
       if (io_TOP_WR) begin
-        if (_T_4) begin
+        if (_T_5) begin
           r_len <= io_TOP_LENGTH;
         end
-      end else if (_T_13) begin
-        if (_T_4) begin
+      end else if (read_status) begin
+        if (_T_5) begin
           r_len <= io_TOP_LENGTH;
         end
       end
-    end else if (_T_26) begin
+    end else if (_T_25) begin
       if (io_RX_READY) begin
-        if (_T_28) begin
-          r_len <= _T_32;
+        if (_T_27) begin
+          r_len <= _T_31;
         end else begin
           r_len <= 4'h0;
         end
@@ -140,18 +146,18 @@ end // initial
       r_address <= 4'h0;
     end else if (_T_2) begin
       if (io_TOP_WR) begin
-        if (_T_4) begin
+        if (_T_5) begin
           r_address <= io_TOP_ADDRESS;
         end
-      end else if (_T_13) begin
-        if (_T_4) begin
+      end else if (read_status) begin
+        if (_T_5) begin
           r_address <= io_TOP_ADDRESS;
         end
       end
-    end else if (_T_26) begin
+    end else if (_T_25) begin
       if (io_RX_READY) begin
-        if (_T_28) begin
-          r_address <= _T_30;
+        if (_T_27) begin
+          r_address <= _T_29;
         end else begin
           r_address <= 4'h0;
         end
@@ -161,13 +167,13 @@ end // initial
       r_wdata <= 32'h0;
     end else if (_T_2) begin
       if (io_TOP_WR) begin
-        if (_T_4) begin
+        if (_T_5) begin
           r_wdata <= io_TOP_WDATA;
         end
       end
-    end else if (_T_26) begin
+    end else if (_T_25) begin
       if (io_RX_READY) begin
-        if (_T_28) begin
+        if (_T_27) begin
           r_wdata <= io_TOP_WDATA;
         end else begin
           r_wdata <= 32'h0;
@@ -178,19 +184,19 @@ end // initial
       r_wr <= 1'h0;
     end else if (_T_2) begin
       if (io_TOP_WR) begin
-        if (_T_10) begin
+        if (_T_11) begin
           r_wr <= io_TOP_WR;
-        end else if (_T_4) begin
+        end else if (_T_5) begin
           r_wr <= io_TOP_WR;
         end
-      end else if (_T_13) begin
-        if (_T_10) begin
+      end else if (read_status) begin
+        if (_T_11) begin
           r_wr <= io_TOP_WR;
-        end else if (_T_4) begin
+        end else if (_T_5) begin
           r_wr <= io_TOP_WR;
         end
       end
-    end else if (_T_26) begin
+    end else if (_T_25) begin
       if (io_RX_READY) begin
         r_wr <= _GEN_54;
       end
@@ -199,80 +205,72 @@ end // initial
       r_rd <= 1'h0;
     end else if (_T_2) begin
       if (io_TOP_WR) begin
-        if (_T_10) begin
+        if (_T_11) begin
           r_rd <= io_TOP_RD;
-        end else if (_T_4) begin
+        end else if (_T_5) begin
           r_rd <= io_TOP_RD;
         end
-      end else if (_T_13) begin
-        if (_T_10) begin
+      end else if (read_status) begin
+        if (_T_11) begin
           r_rd <= io_TOP_RD;
-        end else if (_T_4) begin
+        end else if (_T_5) begin
           r_rd <= io_TOP_RD;
         end
       end
-    end else if (_T_26) begin
+    end else if (_T_25) begin
       if (io_RX_READY) begin
         r_rd <= _GEN_55;
       end
     end
     if (reset) begin
       r_rd_done <= 1'h0;
-    end else if (_T_2) begin
-      if (!(io_TOP_WR)) begin
-        if (_T_13) begin
-          if (_T_22) begin
-            r_rd_done <= 1'h0;
-          end else if (!(_T_4)) begin
-            r_rd_done <= _GEN_15;
-          end
-        end
-      end
+    end else begin
+      r_rd_done <= _GEN_81;
     end
     if (reset) begin
       r_transaction_cnt <= 3'h0;
     end else if (_T_2) begin
       if (io_TOP_WR) begin
-        if (_T_4) begin
-          r_transaction_cnt <= _T_6;
+        if (_T_5) begin
+          r_transaction_cnt <= _T_7;
         end else if (io_RX_READY) begin
           r_transaction_cnt <= 3'h0;
         end else begin
-          r_transaction_cnt <= _T_6;
+          r_transaction_cnt <= _T_7;
         end
-      end else if (_T_13) begin
-        if (_T_4) begin
-          r_transaction_cnt <= _T_6;
+      end else if (read_status) begin
+        if (_T_5) begin
+          r_transaction_cnt <= _T_7;
         end else if (io_RX_READY) begin
           r_transaction_cnt <= 3'h0;
         end else begin
-          r_transaction_cnt <= _T_6;
+          r_transaction_cnt <= _T_7;
         end
       end
-    end else if (_T_26) begin
+    end else if (_T_25) begin
       if (io_RX_READY) begin
         r_transaction_cnt <= 3'h0;
       end else begin
-        r_transaction_cnt <= _T_6;
+        r_transaction_cnt <= _T_7;
       end
     end
     if (reset) begin
       state <= 2'h0;
     end else if (_T_2) begin
       if (io_TOP_WR) begin
-        if (_T_10) begin
+        if (_T_11) begin
           state <= 2'h1;
         end
-      end else if (_T_13) begin
-        if (_T_10) begin
+      end else if (read_status) begin
+        if (_T_11) begin
           state <= 2'h1;
         end
       end else begin
         state <= 2'h0;
       end
-    end else if (_T_26) begin
+    end else if (_T_25) begin
       if (io_RX_READY) begin
-        state <= {{1'd0}, _T_28};
+        state <= {{1'd0}, _T_27};
       end
     end
   end
