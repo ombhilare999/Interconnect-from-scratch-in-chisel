@@ -116,6 +116,7 @@ class Transmitter extends Module() {
               }
             } .otherwise {
                 when (io.RX_READY === 1.U){
+                    r_transaction_cnt := 0.U
                     read_wait  := 1.U
                 } .otherwise {
                     r_address    := r_address
@@ -136,21 +137,25 @@ class Transmitter extends Module() {
 
       when (read_write === 1.U){
           io.TOP_RDATA := io.RDATA
-          read_wait    := 0.U
-      }
+          when (io.TOP_LENGTH > 1.U) {
+            read_wait    := 1.U
+          }  .otherwise {
+            read_wait    := 0.U
+          }
+        }
     }
     is(State.sOne) {
-        when (io.RX_READY === 1.U){ 
+        when(( (io.RX_READY & (!io.RD)) | io.RX_RDDATAVALID) === 1.U){
           r_transaction_cnt := 0.U
           when (r_len > 1.U){ 
             r_address    := r_address + 1.U
             r_wdata      := io.TOP_WDATA
-            io.TOP_RDATA := io.RDATA
+            read_wait  := 1.U
             r_len        := r_len - 1.U
             state        := State.sOne          //Remain in state two
           } .otherwise {
             state := State.sIdle            //Otherwise go to IDLE state
-            io.TOP_RDATA := io.RDATA
+            read_wait  := 0.U
             r_len        := 0.U
             r_wr         := 0.U       
             r_rd         := 0.U
@@ -165,6 +170,10 @@ class Transmitter extends Module() {
           r_len        := r_len
           r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
         }
+
+      when (read_write === 1.U){
+          io.TOP_RDATA := io.RDATA
+      }
     }
   }
 

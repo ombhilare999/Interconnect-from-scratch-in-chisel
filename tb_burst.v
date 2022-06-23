@@ -12,9 +12,10 @@ module top_tb();
 
 reg clock;
 reg reset;
-reg start;
 reg wr;
 reg rd;
+reg ready;
+reg rddatavalid;
 reg [3:0] length;
 reg [3:0] address;
 reg [31:0] wdata;
@@ -30,40 +31,44 @@ initial begin
     #5
     //Toggling Reset Once
     #10 reset = 1'b1;
-    start = 1'b0;
     wr = 1'b0;
     rd = 1'b0;
     #10 
     @(posedge clock) 
     reset = 1'b0;
-    start = 1'b1;
     address = 4'h6;
     length = 4'h4;
     wdata = 4'hA;
+    ready = 1'b1;
     wr = 1'b1;
     rd = 1'b0;
     @(posedge clock)
     address = 4'h0;
     length = 4'h0;
     wdata = 4'hB;
+    ready = 1'b1; 
     wr = 1'b0;
     rd = 1'b0;
     @(posedge clock) 
     address = 4'h0;
     length = 4'h0;
     wdata = 4'hC;
+    ready = 1'b0; 
     wr = 1'b0;
     rd = 1'b0;
+    ready = 1'b1; 
     @(posedge clock) 
+    ready = 1'b1; 
     wdata = 4'hD;
     @(posedge clock) 
     wdata = 4'h0;
-    
     @(posedge clock) 
     address = 4'h6;
     length = 4'h4;
     wr = 1'b0;
     rd = 1'b1;
+    ready = 1'b1;
+    rddatavalid = 1'b1;
     @(posedge clock) 
     address = 4'h0;
     length = 4'h0;
@@ -83,12 +88,13 @@ Top uut
 (
   .clock(clock),
   .reset(reset),
-  .io_start(start),
   .io_top_wr(wr),
   .io_top_rd(rd),
   .io_top_address(address),
   .io_top_wdata(wdata),
   .io_top_rdata(rdata),
+  .io_top_ready(ready),
+  .io_top_rddatavalid(rddatavalid),
   .io_top_length(length)
 );
 

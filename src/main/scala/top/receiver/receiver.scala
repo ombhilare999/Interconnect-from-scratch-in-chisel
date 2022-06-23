@@ -38,8 +38,10 @@ class Receiver extends Module() {
 
   //Memory Related Signals
   val rf = Mem(10, UInt(32.W))
-  rf(0x4.U) := 0x2.U
-
+  //rf(0x4.U) := 0x2.U
+  //rf(0x5.U) := 0x3.U
+  //rf(0x6.U) := 0x4.U
+  //rf(0x7.U) := 0x5.U
   //Initializing the output signals
   io.RDATA := 0.U
   
@@ -51,7 +53,7 @@ class Receiver extends Module() {
 
   switch(state) {
     is(State.sIdle) {
-        when((io.READY | io.RDDATAVALID) === 1.U){
+        when(( (io.READY & (!io.RD)) | io.RDDATAVALID) === 1.U){
             //Updating registers based on Input
             r_wr       :=  io.WR
             r_rd       :=  io.RD

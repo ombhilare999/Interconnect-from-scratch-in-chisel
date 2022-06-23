@@ -1,10 +1,10 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Thu Jun 23 10:29:16 2022
+[*] Thu Jun 23 14:28:12 2022
 [*]
 [dumpfile] "/home/bhilare/omkar/chisel_FSMs_communication/top_dump.vcd"
-[dumpfile_mtime] "Thu Jun 23 10:28:19 2022"
-[dumpfile_size] 5307
+[dumpfile_mtime] "Thu Jun 23 14:14:03 2022"
+[dumpfile_size] 6912
 [savefile] "/home/bhilare/omkar/chisel_FSMs_communication/sample.sav"
 [timestart] 0
 [size] 1920 1163
@@ -15,7 +15,7 @@
 [sst_width] 233
 [signals_width] 250
 [sst_expanded] 1
-[sst_vpaned_height] 400
+[sst_vpaned_height] 434
 @28
 top_tb.clock
 top_tb.reset
@@ -35,6 +35,9 @@ top_tb.rdata[31:0]
 top_tb.uut.Tx_io_ADDRESS[3:0]
 @28
 top_tb.uut.Tx.r_transaction_cnt[2:0]
+@29
+top_tb.uut.Tx.state[1:0]
+@28
 top_tb.uut.Tx.io_RX_READY
 top_tb.uut.Tx.read_wait
 top_tb.uut.Tx.read_write
