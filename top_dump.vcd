@@ -1,5 +1,5 @@
 $date
-	Wed Jun 22 11:05:54 2022
+	Thu Jun 23 14:37:57 2022
 $end
 $version
 	Icarus Verilog
@@ -13,38 +13,39 @@ $var reg 4 " address [3:0] $end
 $var reg 1 # clock $end
 $var reg 4 $ length [3:0] $end
 $var reg 1 % rd $end
-$var reg 1 & ready $end
-$var reg 1 ' reset $end
-$var reg 32 ( wdata [31:0] $end
-$var reg 1 ) wr $end
+$var reg 1 & rddatavalid $end
+$var reg 1 ' ready $end
+$var reg 1 ( reset $end
+$var reg 32 ) wdata [31:0] $end
+$var reg 1 * wr $end
 $scope module uut $end
-$var wire 1 * Rx_clock $end
-$var wire 4 + Rx_io_ADD [3:0] $end
-$var wire 1 , Rx_io_RD $end
-$var wire 1 - Rx_io_TOP_RDDATAVALID $end
-$var wire 1 . Rx_io_TOP_READY $end
-$var wire 32 / Rx_io_WDATA [31:0] $end
-$var wire 1 0 Rx_io_WR $end
-$var wire 1 1 Tx_clock $end
-$var wire 32 2 Tx_io_RDATA [31:0] $end
-$var wire 1 3 Tx_io_RX_RDDATAVALID $end
-$var wire 1 4 Tx_io_RX_READY $end
-$var wire 4 5 Tx_io_TOP_ADDRESS [3:0] $end
-$var wire 4 6 Tx_io_TOP_LENGTH [3:0] $end
-$var wire 1 7 Tx_io_TOP_RD $end
-$var wire 32 8 Tx_io_TOP_WDATA [31:0] $end
-$var wire 1 9 Tx_io_TOP_WR $end
-$var wire 1 : Tx_reset $end
+$var wire 1 + Rx_clock $end
+$var wire 4 , Rx_io_ADD [3:0] $end
+$var wire 1 - Rx_io_RD $end
+$var wire 1 . Rx_io_TOP_RDDATAVALID $end
+$var wire 1 / Rx_io_TOP_READY $end
+$var wire 32 0 Rx_io_WDATA [31:0] $end
+$var wire 1 1 Rx_io_WR $end
+$var wire 1 2 Tx_clock $end
+$var wire 32 3 Tx_io_RDATA [31:0] $end
+$var wire 1 4 Tx_io_RX_RDDATAVALID $end
+$var wire 1 5 Tx_io_RX_READY $end
+$var wire 4 6 Tx_io_TOP_ADDRESS [3:0] $end
+$var wire 4 7 Tx_io_TOP_LENGTH [3:0] $end
+$var wire 1 8 Tx_io_TOP_RD $end
+$var wire 32 9 Tx_io_TOP_WDATA [31:0] $end
+$var wire 1 : Tx_io_TOP_WR $end
+$var wire 1 ; Tx_reset $end
 $var wire 1 # clock $end
-$var wire 4 ; io_top_address [3:0] $end
-$var wire 4 < io_top_length [3:0] $end
+$var wire 4 < io_top_address [3:0] $end
+$var wire 4 = io_top_length [3:0] $end
 $var wire 1 % io_top_rd $end
-$var wire 32 = io_top_rdata [31:0] $end
-$var wire 1 > io_top_rddatavalid $end
-$var wire 1 & io_top_ready $end
+$var wire 32 > io_top_rdata [31:0] $end
+$var wire 1 & io_top_rddatavalid $end
+$var wire 1 ' io_top_ready $end
 $var wire 32 ? io_top_wdata [31:0] $end
-$var wire 1 ) io_top_wr $end
-$var wire 1 ' reset $end
+$var wire 1 * io_top_wr $end
+$var wire 1 ( reset $end
 $var wire 1 @ Tx_io_WR $end
 $var wire 32 A Tx_io_WDATA [31:0] $end
 $var wire 32 B Tx_io_TOP_RDATA [31:0] $end
@@ -54,87 +55,83 @@ $var wire 1 E Rx_io_READY $end
 $var wire 1 F Rx_io_RDDATAVALID $end
 $var wire 32 G Rx_io_RDATA [31:0] $end
 $scope module Rx $end
-$var wire 1 * clock $end
-$var wire 4 H io_ADD [3:0] $end
-$var wire 1 , io_RD $end
+$var wire 1 H _T_4 $end
+$var wire 1 + clock $end
+$var wire 4 I io_ADD [3:0] $end
+$var wire 1 - io_RD $end
 $var wire 1 F io_RDDATAVALID $end
 $var wire 1 E io_READY $end
-$var wire 1 - io_TOP_RDDATAVALID $end
-$var wire 1 . io_TOP_READY $end
-$var wire 32 I io_WDATA [31:0] $end
-$var wire 1 0 io_WR $end
-$var wire 1 J r_wr $end
-$var wire 1 K rf__T_6_en $end
-$var wire 1 L rf__T_6_mask $end
-$var wire 32 M rf__T_8_data [31:0] $end
-$var wire 4 N rf__T_addr [3:0] $end
-$var wire 32 O rf__T_data [31:0] $end
-$var wire 1 P rf__T_en $end
-$var wire 1 Q rf__T_mask $end
-$var wire 4 R rf__T_8_addr [3:0] $end
-$var wire 32 S rf__T_6_data [31:0] $end
-$var wire 4 T rf__T_6_addr [3:0] $end
-$var wire 32 U io_RDATA [31:0] $end
-$var wire 32 V _GEN_3 [31:0] $end
-$var wire 32 W _GEN_13 [31:0] $end
-$var wire 1 X _GEN_12 $end
+$var wire 1 . io_TOP_RDDATAVALID $end
+$var wire 1 / io_TOP_READY $end
+$var wire 32 J io_WDATA [31:0] $end
+$var wire 1 1 io_WR $end
+$var wire 1 K r_wr $end
+$var wire 1 L rf__T_7_en $end
+$var wire 1 M rf__T_7_mask $end
+$var wire 32 N rf__T_9_data [31:0] $end
+$var wire 4 O rf__T_addr [3:0] $end
+$var wire 32 P rf__T_data [31:0] $end
+$var wire 1 Q rf__T_en $end
+$var wire 1 R rf__T_mask $end
+$var wire 4 S rf__T_9_addr [3:0] $end
+$var wire 32 T rf__T_7_data [31:0] $end
+$var wire 4 U rf__T_7_addr [3:0] $end
+$var wire 32 V io_RDATA [31:0] $end
+$var wire 32 W _GEN_3 [31:0] $end
+$var wire 32 X _GEN_13 [31:0] $end
+$var wire 1 Y _GEN_12 $end
 $upscope $end
 $scope module Tx $end
-$var wire 1 Y _GEN_15 $end
-$var wire 1 Z _GEN_54 $end
+$var wire 1 Z _GEN_17 $end
 $var wire 1 [ _GEN_55 $end
-$var wire 1 \ _T_13 $end
-$var wire 1 ] _T_22 $end
-$var wire 1 1 clock $end
-$var wire 4 ^ io_ADDRESS [3:0] $end
+$var wire 1 \ _GEN_56 $end
+$var wire 1 2 clock $end
+$var wire 4 ] io_ADDRESS [3:0] $end
 $var wire 1 C io_RD $end
-$var wire 32 _ io_RDATA [31:0] $end
-$var wire 1 3 io_RX_RDDATAVALID $end
-$var wire 1 4 io_RX_READY $end
-$var wire 4 ` io_TOP_ADDRESS [3:0] $end
-$var wire 4 a io_TOP_LENGTH [3:0] $end
-$var wire 1 7 io_TOP_RD $end
-$var wire 32 b io_TOP_WDATA [31:0] $end
-$var wire 1 9 io_TOP_WR $end
+$var wire 32 ^ io_RDATA [31:0] $end
+$var wire 1 4 io_RX_RDDATAVALID $end
+$var wire 1 5 io_RX_READY $end
+$var wire 4 _ io_TOP_ADDRESS [3:0] $end
+$var wire 4 ` io_TOP_LENGTH [3:0] $end
+$var wire 1 8 io_TOP_RD $end
+$var wire 32 a io_TOP_WDATA [31:0] $end
+$var wire 1 : io_TOP_WR $end
 $var wire 1 @ io_WR $end
-$var wire 1 : reset $end
+$var wire 1 b read_write $end
+$var wire 1 ; reset $end
 $var wire 32 c io_WDATA [31:0] $end
 $var wire 32 d io_TOP_RDATA [31:0] $end
-$var wire 3 e _T_6 [2:0] $end
-$var wire 1 f _T_4 $end
-$var wire 4 g _T_32 [3:0] $end
-$var wire 4 h _T_30 [3:0] $end
-$var wire 1 i _T_28 $end
-$var wire 1 j _T_26 $end
-$var wire 1 k _T_2 $end
-$var wire 1 l _T_10 $end
-$var wire 32 m _GEN_67 [31:0] $end
-$var wire 32 n _GEN_59 [31:0] $end
+$var wire 3 e _T_8 [2:0] $end
+$var wire 1 f _T_5 $end
+$var wire 4 g _T_31 [3:0] $end
+$var wire 1 h _T_3 $end
+$var wire 4 i _T_29 [3:0] $end
+$var wire 1 j _T_27 $end
+$var wire 1 k _T_25 $end
+$var wire 1 l _T_12 $end
+$var wire 32 m _GEN_68 [31:0] $end
+$var wire 32 n _GEN_60 [31:0] $end
 $var wire 32 o _GEN_48 [31:0] $end
-$var wire 32 p _GEN_38 [31:0] $end
-$var wire 32 q _GEN_27 [31:0] $end
-$var reg 4 r r_address [3:0] $end
-$var reg 4 s r_len [3:0] $end
-$var reg 1 t r_rd $end
-$var reg 1 u r_rd_done $end
-$var reg 3 v r_transaction_cnt [2:0] $end
-$var reg 32 w r_wdata [31:0] $end
-$var reg 1 x r_wr $end
-$var reg 2 y state [1:0] $end
+$var reg 4 p r_address [3:0] $end
+$var reg 4 q r_len [3:0] $end
+$var reg 1 r r_rd $end
+$var reg 3 s r_transaction_cnt [2:0] $end
+$var reg 32 t r_wdata [31:0] $end
+$var reg 1 u r_wr $end
+$var reg 1 v read_wait $end
+$var reg 2 w state [1:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-bx y
-xx
 bx w
-bx v
+xv
 xu
-xt
+bx t
 bx s
-bx r
+xr
 bx q
 bx p
 bx o
@@ -143,42 +140,42 @@ bx m
 xl
 xk
 xj
-xi
-bx h
+bx i
+xh
 bx g
 xf
 bx e
 bx d
 bx c
-bx b
+xb
 bx a
 bx `
 bx _
 bx ^
-x]
+bx ]
 x\
 x[
 xZ
 xY
-xX
+bx X
 bx W
 bx V
 bx U
 bx T
 bx S
-bx R
+1R
 1Q
-1P
-b10 O
-b1 N
-bx M
-1L
+b10 P
+b100 O
+bx N
+1M
+xL
 xK
-xJ
+bx J
 bx I
-bx H
+xH
 bx G
-zF
+xF
 xE
 bx D
 xC
@@ -186,29 +183,29 @@ bx B
 bx A
 x@
 bx ?
-z>
+bx >
 bx =
 bx <
-bx ;
+x;
 x:
-x9
-bx 8
-x7
+bx 9
+x8
+bx 7
 bx 6
-bx 5
+x5
 x4
-z3
-bx 2
-01
-x0
-bx /
+bx 3
+02
+x1
+bx 0
+x/
 x.
-z-
-x,
-bx +
-0*
-x)
-bx (
+x-
+bx ,
+0+
+x*
+bx )
+x(
 x'
 x&
 x%
@@ -218,414 +215,319 @@ bx "
 bx !
 $end
 #5000
-11
-1*
+12
+1+
 1#
 #10000
-01
-0*
+02
+0+
 0#
 #15000
+b0 n
+b0 3
+b0 ^
+b0 G
+b0 V
+0L
+b0 X
 b0 !
-b0 =
+b0 >
 b0 B
 b0 d
-b0 n
-b0 o
-b0 2
-b0 _
-b0 G
-b0 U
-b0 q
-b0 p
-0K
-b0 W
 b0 m
-0]
-0\
-b0 V
-0X
-0J
-b0 S
-b0 R
+b0 W
+0Y
+0K
 b0 T
+b0 S
+b0 U
+0\
 0[
-0Z
-1k
-0j
-b0 y
+1h
+0k
+b0 w
+0v
 1f
 b1 e
-b0 v
-0u
-0,
+b0 s
+0-
 0C
-0t
-00
+0r
+01
 0@
-0x
-b0 /
-b0 I
+0u
+b0 0
+b0 J
 b0 A
 b0 c
-b0 w
-b1 h
-b0 +
-b0 H
+b0 t
+b1 i
+b0 ,
+b0 I
 b0 D
-b0 ^
-b0 r
-0i
+b0 ]
+b0 p
+0j
 b1111 g
-b0 s
-11
-1*
+b0 q
+b0 o
+0b
+12
+1+
 1#
-07
+04
+0F
+0.
+0&
+08
 0%
-09
-0)
-1:
-1'
-#20000
-01
+0:
 0*
+1;
+1(
+#20000
+02
+0+
 0#
 #25000
-0f
-b10 e
-b1 v
-10
-1@
-1x
-b1010 /
-b1010 I
-b1010 A
-b1010 c
-b1010 w
-b111 h
-b110 +
-b110 H
-b110 D
-b110 ^
-b110 r
-b0 g
-b1 s
-0Y
-04
-0E
-0.
-0&
-19
-1)
-b1010 8
-b1010 b
-b1010 (
-b1010 ?
-0l
-b1 6
-b1 a
-b1 $
-b1 <
-b110 5
-b110 `
-b110 "
-b110 ;
-0:
-0'
+1L
+1K
+b110 T
+b101 S
+b101 U
 11
+1@
+1u
+b110 0
+b110 J
+b110 A
+b110 c
+b110 t
+b110 i
+b101 ,
+b101 I
+b101 D
+b101 ]
+b101 p
+b0 g
+b1 q
+1H
+1Z
+0l
+b1 7
+b1 `
+b1 $
+b1 =
+15
+1E
+1/
+1'
+1:
 1*
+b110 9
+b110 a
+b110 )
+b110 ?
+b101 6
+b101 _
+b101 "
+b101 <
+0;
+0(
+12
+1+
 1#
 #30000
-01
-0*
+02
+0+
 0#
 #35000
-b11 e
-b10 v
-11
-1*
+b110 N
+b0 9
+b0 a
+b0 )
+b0 ?
+0:
+0*
+b0 7
+b0 `
+b0 $
+b0 =
+b0 6
+b0 _
+b0 "
+b0 <
+12
+1+
 1#
 #40000
-01
-0*
+02
+0+
 0#
 #45000
-b100 e
-b11 v
-11
-1*
+b110 !
+b110 >
+b110 B
+b110 d
+b110 o
+b110 n
+b110 3
+b110 ^
+b110 G
+b110 V
+0L
+1Y
+b110 X
+1b
+b110 W
+0K
+1v
+1-
+1C
+1r
+01
+0@
+0u
+b1 7
+b1 `
+b1 $
+b1 =
+14
+1F
+1.
+1&
+18
+1%
+b101 6
+b101 _
+b101 "
+b101 <
+12
+1+
 1#
 #50000
-01
-0*
+02
+0+
 0#
 #55000
-1f
-b1 e
-b0 v
-b110 R
-b1010 S
-b110 T
-1K
-1J
-1Y
-14
-1E
-1.
-1&
-11
-1*
-1#
-#60000
-01
-0*
-0#
-#65000
-b1011 S
-b111 R
-b111 T
-1Z
-0k
-1j
-b1 y
-0f
-b10 e
-b1 v
-b1011 /
-b1011 I
-b1011 A
-b1011 c
-b1011 w
-b1000 h
-b111 +
-b111 H
-b111 D
-b111 ^
-b111 r
-1i
-b10 g
-b11 s
-bx M
-b1011 8
-b1011 b
-b1011 (
-b1011 ?
-1l
-b11 6
-b11 a
-b11 $
-b11 <
-b111 5
-b111 `
-b111 "
-b111 ;
-11
-1*
-1#
-#70000
-01
-0*
-0#
-#75000
-b11 e
-b10 v
-b0 R
+0Z
+0v
+bx X
+bx W
+b0 !
+b0 >
+b0 B
+b0 d
+bx N
 b0 S
 b0 T
-0K
-0J
-0Y
-09
-0)
-b1100 8
-b1100 b
-b1100 (
-b1100 ?
-04
+b0 U
+b0 3
+b0 ^
+b0 G
+b0 V
+b0 o
+b0 n
+0H
+0b
+05
 0E
+0/
+0'
+04
+0F
 0.
 0&
-0l
-b0 6
-b0 a
-b0 $
-b0 <
-b0 5
+08
+0%
+b0 7
 b0 `
+b0 $
+b0 =
+b0 6
+b0 _
 b0 "
-b0 ;
-11
-1*
+b0 <
+12
+1+
+1#
+#60000
+02
+0+
+0#
+#65000
+12
+1+
+1#
+#70000
+02
+0+
+0#
+#75000
+12
+1+
 1#
 #80000
-01
-0*
+02
+0+
 0#
 #85000
-1f
-b1 e
-b0 v
-b1100 /
-b1100 I
-b1100 A
-b1100 c
-b1100 w
-b1001 h
-b1000 +
-b1000 H
-b1000 D
-b1000 ^
-b1000 r
-b1 g
-b10 s
-bx M
-b1000 R
-b1100 S
-b1000 T
-1K
-1J
-1Y
-14
-1E
-1.
-1&
-11
-1*
+12
+1+
 1#
 #90000
-01
-0*
+02
+0+
 0#
 #95000
-b1101 S
-b1001 R
-b1001 T
-0Z
-b1101 /
-b1101 I
-b1101 A
-b1101 c
-b1101 w
-b1010 h
-b1001 +
-b1001 H
-b1001 D
-b1001 ^
-b1001 r
-0i
-b0 g
-b1 s
-bx M
-b1101 8
-b1101 b
-b1101 (
-b1101 ?
-11
-1*
+12
+1+
 1#
 #100000
-01
-0*
+02
+0+
 0#
 #105000
-0K
-0J
-b0 S
-b0 R
-b0 T
-1k
-0j
-b0 y
-00
-0@
-0x
-b0 /
-b0 I
-b0 A
-b0 c
-b0 w
-b1 h
-b0 +
-b0 H
-b0 D
-b0 ^
-b0 r
-b1111 g
-b0 s
-bx M
-11
-1*
+12
+1+
 1#
 #110000
-01
-0*
+02
+0+
 0#
 #115000
-11
-1*
+12
+1+
 1#
 #120000
-01
-0*
+02
+0+
 0#
 #125000
-11
-1*
+12
+1+
 1#
 #130000
-01
-0*
+02
+0+
 0#
 #135000
-11
-1*
+12
+1+
 1#
 #140000
-01
-0*
+02
+0+
 0#
 #145000
-11
-1*
+12
+1+
 1#
 #150000
-01
-0*
+02
+0+
 0#
 #155000
-11
-1*
-1#
-#160000
-01
-0*
-0#
-#165000
-11
-1*
-1#
-#170000
-01
-0*
-0#
-#175000
-11
-1*
-1#
-#180000
-01
-0*
-0#
-#185000
-11
-1*
-1#
-#190000
-01
-0*
-0#
-#195000
-11
-1*
+12
+1+
 1#

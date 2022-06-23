@@ -12,9 +12,10 @@ module top_tb();
 
 reg clock;
 reg reset;
-reg start;
 reg wr;
 reg rd;
+reg ready;
+reg rddatavalid;
 reg [3:0] length;
 reg [3:0] address;
 reg [31:0] wdata;
@@ -26,36 +27,44 @@ always begin
 end 
 
 
-// Normal_Write_Read
+// Ready_from Receiver
 initial begin
+    #5
     //Toggling Reset Once
-    #10
-    reset = 1'b1;
-    start = 1'b0;
-    #10 reset = 1'b0;
-    start = 1'b1;
-    #10
+    #10 reset = 1'b1;
+    wr = 1'b0;
+    rd = 1'b0;
+    rddatavalid = 1'h0;
+    #10 
     @(posedge clock) 
-    address = 4'h7;
-    length = 4'h1;
-    wr = 1'b1;
-    rd = 1'b0;
-    wdata = 32'hA;    
-    #10
+    reset = 1'b0;
+    address = 4'h5;
+    wdata   = 4'h6;
+    wr      = 1'b1;
+    rd      = 1'b0;
+    ready   = 1'b1;
+    length  = 4'h1;
+    @(posedge clock)
     address = 4'h0;
-    length = 4'h0;
-    #10
-    @(posedge clock)  address = 4'h7;
-    wdata = 32'h0;
-    length = 4'h1;
-    wr = 1'b0;
-    rd = 1'b1;
-    #10
-    rd = 1'b1;  
-    #10 start = 1'b0;
-    length = 4'h0;
-    wr = 1'b0;
-    rd = 1'b0;
+    length  = 4'h0;
+    wr      = 1'b0;
+    rd      = 1'b0;
+    wdata   = 1'b0;
+    @(posedge clock)
+    address = 4'h5;
+    wr      = 1'b0;
+    rd      = 1'b1;
+    rddatavalid = 1'b1;
+    ready   = 1'b1;
+    length  = 4'h1;
+    @(posedge clock)
+    address = 4'h0;
+    length  = 4'h0;
+    wr      = 1'b0;
+    rd      = 1'b0;
+    wdata   = 1'b0;
+    rddatavalid = 1'b0;
+    ready   = 1'b0;
     #100 $finish;
 end
 
@@ -69,13 +78,16 @@ Top uut
 (
   .clock(clock),
   .reset(reset),
-  .io_start(start),
   .io_top_wr(wr),
   .io_top_rd(rd),
   .io_top_address(address),
   .io_top_wdata(wdata),
   .io_top_rdata(rdata),
+  .io_top_ready(ready),
+  .io_top_rddatavalid(rddatavalid),
   .io_top_length(length)
 );
 
 endmodule
+
+

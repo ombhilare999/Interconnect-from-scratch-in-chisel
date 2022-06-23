@@ -1,10 +1,10 @@
 [*]
 [*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
-[*] Tue Jun 21 10:01:41 2022
+[*] Thu Jun 23 10:29:16 2022
 [*]
 [dumpfile] "/home/bhilare/omkar/chisel_FSMs_communication/top_dump.vcd"
-[dumpfile_mtime] "Tue Jun 21 10:00:50 2022"
-[dumpfile_size] 5006
+[dumpfile_mtime] "Thu Jun 23 10:28:19 2022"
+[dumpfile_size] 5307
 [savefile] "/home/bhilare/omkar/chisel_FSMs_communication/sample.sav"
 [timestart] 0
 [size] 1920 1163
@@ -15,11 +15,10 @@
 [sst_width] 233
 [signals_width] 250
 [sst_expanded] 1
-[sst_vpaned_height] 368
+[sst_vpaned_height] 400
 @28
 top_tb.clock
 top_tb.reset
-top_tb.start
 top_tb.wr
 @22
 top_tb.address[3:0]
@@ -37,14 +36,15 @@ top_tb.uut.Tx_io_ADDRESS[3:0]
 @28
 top_tb.uut.Tx.r_transaction_cnt[2:0]
 top_tb.uut.Tx.io_RX_READY
+top_tb.uut.Tx.read_wait
+top_tb.uut.Tx.read_write
+top_tb.uut.Tx.io_RX_RDDATAVALID
 top_tb.uut.Tx_io_WR
 top_tb.uut.Tx_io_RD
 @22
 top_tb.uut.Tx_io_WDATA[31:0]
 top_tb.uut.Tx_io_RDATA[31:0]
-top_tb.uut.Rx.rf__T_5_addr[3:0]
-@23
-top_tb.uut.Rx.rf__T_5_data[31:0]
+top_tb.uut.Tx.io_TOP_RDATA[31:0]
 @20000
 -
 -

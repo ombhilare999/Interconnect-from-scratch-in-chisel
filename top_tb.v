@@ -38,28 +38,28 @@ initial begin
     #10 
     @(posedge clock) 
     reset = 1'b0;
-    address = 4'h1;
+    address = 4'h4;
     length = 4'h1;
     wdata = 4'hA;
     wr = 1'b0;
     rd = 1'b1;
     ready = 1'b0;   
-    @(posedge clock) 
-    ready = 1'b1;  
-    @(posedge clock) 
+    #20
+    ready = 1'b1;
+    #10
+    ready = 1'b0;
     address = 4'h0;
     length = 4'h0;
     wdata = 4'h0;
     wr = 1'b0;
     rd = 1'b0;
-    ready = 1'b0;
     @(posedge clock) 
     rddatavalid = 1'h1;
     @(posedge clock) 
     rddatavalid = 1'h0;
+    rd = 1'b0;
     #100 $finish;
 end
-
 
 initial
 begin

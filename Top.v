@@ -30,38 +30,29 @@ module Transmitter(
   reg [31:0] r_wdata; // @[transmitter.scala 37:26]
   reg  r_wr; // @[transmitter.scala 38:26]
   reg  r_rd; // @[transmitter.scala 39:26]
-  reg  r_rd_done; // @[transmitter.scala 40:26]
-  reg [2:0] r_transaction_cnt; // @[transmitter.scala 43:34]
-  reg [1:0] state; // @[transmitter.scala 62:22]
-  wire  _T_2 = 2'h0 == state; // @[Conditional.scala 37:30]
-  wire  w_rd = _T_2 & io_TOP_RD; // @[Conditional.scala 40:58]
-  wire  _T_3 = w_rd | r_rd_done; // @[transmitter.scala 69:28]
-  wire  _T_5 = r_transaction_cnt == 3'h0; // @[transmitter.scala 73:37]
-  wire [2:0] _T_7 = r_transaction_cnt + 3'h1; // @[transmitter.scala 79:54]
-  wire  _T_11 = io_TOP_LENGTH > 4'h1; // @[transmitter.scala 92:33]
-  wire  read_status = _T_2 & _T_3; // @[Conditional.scala 40:58]
-  wire  _GEN_26 = _T_5 ? 1'h0 : io_RX_READY; // @[transmitter.scala 98:45]
-  wire  _T_21 = r_rd_done & io_RX_RDDATAVALID; // @[transmitter.scala 117:38]
-  wire [31:0] _GEN_27 = _T_21 ? io_RDATA : 32'h0; // @[transmitter.scala 117:69]
-  wire  _GEN_28 = _T_21 ? 1'h0 : _GEN_26; // @[transmitter.scala 117:69]
-  wire  _GEN_37 = read_status & _GEN_28; // @[transmitter.scala 97:42]
-  wire [31:0] _GEN_38 = read_status ? _GEN_27 : 32'h0; // @[transmitter.scala 97:42]
-  wire  _GEN_47 = io_TOP_WR ? 1'h0 : _GEN_37; // @[transmitter.scala 72:31]
-  wire [31:0] _GEN_48 = io_TOP_WR ? 32'h0 : _GEN_38; // @[transmitter.scala 72:31]
+  reg [2:0] r_transaction_cnt; // @[transmitter.scala 40:34]
+  reg  read_wait; // @[transmitter.scala 41:27]
+  wire  read_write = read_wait & io_RX_RDDATAVALID; // @[transmitter.scala 55:29]
+  reg [1:0] state; // @[transmitter.scala 71:22]
+  wire  _T_3 = 2'h0 == state; // @[Conditional.scala 37:30]
+  wire  _T_5 = r_transaction_cnt == 3'h0; // @[transmitter.scala 77:37]
+  wire [2:0] _T_8 = r_transaction_cnt + 3'h1; // @[transmitter.scala 86:56]
+  wire  _T_12 = io_TOP_LENGTH > 4'h1; // @[transmitter.scala 100:33]
+  wire  _GEN_17 = io_RX_READY | read_wait; // @[transmitter.scala 111:41]
+  wire [31:0] _GEN_48 = read_write ? io_RDATA : 32'h0; // @[transmitter.scala 137:32]
   wire  _T_25 = 2'h1 == state; // @[Conditional.scala 37:30]
-  wire  _T_27 = r_len > 4'h1; // @[transmitter.scala 136:23]
-  wire [3:0] _T_29 = r_address + 4'h1; // @[transmitter.scala 137:39]
-  wire [3:0] _T_31 = r_len - 4'h1; // @[transmitter.scala 140:35]
-  wire  _GEN_54 = _T_27 & r_wr; // @[transmitter.scala 136:29]
-  wire  _GEN_55 = _T_27 & r_rd; // @[transmitter.scala 136:29]
-  wire [31:0] _GEN_59 = io_RX_READY ? io_RDATA : 32'h0; // @[transmitter.scala 134:35]
-  wire [31:0] _GEN_67 = _T_25 ? _GEN_59 : 32'h0; // @[Conditional.scala 39:67]
-  wire  _GEN_81 = _T_2 & _GEN_47; // @[Conditional.scala 40:58]
-  assign io_TOP_RDATA = _T_2 ? _GEN_48 : _GEN_67; // @[transmitter.scala 46:16 transmitter.scala 118:28 transmitter.scala 121:28 transmitter.scala 139:26 transmitter.scala 144:26]
-  assign io_WR = r_wr; // @[transmitter.scala 47:16 transmitter.scala 162:14]
-  assign io_RD = r_rd; // @[transmitter.scala 48:16 transmitter.scala 163:14]
-  assign io_ADDRESS = r_address; // @[transmitter.scala 49:16 transmitter.scala 164:14]
-  assign io_WDATA = r_wdata; // @[transmitter.scala 50:16 transmitter.scala 165:14]
+  wire  _T_27 = r_len > 4'h1; // @[transmitter.scala 145:23]
+  wire [3:0] _T_29 = r_address + 4'h1; // @[transmitter.scala 146:39]
+  wire [3:0] _T_31 = r_len - 4'h1; // @[transmitter.scala 149:35]
+  wire  _GEN_55 = _T_27 & r_wr; // @[transmitter.scala 145:29]
+  wire  _GEN_56 = _T_27 & r_rd; // @[transmitter.scala 145:29]
+  wire [31:0] _GEN_60 = io_RX_READY ? io_RDATA : 32'h0; // @[transmitter.scala 143:35]
+  wire [31:0] _GEN_68 = _T_25 ? _GEN_60 : 32'h0; // @[Conditional.scala 39:67]
+  assign io_TOP_RDATA = _T_3 ? _GEN_48 : _GEN_68; // @[transmitter.scala 49:16 transmitter.scala 138:24 transmitter.scala 148:26 transmitter.scala 153:26]
+  assign io_WR = r_wr; // @[transmitter.scala 50:16 transmitter.scala 171:14]
+  assign io_RD = r_rd; // @[transmitter.scala 51:16 transmitter.scala 172:14]
+  assign io_ADDRESS = r_address; // @[transmitter.scala 52:16 transmitter.scala 173:14]
+  assign io_WDATA = r_wdata; // @[transmitter.scala 53:16 transmitter.scala 174:14]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -108,9 +99,9 @@ initial begin
   _RAND_4 = {1{`RANDOM}};
   r_rd = _RAND_4[0:0];
   _RAND_5 = {1{`RANDOM}};
-  r_rd_done = _RAND_5[0:0];
+  r_transaction_cnt = _RAND_5[2:0];
   _RAND_6 = {1{`RANDOM}};
-  r_transaction_cnt = _RAND_6[2:0];
+  read_wait = _RAND_6[0:0];
   _RAND_7 = {1{`RANDOM}};
   state = _RAND_7[1:0];
 `endif // RANDOMIZE_REG_INIT
@@ -123,12 +114,12 @@ end // initial
   always @(posedge clock) begin
     if (reset) begin
       r_len <= 4'h0;
-    end else if (_T_2) begin
+    end else if (_T_3) begin
       if (io_TOP_WR) begin
         if (_T_5) begin
           r_len <= io_TOP_LENGTH;
         end
-      end else if (read_status) begin
+      end else if (io_TOP_RD) begin
         if (_T_5) begin
           r_len <= io_TOP_LENGTH;
         end
@@ -144,12 +135,12 @@ end // initial
     end
     if (reset) begin
       r_address <= 4'h0;
-    end else if (_T_2) begin
+    end else if (_T_3) begin
       if (io_TOP_WR) begin
         if (_T_5) begin
           r_address <= io_TOP_ADDRESS;
         end
-      end else if (read_status) begin
+      end else if (io_TOP_RD) begin
         if (_T_5) begin
           r_address <= io_TOP_ADDRESS;
         end
@@ -165,7 +156,7 @@ end // initial
     end
     if (reset) begin
       r_wdata <= 32'h0;
-    end else if (_T_2) begin
+    end else if (_T_3) begin
       if (io_TOP_WR) begin
         if (_T_5) begin
           r_wdata <= io_TOP_WDATA;
@@ -182,15 +173,15 @@ end // initial
     end
     if (reset) begin
       r_wr <= 1'h0;
-    end else if (_T_2) begin
+    end else if (_T_3) begin
       if (io_TOP_WR) begin
-        if (_T_11) begin
+        if (_T_12) begin
           r_wr <= io_TOP_WR;
         end else if (_T_5) begin
           r_wr <= io_TOP_WR;
         end
-      end else if (read_status) begin
-        if (_T_11) begin
+      end else if (io_TOP_RD) begin
+        if (_T_12) begin
           r_wr <= io_TOP_WR;
         end else if (_T_5) begin
           r_wr <= io_TOP_WR;
@@ -198,20 +189,20 @@ end // initial
       end
     end else if (_T_25) begin
       if (io_RX_READY) begin
-        r_wr <= _GEN_54;
+        r_wr <= _GEN_55;
       end
     end
     if (reset) begin
       r_rd <= 1'h0;
-    end else if (_T_2) begin
+    end else if (_T_3) begin
       if (io_TOP_WR) begin
-        if (_T_11) begin
+        if (_T_12) begin
           r_rd <= io_TOP_RD;
         end else if (_T_5) begin
           r_rd <= io_TOP_RD;
         end
-      end else if (read_status) begin
-        if (_T_11) begin
+      end else if (io_TOP_RD) begin
+        if (_T_12) begin
           r_rd <= io_TOP_RD;
         end else if (_T_5) begin
           r_rd <= io_TOP_RD;
@@ -219,50 +210,66 @@ end // initial
       end
     end else if (_T_25) begin
       if (io_RX_READY) begin
-        r_rd <= _GEN_55;
+        r_rd <= _GEN_56;
       end
     end
     if (reset) begin
-      r_rd_done <= 1'h0;
-    end else begin
-      r_rd_done <= _GEN_81;
-    end
-    if (reset) begin
       r_transaction_cnt <= 3'h0;
-    end else if (_T_2) begin
+    end else if (_T_3) begin
       if (io_TOP_WR) begin
         if (_T_5) begin
-          r_transaction_cnt <= _T_7;
+          if (io_RX_READY) begin
+            r_transaction_cnt <= 3'h0;
+          end else begin
+            r_transaction_cnt <= _T_8;
+          end
         end else if (io_RX_READY) begin
           r_transaction_cnt <= 3'h0;
         end else begin
-          r_transaction_cnt <= _T_7;
+          r_transaction_cnt <= _T_8;
         end
-      end else if (read_status) begin
+      end else if (io_TOP_RD) begin
         if (_T_5) begin
-          r_transaction_cnt <= _T_7;
-        end else if (io_RX_READY) begin
-          r_transaction_cnt <= 3'h0;
-        end else begin
-          r_transaction_cnt <= _T_7;
+          if (io_RX_READY) begin
+            r_transaction_cnt <= 3'h0;
+          end else begin
+            r_transaction_cnt <= _T_8;
+          end
+        end else if (!(io_RX_READY)) begin
+          r_transaction_cnt <= _T_8;
         end
       end
     end else if (_T_25) begin
       if (io_RX_READY) begin
         r_transaction_cnt <= 3'h0;
       end else begin
-        r_transaction_cnt <= _T_7;
+        r_transaction_cnt <= _T_8;
+      end
+    end
+    if (reset) begin
+      read_wait <= 1'h0;
+    end else if (_T_3) begin
+      if (read_write) begin
+        read_wait <= 1'h0;
+      end else if (!(io_TOP_WR)) begin
+        if (io_TOP_RD) begin
+          if (_T_5) begin
+            read_wait <= _GEN_17;
+          end else begin
+            read_wait <= _GEN_17;
+          end
+        end
       end
     end
     if (reset) begin
       state <= 2'h0;
-    end else if (_T_2) begin
+    end else if (_T_3) begin
       if (io_TOP_WR) begin
-        if (_T_11) begin
+        if (_T_12) begin
           state <= 2'h1;
         end
-      end else if (read_status) begin
-        if (_T_11) begin
+      end else if (io_TOP_RD) begin
+        if (_T_12) begin
           state <= 2'h1;
         end
       end else begin
@@ -293,36 +300,37 @@ module Receiver(
 `ifdef RANDOMIZE_MEM_INIT
   reg [31:0] _RAND_0;
 `endif // RANDOMIZE_MEM_INIT
-  reg [31:0] rf [0:9]; // @[receiver.scala 39:15]
-  wire [31:0] rf__T_8_data; // @[receiver.scala 39:15]
-  wire [3:0] rf__T_8_addr; // @[receiver.scala 39:15]
-  wire [31:0] rf__T_data; // @[receiver.scala 39:15]
-  wire [3:0] rf__T_addr; // @[receiver.scala 39:15]
-  wire  rf__T_mask; // @[receiver.scala 39:15]
-  wire  rf__T_en; // @[receiver.scala 39:15]
-  wire [31:0] rf__T_6_data; // @[receiver.scala 39:15]
-  wire [3:0] rf__T_6_addr; // @[receiver.scala 39:15]
-  wire  rf__T_6_mask; // @[receiver.scala 39:15]
-  wire  rf__T_6_en; // @[receiver.scala 39:15]
-  wire  r_wr = io_READY & io_WR; // @[receiver.scala 53:31]
-  wire [31:0] _GEN_3 = io_RD ? rf__T_8_data : 32'h0; // @[receiver.scala 62:40]
-  wire  _GEN_12 = r_wr ? 1'h0 : io_RD; // @[receiver.scala 60:32]
-  wire [31:0] _GEN_13 = r_wr ? 32'h0 : _GEN_3; // @[receiver.scala 60:32]
-  assign rf__T_8_addr = io_READY ? io_ADD : 4'h0;
+  reg [31:0] rf [0:9]; // @[receiver.scala 40:15]
+  wire [31:0] rf__T_9_data; // @[receiver.scala 40:15]
+  wire [3:0] rf__T_9_addr; // @[receiver.scala 40:15]
+  wire [31:0] rf__T_data; // @[receiver.scala 40:15]
+  wire [3:0] rf__T_addr; // @[receiver.scala 40:15]
+  wire  rf__T_mask; // @[receiver.scala 40:15]
+  wire  rf__T_en; // @[receiver.scala 40:15]
+  wire [31:0] rf__T_7_data; // @[receiver.scala 40:15]
+  wire [3:0] rf__T_7_addr; // @[receiver.scala 40:15]
+  wire  rf__T_7_mask; // @[receiver.scala 40:15]
+  wire  rf__T_7_en; // @[receiver.scala 40:15]
+  wire  _T_4 = io_READY | io_RDDATAVALID; // @[receiver.scala 54:24]
+  wire  r_wr = _T_4 & io_WR; // @[receiver.scala 54:50]
+  wire [31:0] _GEN_3 = io_RD ? rf__T_9_data : 32'h0; // @[receiver.scala 63:40]
+  wire  _GEN_12 = r_wr ? 1'h0 : io_RD; // @[receiver.scala 61:32]
+  wire [31:0] _GEN_13 = r_wr ? 32'h0 : _GEN_3; // @[receiver.scala 61:32]
+  assign rf__T_9_addr = _T_4 ? io_ADD : 4'h0;
   `ifndef RANDOMIZE_GARBAGE_ASSIGN
-  assign rf__T_8_data = rf[rf__T_8_addr]; // @[receiver.scala 39:15]
+  assign rf__T_9_data = rf[rf__T_9_addr]; // @[receiver.scala 40:15]
   `else
-  assign rf__T_8_data = rf__T_8_addr >= 4'ha ? _RAND_1[31:0] : rf[rf__T_8_addr]; // @[receiver.scala 39:15]
+  assign rf__T_9_data = rf__T_9_addr >= 4'ha ? _RAND_1[31:0] : rf[rf__T_9_addr]; // @[receiver.scala 40:15]
   `endif // RANDOMIZE_GARBAGE_ASSIGN
   assign rf__T_data = 32'h2;
-  assign rf__T_addr = 4'h1;
+  assign rf__T_addr = 4'h4;
   assign rf__T_mask = 1'h1;
   assign rf__T_en = 1'h1;
-  assign rf__T_6_data = io_READY ? io_WDATA : 32'h0;
-  assign rf__T_6_addr = io_READY ? io_ADD : 4'h0;
-  assign rf__T_6_mask = 1'h1;
-  assign rf__T_6_en = io_READY & r_wr;
-  assign io_RDATA = io_READY ? _GEN_13 : 32'h0; // @[receiver.scala 43:12 receiver.scala 64:24 receiver.scala 66:24]
+  assign rf__T_7_data = _T_4 ? io_WDATA : 32'h0;
+  assign rf__T_7_addr = _T_4 ? io_ADD : 4'h0;
+  assign rf__T_7_mask = 1'h1;
+  assign rf__T_7_en = _T_4 & r_wr;
+  assign io_RDATA = _T_4 ? _GEN_13 : 32'h0; // @[receiver.scala 44:12 receiver.scala 65:24 receiver.scala 67:24]
   assign io_READY = io_TOP_READY; // @[receiver.scala 35:18]
   assign io_RDDATAVALID = io_TOP_RDDATAVALID; // @[receiver.scala 36:18]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
@@ -375,10 +383,10 @@ end // initial
 `endif // SYNTHESIS
   always @(posedge clock) begin
     if(rf__T_en & rf__T_mask) begin
-      rf[rf__T_addr] <= rf__T_data; // @[receiver.scala 39:15]
+      rf[rf__T_addr] <= rf__T_data; // @[receiver.scala 40:15]
     end
-    if(rf__T_6_en & rf__T_6_mask) begin
-      rf[rf__T_6_addr] <= rf__T_6_data; // @[receiver.scala 39:15]
+    if(rf__T_7_en & rf__T_7_mask) begin
+      rf[rf__T_7_addr] <= rf__T_7_data; // @[receiver.scala 40:15]
     end
   end
 endmodule
