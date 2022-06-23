@@ -1,37 +1,102 @@
-## Welcome to GitHub Pages
+# Interconnect from Scratch in Chisel
 
-You can use the [editor on GitHub](https://github.com/ombhilare999/Interconnect-from-scratch-in-chisel/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+- In this project, we have Implemented the Topics coverd in the Chapter 4: Interconnects of the Book [Fundamentals of System-on-Chip Design on Arm Cortex-M Microcontrollers](https://www.arm.com/resources/education/books/fundamentals-soc) by René Beuchat, Florian Depraz, Sahand Kashani, Andrea Guerrieri.
+- Chapter 4 of this book covers, how interconnects can be made by scratch. These topics were Implemented in chisel in this project and verification testcases are written in Verilog.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Project Directory Structure:
 
-### Markdown
+``` 
+bhilare@LAPPC48:~/omkar/experiments_chisel/example_2/src$ tree -L 5
+.
+├── main
+│   └── scala
+│       └── top
+│           ├── receiver
+│           │   └── receiver.scala
+│           ├── top.scala
+│           └── transmitter
+│               └── transmitter.scala
+└── test
+    └── scala
+        └── top_test
+            └── top_test.scala
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+8 directories, 4 files
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+## Circuit Level Representation of Top Module:
+  <p align="center">
+        <img width="1600" height="429" src="assets/circuit.png">
+  </p>
 
-### Jekyll Themes
+## Final Interconnect Block Diagram:
+  <p align="center">
+        <img width="388" height="258" src="assets/system.png">
+  </p>
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ombhilare999/Interconnect-from-scratch-in-chisel/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
+## Steps:
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+1. **Normal Write and Read:**
+
+      `make TESTBENCH=tb_normal`
+
+### Waveform in the Book:
+
+<p align="center">
+       <img width="916" height="255" src="assets/normal_read_write.png">
+</p>     
+
+### Interconnect Output:
+
+<p align="center">
+      <img width="749" height="229" src="assets/output_normal_read_write.png">
+</p>
+
+2. **Burst Read and Write Output**
+
+### Waveform in the Book:
+
+<p align="center">
+       <img width="893" height="269" src="assets/burst_read.png">
+</p>     
+
+<p align="center">
+       <img width="805" height="273" src="assets/burst_write.png">
+</p> 
+
+### Interconnect Output:
+
+<p align="center">
+       <img width="1334" height="559" src="assets/burst_output.png">
+</p> 
+
+3. **Completer to Requestor Ready Write Example**
+      `make TESTBENCH=tb_ready_write`
+
+### Waveform in the Book:
+
+<p align="center">
+       <img width="883" height="330" src="assets/ready_write.png">
+</p>     
+
+### Interconnect Output:
+
+<p align="center">
+      <img width="1231" height="630" src="assets/ready_write_output.png">
+</p>
+
+4. **Completer to Requestor Ready Read Example**
+      `make TESTBENCH=tb_ready_read`
+
+### Waveform in the Book:
+
+<p align="center">
+       <img width="916" height="255" src="assets/ready_read.png">
+</p>     
+
+### Interconnect Output:
+
+<p align="center">
+      <img width="1240" height="558" src="assets/ready_read_output.png">
+</p>
