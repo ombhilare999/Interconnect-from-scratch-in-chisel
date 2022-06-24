@@ -37,9 +37,9 @@ bhilare@LAPPC48:~/omkar/experiments_chisel/example_2/src$ tree -L 5
 
 ## Steps:
 
-1. **Normal Write and Read:**
+##  **Normal Write and Read:**
 
-      `make TESTBENCH=tb_normal`
+> make TESTBENCH=tb_norma
 
 ### Waveform in the Book:
 
@@ -53,7 +53,9 @@ bhilare@LAPPC48:~/omkar/experiments_chisel/example_2/src$ tree -L 5
       <img width="749" height="229" src="assets/output_normal_read_write.png">
 </p>
 
-2. **Burst Read and Write Output**
+##  **Burst Read and Write Output**
+
+> make TESTBENCH=tb_burst
 
 ### Waveform in the Book:
 
@@ -71,8 +73,9 @@ bhilare@LAPPC48:~/omkar/experiments_chisel/example_2/src$ tree -L 5
        <img width="1334" height="559" src="assets/burst_output.png">
 </p> 
 
-3. **Completer to Requestor Ready Write Example**
-      `make TESTBENCH=tb_ready_write`
+##  **Completer to Requestor Ready Write Example**
+
+> make TESTBENCH=tb_ready_write
 
 ### Waveform in the Book:
 
@@ -86,8 +89,9 @@ bhilare@LAPPC48:~/omkar/experiments_chisel/example_2/src$ tree -L 5
       <img width="1231" height="630" src="assets/ready_write_output.png">
 </p>
 
-4. **Completer to Requestor Ready Read Example**
-      `make TESTBENCH=tb_ready_read`
+##  **Completer to Requestor Ready Read Example**
+
+> make TESTBENCH=tb_ready_read
 
 ### Waveform in the Book:
 
