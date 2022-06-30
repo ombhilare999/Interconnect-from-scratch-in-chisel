@@ -63,6 +63,30 @@ class AXI4_Manager extends Module() {
             val R_READY = Output(UInt(1.W))   //Read Data Ready
             val R_VALID = Input(UInt(1.W))    //Read Data Valid                 
         }
+    )
+        // Registered Signals
+        
+        //Write Address Signals:
+        val r_AW_BURST = RegInit(0.U(2.W))
+        val r_AW_ADDR  = RegInit(0.U(6.W))
+        val r_AW_LEN   = RegInit(0.U(8.W))
+        val r_AW_SIZE  = RegInit(0.U(3.W))
+        val r_AW_ID    = RegInit(0.U(1.W))
+        val r_AW_VALID = RegInit(0.U(1.W))
+        val r_AW_PROT  = RegInit(0.U(3.W))
+        val r_transaction_cnt = RegInit(0.U(3.W))
+
+        //Write Data Signals:
+        val r_W_DATA   = RegInit(0.U(32.W))
+        val r_W_LAST   = RegInit(0.U(1.W))
+        val r_W_STRB   = RegInit(0.U(4.W))
+        val r_W_VALID  = RegInit(0.U(1.W))
+
+        //Write Response:
+        val r_B_READY    = RegInit(0.U(1.W))
+
+        //Initializing Variables:
+        
 
         // Object for state 
         object State extends ChiselEnum {
@@ -74,11 +98,52 @@ class AXI4_Manager extends Module() {
         //Transmitter FSM 
         switch(state) {   
             is(State.sIdle) {
-                
+                when (r_transaction_cnt === 0.U){   //Means the first step of transaction
+                    //First Transaction:
+                    r_AW_VALID := 1.U
+                    r_AW_
+
+                    when (io.RX_READY === 1.U){
+                        r_transaction_cnt := 0.U
+                    } .otherwise {
+                        r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
+                    }
+                } .otherwise {
+                    when (io.RX_READY === 1.U){
+                        r_transaction_cnt := 0.U
+                    } .otherwise {
+                        r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
+                    }
+                }
+                when (io.TOP_LENGTH > 1.U) {
+                    state := State.sOne
+                    r_wr        := io.TOP_WR       // Asserting write enable
+                    r_rd        := io.TOP_RD       // De-Asserting Read Enable 
+                } 
             } 
             is(State.sOne)  {
             
             }     
         }
-    )
+    
+        //Updating AXI Signals:
+
+        //Write Address Signals:
+        io.AW_BURST := r_AW_BURST 
+        io.AW_ADDR  := r_AW_ADDR  
+        io.AW_LEN   := r_AW_LEN  
+        io.AW_SIZE  := r_AW_SIZE 
+        io.AW_ID    := r_AW_ID    
+        io.AW_VALID := r_AW_VALID
+        io.AW_PROT  := r_AW_PROT  
+
+        //Write Data Signals:
+        io.W_DATA   := r_W_DATA
+        io.W_LAST   := r_W_LAST
+        io.W_STRB   := r_W_STRB
+        io.W_VALID  := r_W_VALID
+
+        //Write Response Channel:
+        io.B_READY  := r_B_READY
+        
 }
