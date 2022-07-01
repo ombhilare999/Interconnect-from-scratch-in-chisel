@@ -98,28 +98,30 @@ class AXI4_Manager extends Module() {
         //Transmitter FSM 
         switch(state) {   
             is(State.sIdle) {
-                when (r_transaction_cnt === 0.U){   //Means the first step of transaction
-                    //First Transaction:
-                    r_AW_VALID := 1.U
-                    r_AW_
+                when(io.TOP_WR === 1.U) {               //IF write is asserted by the top module
+                    when (r_transaction_cnt === 0.U){   //Means the first step of transaction
+                        //First Transaction:
+                        r_AW_VALID := 1.U
+                        r_AW_
 
-                    when (io.RX_READY === 1.U){
-                        r_transaction_cnt := 0.U
+                        when (io.RX_READY === 1.U){
+                            r_transaction_cnt := 0.U
+                        } .otherwise {
+                            r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
+                        }
                     } .otherwise {
-                        r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
+                        when (io.RX_READY === 1.U){
+                            r_transaction_cnt := 0.U
+                        } .otherwise {
+                            r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
+                        }
                     }
-                } .otherwise {
-                    when (io.RX_READY === 1.U){
-                        r_transaction_cnt := 0.U
-                    } .otherwise {
-                        r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
-                    }
+                    when (io.TOP_LENGTH > 1.U) {
+                        state := State.sOne
+                        r_wr        := io.TOP_WR       // Asserting write enable
+                        r_rd        := io.TOP_RD       // De-Asserting Read Enable 
+                    } 
                 }
-                when (io.TOP_LENGTH > 1.U) {
-                    state := State.sOne
-                    r_wr        := io.TOP_WR       // Asserting write enable
-                    r_rd        := io.TOP_RD       // De-Asserting Read Enable 
-                } 
             } 
             is(State.sOne)  {
             
