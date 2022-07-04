@@ -82,7 +82,7 @@ class Top extends Module() {
         val r_B_READY    = RegInit(0.U(1.W))
 
         //Extra Variables:
-        val r_len     = RegInit(0.U(4.W))
+        val r_len     = RegInit(0.U(8.W))
         val write_response_ready  = Wire(UInt(1.W))
 
         //Initializing Variables:
