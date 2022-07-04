@@ -5,32 +5,17 @@
   },
   {
     "class":"chisel3.experimental.EnumAnnotations$EnumDefAnnotation",
-    "typeName":"examples.Receiver$State",
+    "typeName":"top.Top$State",
     "definition":{
-      "sNone":0,
+      "sIdle":0,
       "sOne":1,
       "sTwo":2
     }
   },
   {
     "class":"chisel3.experimental.EnumAnnotations$EnumComponentAnnotation",
-    "target":"Top.Receiver.state",
-    "enumTypeName":"examples.Receiver$State"
-  },
-  {
-    "class":"chisel3.experimental.EnumAnnotations$EnumDefAnnotation",
-    "typeName":"examples.Transmitter$State",
-    "definition":{
-      "sNone":0,
-      "sOne":1,
-      "sTwo":2,
-      "sThree":3
-    }
-  },
-  {
-    "class":"chisel3.experimental.EnumAnnotations$EnumComponentAnnotation",
-    "target":"Top.Transmitter.state",
-    "enumTypeName":"examples.Transmitter$State"
+    "target":"Top.Top.state",
+    "enumTypeName":"top.Top$State"
   },
   {
     "class":"firrtl.options.TargetDirAnnotation",
