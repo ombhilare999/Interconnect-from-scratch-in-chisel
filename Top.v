@@ -5,10 +5,14 @@ module Top(
   input         io_TOP_RD,
   input  [5:0]  io_TOP_ADDRESS,
   input  [31:0] io_TOP_WDATA,
-  output [31:0] io_TOP_RDATA,
-  input  [5:0]  io_TOP_LENGTH,
+  input  [7:0]  io_TOP_LENGTH,
   input  [1:0]  io_TOP_BURST,
   input  [2:0]  io_TOP_SIZE,
+  output [31:0] io_TOP_RDATA,
+  input  [5:0]  io_TOP_R_ADDRESS,
+  input  [7:0]  io_TOP_R_LENGTH,
+  input  [1:0]  io_TOP_R_BURST,
+  input  [2:0]  io_TOP_R_SIZE,
   output [1:0]  io_AW_BURST,
   output [5:0]  io_AW_ADDR,
   output [7:0]  io_AW_LEN,
@@ -55,66 +59,111 @@ module Top(
   reg [31:0] _RAND_10;
   reg [31:0] _RAND_11;
   reg [31:0] _RAND_12;
+  reg [31:0] _RAND_13;
+  reg [31:0] _RAND_14;
+  reg [31:0] _RAND_15;
+  reg [31:0] _RAND_16;
+  reg [31:0] _RAND_17;
+  reg [31:0] _RAND_18;
+  reg [31:0] _RAND_19;
+  reg [31:0] _RAND_20;
+  reg [31:0] _RAND_21;
+  reg [31:0] _RAND_22;
 `endif // RANDOMIZE_REG_INIT
-  reg [1:0] r_AW_BURST; // @[Main.scala 66:33]
-  reg [5:0] r_AW_ADDR; // @[Main.scala 67:33]
-  reg [7:0] r_AW_LEN; // @[Main.scala 68:33]
-  reg [2:0] r_AW_SIZE; // @[Main.scala 69:33]
-  reg  r_AW_VALID; // @[Main.scala 71:33]
-  reg [31:0] r_W_DATA; // @[Main.scala 75:33]
-  reg  r_W_LAST; // @[Main.scala 76:33]
-  reg [3:0] r_W_STRB; // @[Main.scala 77:33]
-  reg  r_W_VALID; // @[Main.scala 78:33]
-  reg  r_B_READY; // @[Main.scala 81:33]
-  reg [2:0] r_transaction_cnt; // @[Main.scala 98:44]
-  reg [7:0] r_len; // @[Main.scala 99:44]
-  wire [1:0] _T = ~io_B_RESP; // @[Main.scala 104:46]
-  wire [1:0] _GEN_74 = {{1'd0}, io_B_VALID}; // @[Main.scala 104:44]
-  wire [1:0] _T_1 = _GEN_74 & _T; // @[Main.scala 104:44]
-  reg [1:0] state; // @[Main.scala 111:28]
-  wire  _T_4 = 2'h0 == state; // @[Conditional.scala 37:30]
-  wire  _T_6 = r_transaction_cnt == 3'h0; // @[Main.scala 117:45]
-  wire [12:0] _GEN_75 = {{7'd0}, io_TOP_LENGTH}; // @[Main.scala 124:55]
-  wire [12:0] _T_7 = _GEN_75 << io_TOP_SIZE; // @[Main.scala 124:55]
-  wire [12:0] _T_9 = _T_7 + 13'h1; // @[Main.scala 124:72]
-  wire [2:0] _T_12 = r_transaction_cnt + 3'h1; // @[Main.scala 134:68]
-  wire [12:0] _GEN_17 = _T_6 ? _T_9 : {{5'd0}, r_len}; // @[Main.scala 117:53]
-  wire  _GEN_19 = _T_6 | r_W_VALID; // @[Main.scala 117:53]
-  wire [12:0] _GEN_29 = io_TOP_WR ? _GEN_17 : {{5'd0}, r_len}; // @[Main.scala 116:41]
-  wire  _T_18 = 2'h1 == state; // @[Conditional.scala 37:30]
-  wire  _T_20 = r_len >= 8'h1; // @[Main.scala 159:33]
-  wire [7:0] _T_22 = r_len - 8'h1; // @[Main.scala 160:45]
-  wire  _GEN_36 = _T_20 | r_W_LAST; // @[Main.scala 164:44]
-  wire [7:0] _GEN_37 = _T_20 ? _T_22 : r_len; // @[Main.scala 159:41]
-  wire  _GEN_41 = _T_20 & _GEN_36; // @[Main.scala 159:41]
-  wire  _GEN_42 = _T_20 & r_W_VALID; // @[Main.scala 159:41]
-  wire [7:0] _GEN_43 = io_W_READY ? _GEN_37 : r_len; // @[Main.scala 158:42]
-  wire  _T_26 = 2'h2 == state; // @[Conditional.scala 37:30]
-  wire  write_response_ready = _T_1[0]; // @[Main.scala 100:41 Main.scala 103:30 Main.scala 104:30]
-  wire  _GEN_50 = _T_26 | r_B_READY; // @[Conditional.scala 39:67]
-  wire [7:0] _GEN_52 = _T_18 ? _GEN_43 : r_len; // @[Conditional.scala 39:67]
-  wire [12:0] _GEN_64 = _T_4 ? _GEN_29 : {{5'd0}, _GEN_52}; // @[Conditional.scala 40:58]
-  assign io_TOP_RDATA = 32'h0; // @[Main.scala 244:22]
-  assign io_AW_BURST = r_AW_BURST; // @[Main.scala 214:21]
-  assign io_AW_ADDR = r_AW_ADDR; // @[Main.scala 215:21]
-  assign io_AW_LEN = r_AW_LEN; // @[Main.scala 216:21]
-  assign io_AW_SIZE = r_AW_SIZE; // @[Main.scala 217:21]
-  assign io_AW_ID = 1'h0; // @[Main.scala 218:21]
-  assign io_AW_VALID = r_AW_VALID; // @[Main.scala 219:21]
-  assign io_AW_PROT = 3'h0; // @[Main.scala 220:21]
-  assign io_W_DATA = r_W_DATA; // @[Main.scala 223:21]
-  assign io_W_LAST = r_W_LAST; // @[Main.scala 224:21]
-  assign io_W_STRB = r_W_STRB; // @[Main.scala 225:21]
-  assign io_W_VALID = r_W_VALID; // @[Main.scala 226:21]
-  assign io_B_READY = r_B_READY; // @[Main.scala 229:21]
-  assign io_AR_BURST = 2'h0; // @[Main.scala 232:21]
-  assign io_AR_ADDR = 6'h0; // @[Main.scala 233:21]
-  assign io_AR_LEN = 8'h0; // @[Main.scala 234:21]
-  assign io_AR_SIZE = 3'h0; // @[Main.scala 235:21]
-  assign io_AR_ID = 1'h0; // @[Main.scala 236:21]
-  assign io_AR_VALID = 1'h0; // @[Main.scala 237:21]
-  assign io_AR_PROT = 3'h0; // @[Main.scala 238:21]
-  assign io_R_READY = 1'h0; // @[Main.scala 241:22]
+  reg [1:0] r_AW_BURST; // @[Main.scala 72:33]
+  reg [5:0] r_AW_ADDR; // @[Main.scala 73:33]
+  reg [7:0] r_AW_LEN; // @[Main.scala 74:33]
+  reg [2:0] r_AW_SIZE; // @[Main.scala 75:33]
+  reg  r_AW_VALID; // @[Main.scala 77:33]
+  reg [31:0] r_W_DATA; // @[Main.scala 81:33]
+  reg  r_W_LAST; // @[Main.scala 82:33]
+  reg [3:0] r_W_STRB; // @[Main.scala 83:33]
+  reg  r_W_VALID; // @[Main.scala 84:33]
+  reg  r_B_READY; // @[Main.scala 87:33]
+  reg [1:0] r_AR_BURST; // @[Main.scala 90:33]
+  reg [5:0] r_AR_ADDR; // @[Main.scala 91:33]
+  reg [7:0] r_AR_LEN; // @[Main.scala 92:33]
+  reg [2:0] r_AR_SIZE; // @[Main.scala 93:33]
+  reg  r_AR_VALID; // @[Main.scala 96:33]
+  reg [31:0] r_R_RDATA; // @[Main.scala 100:34]
+  reg  r_R_READY; // @[Main.scala 101:33]
+  reg [2:0] r_transaction_cnt; // @[Main.scala 104:44]
+  reg [7:0] r_len; // @[Main.scala 105:44]
+  reg [2:0] rx_transaction_cnt; // @[Main.scala 109:44]
+  reg [7:0] rx_len; // @[Main.scala 110:44]
+  wire [1:0] _T = ~io_B_RESP; // @[Main.scala 115:46]
+  wire [1:0] _GEN_135 = {{1'd0}, io_B_VALID}; // @[Main.scala 115:44]
+  wire [1:0] _T_1 = _GEN_135 & _T; // @[Main.scala 115:44]
+  wire [1:0] _T_2 = ~io_R_RESP; // @[Main.scala 118:46]
+  wire [1:0] _GEN_136 = {{1'd0}, io_R_VALID}; // @[Main.scala 118:44]
+  wire [1:0] _T_3 = _GEN_136 & _T_2; // @[Main.scala 118:44]
+  wire [1:0] _GEN_137 = {{1'd0}, io_R_LAST}; // @[Main.scala 118:57]
+  wire [1:0] _T_4 = _T_3 & _GEN_137; // @[Main.scala 118:57]
+  reg [1:0] state; // @[Main.scala 125:28]
+  wire  _T_7 = 2'h0 == state; // @[Conditional.scala 37:30]
+  wire  _T_9 = r_transaction_cnt == 3'h0; // @[Main.scala 131:45]
+  wire [14:0] _GEN_138 = {{7'd0}, io_TOP_LENGTH}; // @[Main.scala 138:55]
+  wire [14:0] _T_10 = _GEN_138 << io_TOP_SIZE; // @[Main.scala 138:55]
+  wire [14:0] _T_12 = _T_10 + 15'h1; // @[Main.scala 138:72]
+  wire [2:0] _T_15 = r_transaction_cnt + 3'h1; // @[Main.scala 148:68]
+  wire [14:0] _GEN_17 = _T_9 ? _T_12 : {{7'd0}, r_len}; // @[Main.scala 131:53]
+  wire  _GEN_19 = _T_9 | r_W_VALID; // @[Main.scala 131:53]
+  wire [14:0] _GEN_29 = io_TOP_WR ? _GEN_17 : {{7'd0}, r_len}; // @[Main.scala 130:41]
+  wire  _T_21 = 2'h1 == state; // @[Conditional.scala 37:30]
+  wire  _T_23 = r_len >= 8'h1; // @[Main.scala 173:33]
+  wire [7:0] _T_25 = r_len - 8'h1; // @[Main.scala 174:45]
+  wire  _T_26 = r_len == 8'h1; // @[Main.scala 178:37]
+  wire  _GEN_36 = _T_26 | r_W_LAST; // @[Main.scala 178:45]
+  wire [7:0] _GEN_37 = _T_23 ? _T_25 : r_len; // @[Main.scala 173:41]
+  wire  _GEN_41 = _T_23 & _GEN_36; // @[Main.scala 173:41]
+  wire  _GEN_42 = _T_23 & r_W_VALID; // @[Main.scala 173:41]
+  wire [7:0] _GEN_43 = io_W_READY ? _GEN_37 : r_len; // @[Main.scala 172:42]
+  wire  _T_29 = 2'h2 == state; // @[Conditional.scala 37:30]
+  wire  write_response_ready = _T_1[0]; // @[Main.scala 106:41 Main.scala 114:30 Main.scala 115:30]
+  wire  _GEN_50 = _T_29 | r_B_READY; // @[Conditional.scala 39:67]
+  wire [7:0] _GEN_52 = _T_21 ? _GEN_43 : r_len; // @[Conditional.scala 39:67]
+  wire [14:0] _GEN_64 = _T_7 ? _GEN_29 : {{7'd0}, _GEN_52}; // @[Conditional.scala 40:58]
+  reg [1:0] rx_state; // @[Main.scala 210:31]
+  wire  _T_33 = 2'h0 == rx_state; // @[Conditional.scala 37:30]
+  wire  _T_35 = rx_transaction_cnt == 3'h0; // @[Main.scala 216:45]
+  wire [14:0] _GEN_139 = {{7'd0}, io_TOP_R_LENGTH}; // @[Main.scala 222:56]
+  wire [14:0] _T_36 = _GEN_139 << io_TOP_R_SIZE; // @[Main.scala 222:56]
+  wire [14:0] _T_38 = _T_36 + 15'h1; // @[Main.scala 222:74]
+  wire [2:0] _T_41 = rx_transaction_cnt + 3'h1; // @[Main.scala 232:70]
+  wire  _GEN_84 = io_AR_READY ? r_R_READY : 1'h1; // @[Main.scala 235:50]
+  wire [14:0] _GEN_91 = _T_35 ? _T_38 : {{7'd0}, rx_len}; // @[Main.scala 216:54]
+  wire  _GEN_93 = _T_35 | _GEN_84; // @[Main.scala 216:54]
+  wire [14:0] _GEN_102 = io_TOP_RD ? _GEN_91 : {{7'd0}, rx_len}; // @[Main.scala 215:41]
+  wire  _T_47 = 2'h1 == rx_state; // @[Conditional.scala 37:30]
+  wire  _T_49 = rx_len >= 8'h1; // @[Main.scala 258:34]
+  wire [7:0] _T_51 = rx_len - 8'h1; // @[Main.scala 259:45]
+  wire  read_response_ready = _T_4[0]; // @[Main.scala 111:40 Main.scala 117:30 Main.scala 118:30]
+  wire  _GEN_110 = read_response_ready ? 1'h0 : 1'h1; // @[Main.scala 262:59]
+  wire [7:0] _GEN_111 = _T_49 ? _T_51 : rx_len; // @[Main.scala 258:41]
+  wire [7:0] _GEN_115 = io_R_VALID ? _GEN_111 : rx_len; // @[Main.scala 257:41]
+  wire [7:0] _GEN_119 = _T_47 ? _GEN_115 : rx_len; // @[Conditional.scala 39:67]
+  wire [14:0] _GEN_127 = _T_33 ? _GEN_102 : {{7'd0}, _GEN_119}; // @[Conditional.scala 40:58]
+  assign io_TOP_RDATA = r_R_RDATA; // @[Main.scala 307:22]
+  assign io_AW_BURST = r_AW_BURST; // @[Main.scala 277:21]
+  assign io_AW_ADDR = r_AW_ADDR; // @[Main.scala 278:21]
+  assign io_AW_LEN = r_AW_LEN; // @[Main.scala 279:21]
+  assign io_AW_SIZE = r_AW_SIZE; // @[Main.scala 280:21]
+  assign io_AW_ID = 1'h0; // @[Main.scala 281:21]
+  assign io_AW_VALID = r_AW_VALID; // @[Main.scala 282:21]
+  assign io_AW_PROT = 3'h0; // @[Main.scala 283:21]
+  assign io_W_DATA = r_W_DATA; // @[Main.scala 286:21]
+  assign io_W_LAST = r_W_LAST; // @[Main.scala 287:21]
+  assign io_W_STRB = r_W_STRB; // @[Main.scala 288:21]
+  assign io_W_VALID = r_W_VALID; // @[Main.scala 289:21]
+  assign io_B_READY = r_B_READY; // @[Main.scala 292:21]
+  assign io_AR_BURST = r_AR_BURST; // @[Main.scala 295:21]
+  assign io_AR_ADDR = r_AR_ADDR; // @[Main.scala 296:21]
+  assign io_AR_LEN = r_AR_LEN; // @[Main.scala 297:21]
+  assign io_AR_SIZE = r_AR_SIZE; // @[Main.scala 298:21]
+  assign io_AR_ID = 1'h0; // @[Main.scala 299:21]
+  assign io_AR_VALID = r_AR_VALID; // @[Main.scala 300:21]
+  assign io_AR_PROT = 3'h0; // @[Main.scala 301:21]
+  assign io_R_READY = r_R_READY; // @[Main.scala 304:22]
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
 `endif
@@ -171,11 +220,31 @@ initial begin
   _RAND_9 = {1{`RANDOM}};
   r_B_READY = _RAND_9[0:0];
   _RAND_10 = {1{`RANDOM}};
-  r_transaction_cnt = _RAND_10[2:0];
+  r_AR_BURST = _RAND_10[1:0];
   _RAND_11 = {1{`RANDOM}};
-  r_len = _RAND_11[7:0];
+  r_AR_ADDR = _RAND_11[5:0];
   _RAND_12 = {1{`RANDOM}};
-  state = _RAND_12[1:0];
+  r_AR_LEN = _RAND_12[7:0];
+  _RAND_13 = {1{`RANDOM}};
+  r_AR_SIZE = _RAND_13[2:0];
+  _RAND_14 = {1{`RANDOM}};
+  r_AR_VALID = _RAND_14[0:0];
+  _RAND_15 = {1{`RANDOM}};
+  r_R_RDATA = _RAND_15[31:0];
+  _RAND_16 = {1{`RANDOM}};
+  r_R_READY = _RAND_16[0:0];
+  _RAND_17 = {1{`RANDOM}};
+  r_transaction_cnt = _RAND_17[2:0];
+  _RAND_18 = {1{`RANDOM}};
+  r_len = _RAND_18[7:0];
+  _RAND_19 = {1{`RANDOM}};
+  rx_transaction_cnt = _RAND_19[2:0];
+  _RAND_20 = {1{`RANDOM}};
+  rx_len = _RAND_20[7:0];
+  _RAND_21 = {1{`RANDOM}};
+  state = _RAND_21[1:0];
+  _RAND_22 = {1{`RANDOM}};
+  rx_state = _RAND_22[1:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial
@@ -186,45 +255,45 @@ end // initial
   always @(posedge clock) begin
     if (reset) begin
       r_AW_BURST <= 2'h0;
-    end else if (_T_4) begin
+    end else if (_T_7) begin
       if (io_TOP_WR) begin
-        if (_T_6) begin
+        if (_T_9) begin
           r_AW_BURST <= io_TOP_BURST;
         end
       end
     end
     if (reset) begin
       r_AW_ADDR <= 6'h0;
-    end else if (_T_4) begin
+    end else if (_T_7) begin
       if (io_TOP_WR) begin
-        if (_T_6) begin
+        if (_T_9) begin
           r_AW_ADDR <= io_TOP_ADDRESS;
         end
       end
     end
     if (reset) begin
       r_AW_LEN <= 8'h0;
-    end else if (_T_4) begin
+    end else if (_T_7) begin
       if (io_TOP_WR) begin
-        if (_T_6) begin
-          r_AW_LEN <= {{2'd0}, io_TOP_LENGTH};
+        if (_T_9) begin
+          r_AW_LEN <= io_TOP_LENGTH;
         end
       end
     end
     if (reset) begin
       r_AW_SIZE <= 3'h0;
-    end else if (_T_4) begin
+    end else if (_T_7) begin
       if (io_TOP_WR) begin
-        if (_T_6) begin
+        if (_T_9) begin
           r_AW_SIZE <= io_TOP_SIZE;
         end
       end
     end
     if (reset) begin
       r_AW_VALID <= 1'h0;
-    end else if (_T_4) begin
+    end else if (_T_7) begin
       if (io_TOP_WR) begin
-        if (_T_6) begin
+        if (_T_9) begin
           if (io_AW_READY) begin
             r_AW_VALID <= 1'h0;
           end else begin
@@ -239,10 +308,10 @@ end // initial
     end
     if (reset) begin
       r_W_DATA <= 32'h0;
-    end else if (!(_T_4)) begin
-      if (_T_18) begin
+    end else if (!(_T_7)) begin
+      if (_T_21) begin
         if (io_W_READY) begin
-          if (_T_20) begin
+          if (_T_23) begin
             r_W_DATA <= io_TOP_WDATA;
           end else begin
             r_W_DATA <= 32'h0;
@@ -252,8 +321,8 @@ end // initial
     end
     if (reset) begin
       r_W_LAST <= 1'h0;
-    end else if (!(_T_4)) begin
-      if (_T_18) begin
+    end else if (!(_T_7)) begin
+      if (_T_21) begin
         if (io_W_READY) begin
           r_W_LAST <= _GEN_41;
         end
@@ -261,49 +330,138 @@ end // initial
     end
     if (reset) begin
       r_W_STRB <= 4'h0;
-    end else if (!(_T_4)) begin
-      if (_T_18) begin
+    end else if (!(_T_7)) begin
+      if (_T_21) begin
         if (io_W_READY) begin
-          r_W_STRB <= {{3'd0}, _T_20};
+          r_W_STRB <= {{3'd0}, _T_23};
         end
       end
     end
     if (reset) begin
       r_W_VALID <= 1'h0;
-    end else if (_T_4) begin
+    end else if (_T_7) begin
       if (io_TOP_WR) begin
         r_W_VALID <= _GEN_19;
       end
-    end else if (_T_18) begin
+    end else if (_T_21) begin
       if (io_W_READY) begin
         r_W_VALID <= _GEN_42;
       end
     end
     if (reset) begin
       r_B_READY <= 1'h0;
-    end else if (_T_4) begin
+    end else if (_T_7) begin
       if (io_TOP_WR) begin
-        if (_T_6) begin
+        if (_T_9) begin
           r_B_READY <= 1'h0;
         end
       end
-    end else if (!(_T_18)) begin
+    end else if (!(_T_21)) begin
       r_B_READY <= _GEN_50;
     end
     if (reset) begin
+      r_AR_BURST <= 2'h0;
+    end else if (_T_33) begin
+      if (io_TOP_RD) begin
+        if (_T_35) begin
+          r_AR_BURST <= io_TOP_R_BURST;
+        end else if (!(io_AR_READY)) begin
+          r_AR_BURST <= io_TOP_R_BURST;
+        end
+      end
+    end
+    if (reset) begin
+      r_AR_ADDR <= 6'h0;
+    end else if (_T_33) begin
+      if (io_TOP_RD) begin
+        if (_T_35) begin
+          r_AR_ADDR <= io_TOP_R_ADDRESS;
+        end else if (!(io_AR_READY)) begin
+          r_AR_ADDR <= io_TOP_R_ADDRESS;
+        end
+      end
+    end
+    if (reset) begin
+      r_AR_LEN <= 8'h0;
+    end else if (_T_33) begin
+      if (io_TOP_RD) begin
+        if (_T_35) begin
+          r_AR_LEN <= io_TOP_R_LENGTH;
+        end else if (!(io_AR_READY)) begin
+          r_AR_LEN <= io_TOP_R_LENGTH;
+        end
+      end
+    end
+    if (reset) begin
+      r_AR_SIZE <= 3'h0;
+    end else if (_T_33) begin
+      if (io_TOP_RD) begin
+        if (_T_35) begin
+          r_AR_SIZE <= io_TOP_R_SIZE;
+        end else if (!(io_AR_READY)) begin
+          r_AR_SIZE <= io_TOP_R_SIZE;
+        end
+      end
+    end
+    if (reset) begin
+      r_AR_VALID <= 1'h0;
+    end else if (_T_33) begin
+      if (io_TOP_RD) begin
+        if (_T_35) begin
+          if (io_AR_READY) begin
+            r_AR_VALID <= 1'h0;
+          end else begin
+            r_AR_VALID <= 1'h1;
+          end
+        end else if (io_AR_READY) begin
+          r_AR_VALID <= 1'h0;
+        end else begin
+          r_AR_VALID <= 1'h1;
+        end
+      end
+    end
+    if (reset) begin
+      r_R_RDATA <= 32'h0;
+    end else if (!(_T_33)) begin
+      if (_T_47) begin
+        if (io_R_VALID) begin
+          if (_T_49) begin
+            r_R_RDATA <= io_R_DATA;
+          end
+        end else begin
+          r_R_RDATA <= 32'h0;
+        end
+      end
+    end
+    if (reset) begin
+      r_R_READY <= 1'h0;
+    end else if (_T_33) begin
+      if (io_TOP_RD) begin
+        r_R_READY <= _GEN_93;
+      end
+    end else if (_T_47) begin
+      if (io_R_VALID) begin
+        if (_T_49) begin
+          if (read_response_ready) begin
+            r_R_READY <= 1'h0;
+          end
+        end
+      end
+    end
+    if (reset) begin
       r_transaction_cnt <= 3'h0;
-    end else if (_T_4) begin
+    end else if (_T_7) begin
       if (io_TOP_WR) begin
-        if (_T_6) begin
+        if (_T_9) begin
           if (io_AW_READY) begin
             r_transaction_cnt <= 3'h0;
           end else begin
-            r_transaction_cnt <= _T_12;
+            r_transaction_cnt <= _T_15;
           end
         end else if (io_AW_READY) begin
           r_transaction_cnt <= 3'h0;
         end else begin
-          r_transaction_cnt <= _T_12;
+          r_transaction_cnt <= _T_15;
         end
       end
     end
@@ -313,10 +471,32 @@ end // initial
       r_len <= _GEN_64[7:0];
     end
     if (reset) begin
+      rx_transaction_cnt <= 3'h0;
+    end else if (_T_33) begin
+      if (io_TOP_RD) begin
+        if (_T_35) begin
+          if (io_AR_READY) begin
+            rx_transaction_cnt <= 3'h0;
+          end else begin
+            rx_transaction_cnt <= _T_41;
+          end
+        end else if (io_AR_READY) begin
+          rx_transaction_cnt <= 3'h0;
+        end else begin
+          rx_transaction_cnt <= _T_41;
+        end
+      end
+    end
+    if (reset) begin
+      rx_len <= 8'h0;
+    end else begin
+      rx_len <= _GEN_127[7:0];
+    end
+    if (reset) begin
       state <= 2'h0;
-    end else if (_T_4) begin
+    end else if (_T_7) begin
       if (io_TOP_WR) begin
-        if (_T_6) begin
+        if (_T_9) begin
           if (io_AW_READY) begin
             state <= 2'h1;
           end
@@ -326,9 +506,9 @@ end // initial
       end else begin
         state <= 2'h0;
       end
-    end else if (_T_18) begin
+    end else if (_T_21) begin
       if (io_W_READY) begin
-        if (_T_20) begin
+        if (_T_23) begin
           state <= 2'h1;
         end else begin
           state <= 2'h2;
@@ -336,9 +516,32 @@ end // initial
       end else begin
         state <= 2'h1;
       end
-    end else if (_T_26) begin
+    end else if (_T_29) begin
       if (write_response_ready) begin
         state <= 2'h0;
+      end
+    end
+    if (reset) begin
+      rx_state <= 2'h0;
+    end else if (_T_33) begin
+      if (io_TOP_RD) begin
+        if (_T_35) begin
+          if (io_AR_READY) begin
+            rx_state <= 2'h1;
+          end
+        end else if (io_AR_READY) begin
+          rx_state <= 2'h1;
+        end
+      end else begin
+        rx_state <= 2'h0;
+      end
+    end else if (_T_47) begin
+      if (io_R_VALID) begin
+        if (_T_49) begin
+          rx_state <= {{1'd0}, _GEN_110};
+        end
+      end else begin
+        rx_state <= 2'h1;
       end
     end
   end

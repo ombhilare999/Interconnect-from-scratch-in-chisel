@@ -13,10 +13,16 @@ class Top extends Module() {
             val TOP_RD      = Input(UInt(1.W))    // Read Enable Signal
             val TOP_ADDRESS = Input(UInt(6.W))    // Address Bus
             val TOP_WDATA   = Input(UInt(32.W))   // Write Data Bus
-            val TOP_RDATA   = Output(UInt(32.W))  // Read Data Bus
-            val TOP_LENGTH  = Input(UInt(6.W))    // Length Input
+            val TOP_LENGTH  = Input(UInt(8.W))    // Length Input
             val TOP_BURST   = Input(UInt(2.W))    // Burst Type
             val TOP_SIZE    = Input(UInt(3.W))    // Number of bytes in one burst
+
+            // Signals from Top for Rx:
+            val TOP_RDATA     = Output(UInt(32.W))  // Read Data Bus
+            val TOP_R_ADDRESS = Input(UInt(6.W))    // Address Bus 
+            val TOP_R_LENGTH  = Input(UInt(8.W))    // Length Input
+            val TOP_R_BURST   = Input(UInt(2.W))    // Burst Type
+            val TOP_R_SIZE    = Input(UInt(3.W))    // Number of bytes in one burst
 
             //AXI Write Address Channel
             val AW_BURST = Output(UInt(2.W))   //Burst Type:  2 Bit Burst Bus
@@ -94,14 +100,22 @@ class Top extends Module() {
         val r_R_RDATA   = RegInit(0.U(32.W))
         val r_R_READY  = RegInit(0.U(1.W))
 
-        //Extra Variables:
-        val r_transaction_cnt     = RegInit(0.U(3.W))    
+        //Extra Variables write:
+        val r_transaction_cnt     = RegInit(0.U(3.W))
         val r_len                 = RegInit(0.U(8.W))
         val write_response_ready  = Wire(UInt(1.W))
+        
+        //Extra Variables read:
+        val rx_transaction_cnt    = RegInit(0.U(3.W))
+        val rx_len                = RegInit(0.U(8.W))
+        val read_response_ready  = Wire(UInt(1.W))
 
         //Initializing Variables:
         write_response_ready := 0.U  
         write_response_ready := io.B_VALID & ~io.B_RESP
+
+        read_response_ready  := 0.U
+        read_response_ready  := io.R_VALID & ~io.R_RESP & io.R_LAST
 
         // Object for Write State Machine 
         object State extends ChiselEnum {
@@ -161,7 +175,7 @@ class Top extends Module() {
                         r_W_STRB   := 1.U
                         r_W_DATA   := io.TOP_WDATA
                         state      := State.sOne        
-                        when (r_len >= 1.U){
+                        when (r_len === 1.U){
                             r_W_LAST   := 1.U      
                         }
                     } .otherwise {
@@ -198,13 +212,62 @@ class Top extends Module() {
         //Write State Machine
         switch(rx_state) {   
             is(Rx_State.sIdle){
-
+                when(io.TOP_RD === 1.U) {               //IF write is asserted by the top module
+                    when(rx_transaction_cnt === 0.U) {
+                        //First Transaction:
+                        r_AR_ADDR  := io.TOP_R_ADDRESS
+                        r_AR_BURST := io.TOP_R_BURST
+                        r_AR_LEN   := io.TOP_R_LENGTH
+                        r_AR_SIZE  := io.TOP_R_SIZE
+                        rx_len     := (io.TOP_R_LENGTH << io.TOP_R_SIZE) + 1.U 
+                        r_AR_VALID := 1.U
+                        r_R_READY  := 1.U
+                        r_AR_ID    := 0.U
+                        r_AR_PROT  := 0.U
+                        when(io.AR_READY === 1.U) {     //Valid and Ready High at
+                            rx_transaction_cnt := 0.U 
+                            rx_state := Rx_State.sOne
+                            r_AR_VALID := 0.U
+                        } .otherwise {
+                            rx_transaction_cnt := rx_transaction_cnt + 1.U
+                        }
+                    } .otherwise {
+                        when(io.AR_READY === 1.U){
+                            rx_transaction_cnt := 0.U
+                            r_AR_VALID         := 0.U
+                            rx_state := Rx_State.sOne
+                        } .otherwise {
+                            //Hold the values
+                            r_AR_ADDR  := io.TOP_R_ADDRESS
+                            r_AR_BURST := io.TOP_R_BURST
+                            r_AR_LEN   := io.TOP_R_LENGTH
+                            r_AR_SIZE  := io.TOP_R_SIZE 
+                            r_AR_VALID := 1.U
+                            r_R_READY  := 1.U
+                            r_AR_ID    := 0.U
+                            r_AR_PROT  := 0.U                           
+                            rx_transaction_cnt := rx_transaction_cnt + 1.U
+                        }
+                    }
+                } .otherwise {
+                    rx_state := Rx_State.sIdle
+                }
             }
             is(Rx_State.sOne){
-
-            }
-            is(Rx_State.sTwo){
-
+                when(io.R_VALID === 1.U){
+                    when (rx_len >= 1.U){
+                        rx_len    := rx_len - 1.U 
+                        r_R_RDATA := io.R_DATA
+                        rx_state  := Rx_State.sOne
+                        when (read_response_ready === 1.U){
+                            r_R_READY := 0.U
+                            rx_state := Rx_State.sIdle
+                        }
+                    }
+                } .otherwise {
+                    r_R_RDATA := 0.U
+                    rx_state  := Rx_State.sOne
+                }
             }
         }
 

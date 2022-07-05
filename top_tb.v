@@ -17,11 +17,16 @@ module top_tb();
   reg io_TOP_RD;
   reg [5:0] io_TOP_ADDRESS;
   reg [31:0] io_TOP_WDATA;
-  wire [31:0] io_TOP_RDATA;
-  reg [5:0] io_TOP_LENGTH;
+  reg [7:0] io_TOP_LENGTH;
   reg [1:0] io_TOP_BURST;
   reg [2:0] io_TOP_SIZE; 
 
+  wire [31:0] io_TOP_RDATA;
+  reg  [5:0] io_TOP_R_ADDRESS;
+  reg  [7:0] io_TOP_R_LENGTH;
+  reg  [1:0] io_TOP_R_BURST;
+  reg  [2:0] io_TOP_R_SIZE;
+  
   //AW Channel:
   wire [1:0] io_AW_BURST; 
   wire [5:0] io_AW_ADDR; 
@@ -84,10 +89,18 @@ module top_tb();
     io_TOP_WDATA   = 32'h07563314;
     io_TOP_LENGTH  = 1'h0;
     io_TOP_BURST   = 2'h1;
-    io_TOP_SIZE    = 3'h2;
+    io_TOP_SIZE    = 3'h2; 
     #30 
     io_TOP_WR = 1'b0;
-    #100 $finish;
+    #50 
+    io_TOP_WR = 1'b0;
+    io_TOP_RD = 1'b1;
+    io_TOP_R_ADDRESS = 6'h05;
+    io_TOP_R_LENGTH  = 1'h0;
+    io_TOP_R_BURST   = 2'h1;
+    io_TOP_R_SIZE    = 3'h2;   
+    #100 
+    $finish;
   end
 
   initial
@@ -158,10 +171,15 @@ module top_tb();
     .io_TOP_RD (io_TOP_RD ),
     .io_TOP_ADDRESS (io_TOP_ADDRESS ),
     .io_TOP_WDATA (io_TOP_WDATA ),
-    .io_TOP_RDATA (io_TOP_RDATA ),
     .io_TOP_LENGTH (io_TOP_LENGTH ),
     .io_TOP_BURST (io_TOP_BURST ),
     .io_TOP_SIZE (io_TOP_SIZE ),
+
+    .io_TOP_RDATA (io_TOP_RDATA ),
+    .io_TOP_R_ADDRESS (io_TOP_R_ADDRESS),
+    .io_TOP_R_BURST(io_TOP_R_BURST),
+    .io_TOP_R_LENGTH(io_TOP_R_LENGTH),
+    .io_TOP_R_SIZE(io_TOP_R_SIZE),
 
     //AXI Write Address Channel
     .io_AW_BURST (io_AW_BURST ),
