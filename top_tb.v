@@ -5,8 +5,6 @@
 //
 ////////////////////////////////////////////////////////////////////////
 
-`include "Top.v"
-`include "memory_slave/memory_top.vhd"
 `timescale 1ns / 1ps
 
 module top_tb();
@@ -25,44 +23,44 @@ module top_tb();
   reg [2:0] io_TOP_SIZE; 
 
   //AW Channel:
-  reg [1:0] io_AW_BURST; 
-  reg [5:0] io_AW_ADDR; 
-  reg [7:0] io_AW_LEN; 
-  reg [2:0] io_AW_SIZE; 
-  reg io_AW_ID; 
+  wire [1:0] io_AW_BURST; 
+  wire [5:0] io_AW_ADDR; 
+  wire [7:0] io_AW_LEN; 
+  wire [2:0] io_AW_SIZE; 
+  wire io_AW_ID; 
   wire io_AW_READY; 
-  reg io_AW_VALID; 
-  reg [2:0] io_AW_PROT; 
+  wire io_AW_VALID; 
+  wire [2:0] io_AW_PROT; 
 
   //W Channel:
-  reg [31:0] io_W_DATA; 
-  reg io_W_LAST; 
-  reg [3:0] io_W_STRB; 
+  wire [31:0] io_W_DATA; 
+  wire io_W_LAST; 
+  wire [3:0] io_W_STRB; 
   wire io_W_READY; 
-  reg io_W_VALID; 
+  wire io_W_VALID; 
 
   //B Channel:
   wire io_B_ID; 
-  wire io_B_RESP; 
-  reg io_B_READY;
+  wire [1:0] io_B_RESP; 
+  wire io_B_READY;
   wire io_B_VALID; 
 
   //AR Channel:
-  reg [1:0] io_AR_BURST; 
-  reg [5:0] io_AR_ADDR; 
-  reg [7:0] io_AR_LEN; 
-  reg [3:0] io_AR_SIZE; 
-  reg io_AR_ID; 
+  wire [1:0] io_AR_BURST; 
+  wire [5:0] io_AR_ADDR; 
+  wire [7:0] io_AR_LEN; 
+  wire [2:0] io_AR_SIZE; 
+  wire io_AR_ID; 
   wire io_AR_READY;
-  reg io_AR_VALID; 
-  reg [2:0] io_AR_PROT;
+  wire io_AR_VALID; 
+  wire [2:0] io_AR_PROT;
 
   //R Channel:
   wire [31:0] io_R_DATA; 
   wire io_R_LAST; 
   wire io_R_ID; 
-  wire io_R_RESP; 
-  reg io_R_READY; 
+  wire [1:0] io_R_RESP; 
+  wire io_R_READY; 
   wire io_R_VALID;
 
   always
@@ -78,14 +76,17 @@ module top_tb();
   begin
     #5
     //Toggling Reset Once
-    #10 reset = 1'b1;
+    reset = 1'b1;
+    #10 reset = 1'b0;
     io_TOP_WR = 1'b1;
     io_TOP_RD = 1'b0;
-    io_TOP_ADDRESS = 6'h38;
+    io_TOP_ADDRESS = 6'h05;
     io_TOP_WDATA   = 32'h07563314;
     io_TOP_LENGTH  = 1'h0;
     io_TOP_BURST   = 2'h1;
-    io_TOP_SIZE    = 3'h0;
+    io_TOP_SIZE    = 3'h2;
+    #30 
+    io_TOP_WR = 1'b0;
     #100 $finish;
   end
 
@@ -103,7 +104,7 @@ module top_tb();
   )
   memory_top_0 (
     .ACLK(clock),
-    .ARESETn(reset),
+    .ARESETn(~reset),
 
     //AXI Write Address Channel
     .S_AXI_AWADDR(io_AW_ADDR),

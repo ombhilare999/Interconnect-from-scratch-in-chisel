@@ -9,7 +9,8 @@
     "definition":{
       "sIdle":0,
       "sOne":1,
-      "sTwo":2
+      "sTwo":2,
+      "sThree":3
     }
   },
   {

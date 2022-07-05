@@ -37,7 +37,7 @@ class Top extends Module() {
             
             //AXI Write Response Channel
             val B_ID    = Input(UInt(1.W))     //Response ID Tag
-            val B_RESP  = Input(UInt(1.W))     //Write Response
+            val B_RESP  = Input(UInt(2.W))     //Write Response
             val B_READY = Output(UInt(1.W))    //Response Ready
             val B_VALID = Input(UInt(1.W))     //Write Response Valid
             
@@ -55,7 +55,7 @@ class Top extends Module() {
             val R_DATA  = Input(UInt(32.W))   //Read Data
             val R_LAST  = Input(UInt(1.W))    //Read Last.
             val R_ID    = Input(UInt(1.W))    //Read Data ID
-            val R_RESP  = Input(UInt(1.W))    //Read Response
+            val R_RESP  = Input(UInt(2.W))    //Read Response
             val R_READY = Output(UInt(1.W))   //Read Data Ready
             val R_VALID = Input(UInt(1.W))    //Read Data Valid                 
         }
@@ -87,7 +87,7 @@ class Top extends Module() {
 
         //Initializing Variables:
         write_response_ready := 0.U  
-        write_response_ready := io.B_VALID & io.B_RESP
+        write_response_ready := io.B_VALID & ~io.B_RESP
 
         //Keeping Read signals low
         io.TOP_RDATA  :=   0.U
@@ -102,7 +102,7 @@ class Top extends Module() {
 
         // Object for state 
         object State extends ChiselEnum {
-            val sIdle, sOne, sTwo = Value
+            val sIdle, sOne, sTwo, sThree = Value
         }
 
         val state = RegInit(State.sIdle)
@@ -113,23 +113,27 @@ class Top extends Module() {
                 when(io.TOP_WR === 1.U) {               //IF write is asserted by the top module
                     when (r_transaction_cnt === 0.U){   //Means the first step of transaction
                         //First Transaction:
+                        r_B_READY := 0.U                //Last Transaction reamining task
                         r_AW_BURST := io.TOP_BURST
                         r_AW_ADDR  := io.TOP_ADDRESS
                         r_AW_LEN   := io.TOP_LENGTH
                         r_AW_SIZE  := io.TOP_SIZE
-                        r_len      := io.TOP_LENGTH << io.TOP_SIZE
+                        r_len      := ( io.TOP_LENGTH << io.TOP_SIZE ) + 1.U
                         r_AW_VALID := 1.U
+                        r_W_VALID  := 1.U
                         r_AW_ID    := 0.U
                         r_AW_PROT  := 0.U
                         when (io.AW_READY === 1.U){ //Valid and Ready high at the same time
                             r_transaction_cnt := 0.U
                             state := State.sOne
+                            r_AW_VALID := 0.U
                         } .otherwise {
                             r_transaction_cnt := r_transaction_cnt + 1.U  //Increment on each transaction 
                         }
                     } .otherwise {
                         when (io.AW_READY === 1.U){ //Valid and Ready high at the same time
                             r_transaction_cnt := 0.U
+                            r_AW_VALID := 0.U
                             state := State.sOne
                         } .otherwise {
                             // Hold the Values
@@ -151,14 +155,16 @@ class Top extends Module() {
                 when(io.W_READY === 1.U) {  
                     when (r_len >= 1.U) { 
                         r_len      := r_len - 1.U
-                        r_W_VALID  := 1.U
                         r_W_STRB   := 1.U
                         r_W_DATA   := io.TOP_WDATA
                         state      := State.sOne        
+                        when (r_len >= 1.U){
+                            r_W_LAST   := 1.U      
+                        }
                     } .otherwise {
                         state := State.sTwo      //Go to next state 
-                        r_W_DATA   := 0.U
-                        r_W_LAST   := 1.U                    
+                        r_W_LAST  := 0.U
+                        r_W_DATA   := 0.U    
                         r_W_STRB   := 0.U
                         r_W_VALID  := 0.U
                     }
@@ -171,11 +177,9 @@ class Top extends Module() {
                 }
             }
             is(State.sTwo){
-                r_W_LAST  := 0.U
                 r_B_READY := 1.U        //Stating master is ready to accept the write response
                 when (write_response_ready === 1.U) {
                     state     := State.sIdle
-                    r_B_READY := 0.U
                 }
             }
         }
