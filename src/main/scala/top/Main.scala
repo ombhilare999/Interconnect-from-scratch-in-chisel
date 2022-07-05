@@ -70,7 +70,6 @@ class Top extends Module() {
         val r_AW_ID    = RegInit(0.U(1.W))
         val r_AW_VALID = RegInit(0.U(1.W))
         val r_AW_PROT  = RegInit(0.U(3.W))
-        val r_transaction_cnt = RegInit(0.U(3.W))
 
         //Write Data Signals:
         val r_W_DATA   = RegInit(0.U(32.W))
@@ -79,35 +78,39 @@ class Top extends Module() {
         val r_W_VALID  = RegInit(0.U(1.W))
 
         //Write Response:
-        val r_B_READY    = RegInit(0.U(1.W))
+        val r_B_READY  = RegInit(0.U(1.W))
+
+        //Read Address signals:
+        val r_AR_BURST = RegInit(0.U(2.W))
+        val r_AR_ADDR  = RegInit(0.U(6.W))
+        val r_AR_LEN   = RegInit(0.U(8.W))
+        val r_AR_SIZE  = RegInit(0.U(3.W))
+        val r_AR_ID    = RegInit(0.U(1.W))
+        val r_AR_READY = RegInit(0.U(1.W))
+        val r_AR_VALID = RegInit(0.U(1.W))
+        val r_AR_PROT  = RegInit(0.U(3.W))
+        
+        //Read Data/Response Channel
+        val r_R_RDATA   = RegInit(0.U(32.W))
+        val r_R_READY  = RegInit(0.U(1.W))
 
         //Extra Variables:
-        val r_len     = RegInit(0.U(8.W))
+        val r_transaction_cnt     = RegInit(0.U(3.W))    
+        val r_len                 = RegInit(0.U(8.W))
         val write_response_ready  = Wire(UInt(1.W))
 
         //Initializing Variables:
         write_response_ready := 0.U  
         write_response_ready := io.B_VALID & ~io.B_RESP
 
-        //Keeping Read signals low
-        io.TOP_RDATA  :=   0.U
-        io.AR_BURST   :=   0.U
-        io.AR_ADDR    :=   0.U
-        io.AR_LEN     :=   0.U
-        io.AR_SIZE    :=   0.U
-        io.AR_ID      :=   0.U
-        io.AR_VALID   :=   0.U
-        io.AR_PROT    :=   0.U
-        io.R_READY    :=   0.U
-
-        // Object for state 
+        // Object for Write State Machine 
         object State extends ChiselEnum {
             val sIdle, sOne, sTwo, sThree = Value
         }
 
         val state = RegInit(State.sIdle)
         
-        //Transmitter FSM 
+        //Write State Machine
         switch(state) {   
             is(State.sIdle) {
                 when(io.TOP_WR === 1.U) {               //IF write is asserted by the top module
@@ -184,6 +187,27 @@ class Top extends Module() {
             }
         }
     
+
+        // Object for Write State Machine 
+        object Rx_State extends ChiselEnum {
+            val sIdle, sOne, sTwo, sThree = Value
+        }
+
+        val rx_state = RegInit(Rx_State.sIdle)
+        
+        //Write State Machine
+        switch(rx_state) {   
+            is(Rx_State.sIdle){
+
+            }
+            is(Rx_State.sOne){
+
+            }
+            is(Rx_State.sTwo){
+
+            }
+        }
+
         //Updating AXI Signals:
 
         //Write Address Signals:
@@ -203,7 +227,21 @@ class Top extends Module() {
 
         //Write Response Channel:
         io.B_READY  := r_B_READY
+
+        //Read Address Channel:
+        io.AR_BURST := r_AR_BURST
+        io.AR_ADDR  := r_AR_ADDR
+        io.AR_LEN   := r_AR_LEN
+        io.AR_SIZE  := r_AR_SIZE
+        io.AR_ID    := r_AR_ID
+        io.AR_VALID := r_AR_VALID
+        io.AR_PROT  := r_AR_PROT
         
+        //Read Data/Response Channel:
+        io.R_READY   := r_R_READY
+
+        //Signals to Top Module:
+        io.TOP_RDATA := r_R_RDATA
 }
 
 object TopDriver extends App {
