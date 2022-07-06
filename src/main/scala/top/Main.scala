@@ -136,6 +136,7 @@ class Top extends Module() {
                         r_AW_LEN   := io.TOP_LENGTH
                         r_AW_SIZE  := io.TOP_SIZE
                         r_len      := ( io.TOP_LENGTH << io.TOP_SIZE ) + 1.U
+                        r_W_DATA   := io.TOP_WDATA
                         r_AW_VALID := 1.U
                         r_W_VALID  := 1.U
                         r_AW_ID    := 0.U
@@ -158,6 +159,7 @@ class Top extends Module() {
                             r_AW_ADDR  := r_AW_ADDR
                             r_AW_LEN   := r_AW_LEN
                             r_AW_SIZE  := r_AW_SIZE
+                            r_W_DATA   := r_W_DATA
                             r_AW_VALID := 1.U
                             r_AW_ID    := 0.U
                             r_AW_PROT  := 0.U                           
@@ -172,7 +174,7 @@ class Top extends Module() {
                 when(io.W_READY === 1.U) {  
                     when (r_len >= 1.U) { 
                         r_len      := r_len - 1.U
-                        r_W_STRB   := 1.U
+                        r_W_STRB   := "hf".asUInt(4.W)
                         r_W_DATA   := io.TOP_WDATA
                         state      := State.sOne        
                         when (r_len === 1.U){
